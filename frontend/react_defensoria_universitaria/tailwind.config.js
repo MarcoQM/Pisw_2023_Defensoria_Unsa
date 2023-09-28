@@ -5,8 +5,20 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+    },
+    colors: {
+      'granate': '#5e151d',
+      'white': '#ffffff',
+      'gris': '#999999',
+      'grisclaro': '#d6d6d6',
+      'blue': '#141E42',
+      'black': '#000000',
+      // Configure your color palette here
+    }
   },
   plugins: [],
 }
+
+
 

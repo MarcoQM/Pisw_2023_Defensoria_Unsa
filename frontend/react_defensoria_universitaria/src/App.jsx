@@ -16,7 +16,9 @@ function App() {
 
           <div className=" mt-10">
 
-              <div className="bg-gray-200 h-screen w-/12 py-9 px-4">
+          
+
+              <div className="bg-[url('/portada1.jpg')] h-screen  w-/12 py-9 px-4" >
                 <Routes>
                   <Route path="/" element={<Navigate to="/registro-incidencias" />} />
                   <Route path="/registro-incidencias" element={<RegistroIncidencias/>}/>
