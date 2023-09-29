@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from expediente.api.serializador import ExpedienteSerializador,EstadoExpedienteSerializador,ProcesoExpedienteSerializador
-from expediente.models import Expediente,EstadoExpediente,ProcesoExpediente
+from expedientes_app.api.serializers import ExpedienteSerializer,EstadoExpedienteSerializer,ProcesoExpedienteSerializer
+from expedientes_app.models import Expediente,EstadoExpediente,ProcesoExpediente
 
 #============================================================================
 #===============================Expediente===================================
@@ -11,115 +11,100 @@ from expediente.models import Expediente,EstadoExpediente,ProcesoExpediente
 class ListarExpedientesAV(APIView):
     def get(self, request):
         expedientes = Expediente.objects.all()
-        serializer = ExpedienteSerializador(expedientes, many=True)
+        serializer = ExpedienteSerializer(expedientes, many=True)
         return Response(serializer.data)
     
-class IngresarExpedienteAV(APIView):
     def post(self, request):
         try:
-            serializer = ExpedienteSerializador(data=request.data)
+            serializer = ExpedienteSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
-    
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-class EliminarExpedienteAV(APIView):
-    def delete(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+        
+class DetalleExpedienteAV(APIView):
+    def get(self, request, pk):
         try:
-            expediente = Expediente.objects.get(id=id)
+            expdiente = Expediente.objects.get(pk=pk)
+        except Expediente.DoesNotExist:
+            return Response({'error':'Expediente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ExpedienteSerializer(expdiente)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        try:
+            expediente = Expediente.objects.get(pk=pk)
             expediente.delete()
             return Response({"mensaje": "Expediente eliminado correctamente."}, status=status.HTTP_204_NO_CONTENT)
         except Expediente.DoesNotExist:
             return Response({"error": "El expediente no existe."}, status=status.HTTP_404_NOT_FOUND)
 
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-class ModificarExpedienteAV(APIView):
-    def put(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+    def put(self, request, pk):
         try:
-            expediente = Expediente.objects.get(id=id)
-            serializer = ExpedienteSerializador(expediente, data=request.data)
+            expediente = Expediente.objects.get(pk=pk)
+            serializer = ExpedienteSerializer(expediente, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Expediente.DoesNotExist:
             return Response({"error": "El expediente no existe."}, status=status.HTTP_404_NOT_FOUND)
-    
+
     def http_method_not_allowed(self, request, *args, **kwargs):
         # Manejo personalizado de solicitudes HTTP no permitidas
         mensaje = "Método no permitido para esta vista."
         return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        
+
 #============================================================================
 #=========================EstadoExpediente===================================
 #============================================================================
 
 class ListarEstadosExpedienteAV(APIView):
     def get(self, request):
-        estados = EstadoExpediente.objects.all()
-        serializer = EstadoExpedienteSerializador(estados, many=True)
+        estado_expediente = EstadoExpediente.objects.all()
+        serializer = EstadoExpedienteSerializer(estado_expediente, many=True)
         return Response(serializer.data)
     
-class IngresarEstadoExpedienteAV(APIView):
     def post(self, request):
         try:
-            serializer = EstadoExpedienteSerializador(data=request.data)
+            serializer = EstadoExpedienteSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
-    
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-class EliminarEstadoExpedienteAV(APIView):
-    def delete(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+     
+class DetalleEstadoExpedienteAV(APIView):
+    def get(self, request, pk):
         try:
-            estado = EstadoExpediente.objects.get(id=id)
+            estado_expediente = EstadoExpediente.objects.get(pk=pk)
+        except EstadoExpediente.DoesNotExist:
+            return Response({'error':'Estado de expediente no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = EstadoExpedienteSerializer(estado_expediente)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        try:
+            estado = EstadoExpediente.objects.get(pk=pk)
             estado.delete()
             return Response({"mensaje": "Estado eliminado correctamente."}, status=status.HTTP_204_NO_CONTENT)
         except EstadoExpediente.DoesNotExist:
             return Response({"error": "El estado no existe."}, status=status.HTTP_404_NOT_FOUND)
     
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-class ModificarEstadoExpedienteAV(APIView):
-    def put(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+    def put(self, request, pk):
         try:
-            estado = EstadoExpediente.objects.get(id=id)
-            serializer = EstadoExpedienteSerializador(estado, data=request.data)
+            estado = EstadoExpediente.objects.get(pk=pk)
+            serializer = EstadoExpedienteSerializer(estado, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except EstadoExpediente.DoesNotExist:
             return Response({"error": "El expediente no existe."}, status=status.HTTP_404_NOT_FOUND)
+    
     
     def http_method_not_allowed(self, request, *args, **kwargs):
         # Manejo personalizado de solicitudes HTTP no permitidas
@@ -131,17 +116,13 @@ class ModificarEstadoExpedienteAV(APIView):
 #============================================================================
 class ListarProcesosExpedienteAV(APIView):
     def get(self, request):
-        procesos = ProcesoExpediente.objects.all()
-        serializer = ProcesoExpedienteSerializador(procesos, many=True)
+        proceso_expedientes = ProcesoExpediente.objects.all()
+        serializer = ProcesoExpedienteSerializer(proceso_expedientes, many=True)
         return Response(serializer.data)
     
-class IngresarProcesoExpedienteAV(APIView):
     def post(self, request):
-        if not request.data:
-            return Response({"mensaje": "La solicitud no contiene datos."}, status=status.HTTP_400_BAD_REQUEST)
-
         try:
-            serializer = ProcesoExpedienteSerializador(data=request.data)
+            serializer = ProcesoExpedienteSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -149,40 +130,34 @@ class IngresarProcesoExpedienteAV(APIView):
         except Exception as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
     
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-class EliminarProcesoExpedienteAV(APIView):
-    def delete(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+class DetalleProcesoExpedienteAV(APIView):
+    def get(self, request, pk):
         try:
-            proceso = ProcesoExpediente.objects.get(id=id)
-            proceso.delete()
-            return Response({"mensaje": "proceso eliminado correctamente."}, status=status.HTTP_204_NO_CONTENT)
+            proceso_expediente = ProcesoExpediente.objects.get(pk=pk)
         except ProcesoExpediente.DoesNotExist:
-            return Response({"error": "El proceso no existe."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error':'Sede no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ProcesoExpedienteSerializer(proceso_expediente)
+        return Response(serializer.data)
     
-    def http_method_not_allowed(self, request, *args, **kwargs):
-        # Manejo personalizado de solicitudes HTTP no permitidas
-        mensaje = "Método no permitido para esta vista."
-        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-class ModificarProcesoExpedienteAV(APIView):
-    def put(self, request):
-        datos_json = request.data
-        id = datos_json.get('id')
+    def delete(self, request, pk):
         try:
-            proceso = ProcesoExpediente.objects.get(id=id)
-            serializer = ProcesoExpedienteSerializador(proceso, data=request.data)
+            proceso_expediente = ProcesoExpediente.objects.get(pk=pk)
+            proceso_expediente.delete()
+            return Response({"mensaje": "Proceso expediente eliminado correctamente."}, status=status.HTTP_204_NO_CONTENT)
+        except ProcesoExpediente.DoesNotExist:
+            return Response({"error": "El Proceso expediente no existe."}, status=status.HTTP_404_NOT_FOUND)
+    
+    def put(self, request, pk):
+        try:
+            proceso_expediente = ProcesoExpediente.objects.get(pk=pk)
+            serializer = ProcesoExpedienteSerializer(proceso_expediente, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except ProcesoExpediente.DoesNotExist:
             return Response({"error": "El proceso no existe."}, status=status.HTTP_404_NOT_FOUND)
+    
     
     def http_method_not_allowed(self, request, *args, **kwargs):
         # Manejo personalizado de solicitudes HTTP no permitidas
