@@ -112,8 +112,6 @@ export function RegistroIncidencias() {
             </div>
           </div>
 
-
-
           <div className=" relative  mb-6">
             <label>Dirección</label>
             <input
@@ -150,7 +148,7 @@ export function RegistroIncidencias() {
           </div>
 
           <div>
-            <label>Tipo de Tramite</label>
+            <label className="relative  mb-6">Tipo de Tramite</label>
             <div className="my-3">
               <input type="radio" id="queja" {...register("tiposolicitud", { required: true })} value="queja" style={{ marginRight: "10px" }} />
               <label htmlFor="queja" style={{ marginRight: "50px" }}>Queja</label>
@@ -166,6 +164,56 @@ export function RegistroIncidencias() {
             </div>  
             {errors.genero && <span>Este campo es requerido</span>}
           </div>
+
+          <div className=" relative  ">
+            <label className=" font-bold">Sustentación de la Solicitud</label>
+            <p>(Dede aclararse si se persigue modoficar decisiones ya adoptadas o bien alertar de un supuesto mal funcionamiento con objeto de solventar el problema en el futuro) </p>
+          </div>
+
+          <div className="relative  mb-6">
+            <textarea
+              type="text"
+              className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-24 "
+              placeholder="Escribe algo..."
+            />
+          </div>
+
+          <div className="relative  mb-6">
+            <label className="block font-bold mb-2" htmlFor="adjuntos">Archivos Adjuntos</label>
+            <p>Adjunta hasta un máximo de 5 archivos. Cada archivo deberá pesar como máximo 2MB.</p>
+
+            <input
+              type="file"
+              id="adjuntos"
+              name="adjuntos"
+              className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-5 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-15"
+              multiple
+              accept=".pdf, .doc, .docx, .jpg, .png" 
+              max="3"
+            />
+            
+          </div>
+
+          <div className="relative  mb-6">
+            <input type="checkbox" id="miCheckbox" className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-400" />
+            <label htmlFor="miCheckbox" className="ml-2">Autoriza Ud. ser notificado a través de su correo Electronico</label>
+          </div>
+
+          <div className="relative  mb-6">
+            <p>Apenas se pueda estaremos en contacto contigo. Lamentamos el incidente y te agradecemos tu confianza.</p>
+
+          </div>
+
+          <div className="text-center">
+            <button
+              type="submit"
+              className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white">
+              Registrar
+            </button>
+          </div>
+
+
+
 
 
 
