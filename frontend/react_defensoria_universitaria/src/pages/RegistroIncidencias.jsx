@@ -24,8 +24,28 @@ export function RegistroIncidencias() {
 
         <form >
 
+          <div className="flex flex-wrap -mx-3 mb-3">
+            <div className="w-full md:w-5/6 px-3 mb-3">
+                <label>Rol que desempeña</label>
+            </div>
+            <div className="w-full md:w-1/6 px-3 mb-3">
+              <div
+                className="ml-2 w-8 h-8 bg-granate text-white rounded-full flex items-center justify-center cursor-pointer"
+                onClick={() => {
+                      // Mostrar mensaje de ayuda al hacer clic en el ícono
+                      alert("El rol es la actividad que cumple dentro o fuera de la universidad, postulante universitario, madre o padre del estudiante, etc.");
+                    }}
+                  >
+                <span className="text-lg font-bold">?</span>
+              </div>
+            </div>
+
+
+          </div>
+            
+              
+
           <div>
-            <label>Rol que desempeña</label>
             <div className="my-3">
               <input type="radio" id="estudiante" {...register("rol", { required: true })} value="estudiante" style={{ marginRight: "10px" }} />
               <label htmlFor="estudiante" style={{ marginRight: "50px" }}>Estudiante</label>
@@ -38,8 +58,19 @@ export function RegistroIncidencias() {
 
               <input type="radio" id="otro" {...register("rol", { required: true })} value="otro" style={{ marginRight: "10px" }} />
               <label htmlFor="otro">Otro</label>
-            </div>  
-            {errors.genero && <span>Este campo es requerido</span>}
+            </div>             
+            {errors.rol && <span>Este campo es requerido</span>}
+          </div>
+
+          <div className=" relative  mb-6">
+            <label>Si usted tiene otro Rol, detalle</label>
+            <input
+              type="text"
+              placeholder="Detalle"
+              {...register("direccion", { required: true })}
+              className="bg-grisclaro border border-white p-3 rounded-lg block w-full mb-3 "
+            />
+            {errors.direccion && <span>This field is required</span>}
           </div>
 
 
