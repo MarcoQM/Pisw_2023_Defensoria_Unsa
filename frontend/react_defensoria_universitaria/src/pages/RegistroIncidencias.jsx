@@ -10,16 +10,18 @@ export function RegistroIncidencias() {
   } = useForm();
 
   return (
-    <div>
-      <div className="absolute top-15 right-4">
-        <img
-          src="\defensoria.png" 
-          alt="Defensoria"
-          className="h-40 w-40" // Ajusta el tamaño según tus preferencias
-        />
+    <div className="Relative" >
+      <div className="absolute top-30 right-40">
+        <div className="w-20 h-20 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
+          <img
+            src="\defensoria.png" 
+            alt="Defensoria"
+            className="w-full h-full object-contain" 
+          />
+        </div>
       </div>
 
-      <div className=" max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 ml-40 mt-10">
+      <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 ml-40 mt-10">
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
 
         <form >
