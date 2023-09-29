@@ -11,7 +11,7 @@ export function RegistroIncidencias() {
 
   return (
     <div className="Relative" >
-      <div className="absolute top-30 right-40">
+      <div className="absolute top-50 right-40">
         <div className="w-20 h-20 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
           <img
             src="\defensoria.png" 
@@ -19,7 +19,19 @@ export function RegistroIncidencias() {
             className="w-full h-full object-contain" 
           />
         </div>
+        <div className="bg-white rounded-lg p-4 w-80 h-90 mx-auto top-80 mt-8">
+          {/* Aumentamos el margen superior a "mt-8" para un espacio más ancho */}
+          <h5 className="text-black text-xl font-bold mb-2">Estamos para escucharte</h5>
+          <p className="mb-2">Llena el formulario de atención para que podamos ver tu caso. Si tienes alguna duda, puedes revisar nuestra sección sobre</p>
+          <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoria Universitaria?</h5>
+          <img
+            src="\Alumnos.jpg"
+            alt="Imagen"
+            className="w-60 h-48 mx-auto object-contain"
+          />
+        </div>
       </div>
+
 
       <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 ml-40 mt-10">
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
