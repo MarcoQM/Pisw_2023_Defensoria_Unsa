@@ -1,6 +1,7 @@
 import {BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
 import {  BarraPosterior} from "./components/BarraPosterior";
 import { RegistroIncidencias } from "./pages/RegistroIncidencias";
+import { RegistrosPage } from "./pages/RegistrosPage";
 import {Toaster} from "react-hot-toast";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Navigate to="/registro-incidencias" />} />
                   <Route path="/registro-incidencias" element={<RegistroIncidencias/>}/>
-                 
+                  <Route path="/registros-page" element={<RegistrosPage/>}/>
                 </Routes>
               </div>
           </div>

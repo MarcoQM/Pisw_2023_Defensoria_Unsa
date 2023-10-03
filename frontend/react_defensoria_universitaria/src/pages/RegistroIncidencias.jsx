@@ -1,6 +1,7 @@
 
 import { useForm } from "react-hook-form";
-
+import { RegistrosList } from "../components/RegistrosList";
+import { RegistroCard } from "../components/RegistroCard";
 
 
 export function RegistroIncidencias() {
@@ -256,6 +257,7 @@ export function RegistroIncidencias() {
               Registrar
             </button>
           </div>
+          
 
 
 
