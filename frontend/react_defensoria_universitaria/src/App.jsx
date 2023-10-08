@@ -5,20 +5,11 @@ import { RegistrosPage } from "./pages/RegistrosPage";
 import {Toaster} from "react-hot-toast";
 
 function App() {
- 
-
   return (
-
     <BrowserRouter>   
         <div className="">
-          
-
           <BarraPosterior />
-
           <div className=" mt-10">
-
-          
-
               <div className="bg-[url('/portada1.jpg')] h-screen  w-/12 py-9 px-4" >
                 <Routes>
                   <Route path="/" element={<Navigate to="/registro-incidencias" />} />
@@ -31,8 +22,6 @@ function App() {
         <Toaster/>
         
       </BrowserRouter>
-
-    
   );
 }
 

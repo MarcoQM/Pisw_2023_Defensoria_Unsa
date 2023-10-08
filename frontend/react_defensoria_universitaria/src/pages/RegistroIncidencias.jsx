@@ -1,14 +1,59 @@
 
 import { useForm } from "react-hook-form";
+import { createRegistro } from "../api/registros.api";
 import { RegistrosList } from "../components/RegistrosList";
 import { RegistroCard } from "../components/RegistroCard";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 export function RegistroIncidencias() {
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit=handleSubmit(async data=>{
+    const res= await createRegistro(data);
+    console.log(res);
+  });
+  //para almacenar roles, sedes y tipo
+  const [roles, setRoles] = useState([]);
+  const [sedes, setSedes] = useState([]);
+  const [tipos, setTipos] = useState([]);
+
+  useEffect(() => {
+    // Obtener lista de roles
+    axios
+      .get("/api/roles/")
+      .then((response) => {
+        setRoles(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener roles:", error);
+      });
+
+    // Obtener lista de sedes
+    axios
+      .get("/api/sedes/")
+      .then((response) => {
+        setSedes(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener sedes:", error);
+      });
+
+    // Obtener lista de tipos
+    axios
+      .get("/api/tipos/")
+      .then((response) => {
+        setTipos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener tipos:", error);
+      });
+  }, []);
 
   return (
     <div className="Relative" >
@@ -37,7 +82,7 @@ export function RegistroIncidencias() {
       <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 ml-40 mt-10">
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
 
-        <form >
+        <form onSubmit={onSubmit} >
 
           <div className="flex flex-wrap -mx-3 mb-3">
             <div className="w-full md:w-5/6 px-3 mb-3">
@@ -82,10 +127,10 @@ export function RegistroIncidencias() {
             <input
               type="text"
               placeholder="Detalle"
-              {...register("direccion", { required: true })}
+              {...register("direccion", )}
               className="bg-grisclaro border border-white p-3 rounded-lg block w-full mb-3 "
             />
-            {errors.direccion && <span>This field is required</span>}
+
           </div>
 
 
@@ -136,15 +181,22 @@ export function RegistroIncidencias() {
           </div>
 
           <div className="w-64 relative  mb-6">
-            <label htmlFor="sede">Area/Sede</label>
-            <select
-              className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option value="">Selecciona una opción...</option>
-              <option value="opcion1">Area Ingenierias</option>
-              <option value="opcion2">Area Biomedicas</option>
-              <option value="opcion3">Area Sociales</option>
-            </select>
+          <div className="w-64 relative mb-6">
+          <label htmlFor="sede">Área/Sede</label>
+          <select
+            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            name="sede"
+            {...register("sede", { required: true })}
+          >
+            <option value="">Selecciona una sede...</option>
+            {sedes.map((sede) => (
+              <option key={sede.id} value={sede.id}>
+                {sede.nombre}
+              </option>
+            ))}
+          </select>
+        {errors.sede && <span>Este campo es requerido</span>}
+      </div>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
                 className="fill-current h-4 w-4"
