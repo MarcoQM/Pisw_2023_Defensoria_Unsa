@@ -1,10 +1,10 @@
 
 import { useForm } from "react-hook-form";
-import { createRegistro } from "../api/registros.api";
-import { RegistrosList } from "../components/RegistrosList";
-import { RegistroCard } from "../components/RegistroCard";
+import { getAllSedes, getAllRoles, getAllTipo, createRegistro } from "../api/registros.api";
+//import { RegistrosList } from "../components/RegistrosList";
+//import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 
 
 export function RegistroIncidencias() {
@@ -15,8 +15,8 @@ export function RegistroIncidencias() {
   } = useForm();
 
   const onSubmit=handleSubmit(async data=>{
-    const res= await createRegistro(data);
-    console.log(res);
+    const res3= await createRegistro(data);
+    console.log(res3);
   });
   //para almacenar roles, sedes y tipo
   const [roles, setRoles] = useState([]);
@@ -25,36 +25,32 @@ export function RegistroIncidencias() {
 
   useEffect(() => {
     // Obtener lista de roles
-    axios
-      .get("/api/roles/")
-      .then((response) => {
-        setRoles(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener roles:", error);
-      });
+    async function loadRoles(){
+      const res1 = await getAllRoles();
+      setRoles(res1.data);
+      console.log(res1);
+    } 
+    loadRoles();
 
     // Obtener lista de sedes
-    axios
-      .get("/api/sedes/")
-      .then((response) => {
-        setSedes(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener sedes:", error);
-      });
+    async function loadSedes(){
+      const res = await getAllSedes();
+      setSedes(res.data);
+      console.log(res);
+    } 
+    loadSedes();
 
     // Obtener lista de tipos
-    axios
-      .get("/api/tipos/")
-      .then((response) => {
-        setTipos(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener tipos:", error);
-      });
+    async function loadTipos(){
+      const res2 = await getAllTipo();
+      setTipos(res2.data);
+      console.log(res2);
+    } 
+    loadTipos();
+    
   }, []);
 
+  
   return (
     <div className="Relative" >
       <div className="absolute top-50 right-40">
@@ -107,16 +103,16 @@ export function RegistroIncidencias() {
 
           <div>
             <div className="my-3">
-              <input type="radio" id="estudiante" {...register("rol", { required: true })} value="estudiante" style={{ marginRight: "10px" }} />
+              <input type="radio" id="estudiante" {...register("rol", { required: true })} value="1" style={{ marginRight: "10px" }} />
               <label htmlFor="estudiante" style={{ marginRight: "50px" }}>Estudiante</label>
 
-              <input type="radio" id="docente" {...register("rol", { required: true })} value="docente" style={{ marginRight: "10px" }} />
+              <input type="radio" id="docente" {...register("rol", { required: true })} value="2" style={{ marginRight: "10px" }} />
               <label htmlFor="docente" style={{ marginRight: "50px" }}>Docente</label>
 
-              <input type="radio" id="administrativo" {...register("rol", { required: true })} value="administrativo" style={{ marginRight: "10px" }} />
+              <input type="radio" id="administrativo" {...register("rol", { required: true })} value="3" style={{ marginRight: "10px" }} />
               <label htmlFor="administrativo" style={{ marginRight: "50px" }}>Administrativo</label>
 
-              <input type="radio" id="otro" {...register("rol", { required: true })} value="otro" style={{ marginRight: "10px" }} />
+              <input type="radio" id="otro" {...register("rol", { required: true })} value="4" style={{ marginRight: "10px" }} />
               <label htmlFor="otro">Otro</label>
             </div>             
             {errors.rol && <span>Este campo es requerido</span>}
@@ -181,32 +177,33 @@ export function RegistroIncidencias() {
           </div>
 
           <div className="w-64 relative  mb-6">
-          <div className="w-64 relative mb-6">
-          <label htmlFor="sede">Área/Sede</label>
-          <select
-            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            name="sede"
-            {...register("sede", { required: true })}
-          >
-            <option value="">Selecciona una sede...</option>
-            {sedes.map((sede) => (
-              <option key={sede.id} value={sede.id}>
-                {sede.nombre}
-              </option>
-            ))}
-          </select>
-        {errors.sede && <span>Este campo es requerido</span>}
-      </div>
+            <div className="w-64 relative mb-6">
+              <label htmlFor="sede">Área/Sede</label>
+                <select
+                  className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  name="sede"
+                  {...register("sede", { required: true })}
+                >
+                  <option value="">Selecciona una sede...</option>
+                  {sedes.map((sede) => (
+                    <option key={sede.id} value={sede.id}>
+                      {sede.nombre}
+                    </option>
+                  ))}
+                </select>
+              {errors.sede && <span>Este campo es requerido</span>}
+            </div>
+
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M7.293 8.293a1 1 0 011.414 0L10 9.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"
-                ></path>
-              </svg>
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M7.293 8.293a1 1 0 011.414 0L10 9.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"
+                  ></path>
+                </svg>
             </div>
           </div>
 
@@ -223,44 +220,44 @@ export function RegistroIncidencias() {
 
           <div className="flex flex-wrap -mx-3 mb-3">
             <div className="w-full md:w-1/2 px-3 mb-3">
-              <label htmlFor="celphone">Numero Telefonico</label>
+              <label htmlFor="telefono">Numero Telefonico</label>
               <input
                 type="text"
                 placeholder="Numero Telefonico"
-                {...register("celphone", { required: true })}
+                {...register("telefono", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.celphone && <span>This field is required</span>}
+              {errors.telefono && <span>This field is required</span>}
             </div>
 
             <div className="w-full md:w-1/2 px-3 mb-3">
-              <label htmlFor="email">Correo Electronico</label>
+              <label htmlFor="correo">Correo Electronico</label>
               <input
                 type="text"
                 placeholder="Correo Electronico"
-                {...register("email", { required: true })}
+                {...register("correo", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.email && <span>This field is required</span>}
+              {errors.correo && <span>This field is required</span>}
             </div>
           </div>
 
           <div>
             <label className="relative  mb-6">Tipo de Tramite</label>
             <div className="my-3">
-              <input type="radio" id="queja" {...register("tiposolicitud", { required: true })} value="queja" style={{ marginRight: "10px" }} />
+              <input type="radio" id="queja" {...register("tipo", { required: true })} value="1" style={{ marginRight: "10px" }} />
               <label htmlFor="queja" style={{ marginRight: "50px" }}>Queja</label>
 
-              <input type="radio" id="reclamo" {...register("tiposolicitud", { required: true })} value="reclamo" style={{ marginRight: "10px" }} />
+              <input type="radio" id="reclamo" {...register("tipo", { required: true })} value="2" style={{ marginRight: "10px" }} />
               <label htmlFor="reclamo" style={{ marginRight: "50px" }}>Reclamo</label>
 
-              <input type="radio" id="sugerencia" {...register("tiposolicitud", { required: true })} value="sugerencia" style={{ marginRight: "10px" }} />
+              <input type="radio" id="sugerencia" {...register("tipo", { required: true })} value="3" style={{ marginRight: "10px" }} />
               <label htmlFor="sugerencia" style={{ marginRight: "50px" }}>Sugerencia</label>
 
-              <input type="radio" id="consulta" {...register("tiposolicitud", { required: true })} value="consulta" style={{ marginRight: "10px" }} />
+              <input type="radio" id="consulta" {...register("tipo", { required: true })} value="4" style={{ marginRight: "10px" }} />
               <label htmlFor="consulta">Consulta</label>
             </div>  
-            {errors.genero && <span>Este campo es requerido</span>}
+            {errors.tipo && <span>Este campo es requerido</span>}
           </div>
 
           <div className=" relative  ">
@@ -272,8 +269,9 @@ export function RegistroIncidencias() {
             <textarea
               type="text"
               className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-24 "
-              placeholder="Escribe algo..."
+              placeholder="Escribe algo..." {...register("descripcion" , { required: true})}
             />
+            {errors.descripcion && <span>Este campo es requerido</span>}
           </div>
 
           <div className="relative  mb-6">

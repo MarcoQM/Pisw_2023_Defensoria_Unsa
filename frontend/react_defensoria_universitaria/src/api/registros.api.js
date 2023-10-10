@@ -7,5 +7,11 @@ export const createRegistro = (solicitudes_app) => {
     return axios.post('http://localhost:8000/api/solicitudes/',solicitudes_app);
 };
 export const getAllSedes = () => {
-    return axios.post('http://localhost:8000/api/solicitudes/',solicitudes_app);
+    return axios.get('http://localhost:8000/api/sedes/');
+};
+export const getAllRoles = () => {
+    return axios.get('http://localhost:8000/api/solicitudes/rol/');
+};
+export const getAllTipo = () => {
+    return axios.get('http://localhost:8000/api/solicitudes/tipo/');
 };

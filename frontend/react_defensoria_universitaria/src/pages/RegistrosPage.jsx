@@ -1,14 +1,14 @@
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+//import { useForm } from "react-hook-form";
+//import { Link } from "react-router-dom";
 import { RegistrosList } from "../components/RegistrosList";
-import { RegistroCard } from "../components/RegistroCard";
-
+import { ListaSedes } from "../components/ListaSedes";
+//import { RegistroCard } from "../components/RegistroCard";
 
 export function RegistrosPage() {
-  const {
+  /*const {
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm(); */
 
   return (
     <div className="Relative" >
@@ -17,6 +17,7 @@ export function RegistrosPage() {
           <div className="relative  mb-6">
             <p>Registros</p>
             <RegistrosList />,
+            <ListaSedes />
 
           </div>
 
