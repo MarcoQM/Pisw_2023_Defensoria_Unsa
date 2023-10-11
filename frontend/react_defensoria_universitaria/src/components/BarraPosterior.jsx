@@ -12,15 +12,14 @@ export function BarraPosterior(){
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"
-                    className=" pl-20 w-50 h-10 mr-2"
+                    className=" pl-50 sm:pl-20 w-50 h-10 mr-2"
                     />
-                    <span className=" text-xl font-semibold">Defensoria Universitaria</span>
+                    <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <button className=" text-white hover:text-gris  py-2 px-4 rounded  text-xl">
+                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl">
                     Consulta por expediente
                 </button>
             </div>
-        </div>
-        
+        </div>    
     )
 }

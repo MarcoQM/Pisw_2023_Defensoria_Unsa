@@ -11,7 +11,7 @@ function App() {
         <div className="">
           <BarraPosterior />
           <div className=" mt-10">
-              <div className="bg-[url('/portada1.jpg')] h-screen  w-/12 py-9 px-4" >
+              <div className="bg-[url('../portada2.1.jpg')]   bg-cover bg-center h-screen bg-grayscale-50  w-/12 py-9 " >
                 <Routes>
                   <Route path="/" element={<Navigate to="/login" />} />
                   <Route path="/registro-incidencias" element={<RegistroIncidencias/>}/>

@@ -52,70 +52,70 @@ export function RegistroIncidencias() {
 
   
   return (
+  
     <div className="Relative" >
       <div className="absolute top-50 right-40">
-        <div className="w-20 h-20 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
+        <div className="hidden lg:block w-20 h-20 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 ">
           <img
             src="\defensoria.png" 
             alt="Defensoria"
             className="w-full h-full object-contain" 
           />
         </div>
-        <div className="bg-white rounded-lg p-4 w-80 h-90 mx-auto top-80 mt-8">
-          {/* Aumentamos el margen superior a "mt-8" para un espacio más ancho */}
-          <h5 className="text-black text-xl font-bold mb-2">Estamos para escucharte</h5>
-          <p className="mb-2">Llena el formulario de atención para que podamos ver tu caso. Si tienes alguna duda, puedes revisar nuestra sección sobre</p>
-          <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoria Universitaria?</h5>
-          <img
-            src="\Alumnos.jpg"
-            alt="Imagen"
-            className="w-60 h-48 mx-auto object-contain"
-          />
+        <div className="bg-white rounded-lg p-4 w-80 h-90 mx-auto top-80 mt-8 hidden lg:block  sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
+            {/* Aumentamos el margen superior a "mt-8" para un espacio más ancho */}
+            <h5 className="text-black text-xl font-bold mb-2">Estamos para escucharte</h5>
+            <p className="mb-2">Llena el formulario de atención para que podamos ver tu caso. Si tienes alguna duda, puedes revisar nuestra sección sobre</p>
+            <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoria Universitaria?</h5>
+            <img
+              src="\Alumnos.jpg"
+              alt="Imagen"
+              className="w-60 h-48 mx-auto object-contain"
+            />
         </div>
       </div>
 
 
-      <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 ml-40 mt-10">
+      <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 lg:ml-40 lg:mt-10 ">
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
 
         <form onSubmit={onSubmit} >
-
           <div className="flex flex-wrap -mx-3 mb-3">
             <div className="w-full md:w-5/6 px-3 mb-3">
-                <label>Rol que desempeña</label>
+                <label>Rol que desempeña:</label>
             </div>
             <div className="w-full md:w-1/6 px-3 mb-3">
               <div
                 className="ml-2 w-8 h-8 bg-granate text-white rounded-full flex items-center justify-center cursor-pointer"
                 onClick={() => {
                       // Mostrar mensaje de ayuda al hacer clic en el ícono
+                      
                       alert("El rol es la actividad que cumple dentro o fuera de la universidad, postulante universitario, madre o padre del estudiante, etc.");
                     }}
                   >
                 <span className="text-lg font-bold">?</span>
+                
               </div>
             </div>
 
 
           </div>
+                                                    
+          <div className="my-3">
             
-              
-
-          <div>
-            <div className="my-3">
-              <input type="radio" id="estudiante" {...register("rol", { required: true })} value="1" style={{ marginRight: "10px" }} />
-              <label htmlFor="estudiante" style={{ marginRight: "50px" }}>Estudiante</label>
-
-              <input type="radio" id="docente" {...register("rol", { required: true })} value="2" style={{ marginRight: "10px" }} />
-              <label htmlFor="docente" style={{ marginRight: "50px" }}>Docente</label>
-
-              <input type="radio" id="administrativo" {...register("rol", { required: true })} value="3" style={{ marginRight: "10px" }} />
-              <label htmlFor="administrativo" style={{ marginRight: "50px" }}>Administrativo</label>
-
-              <input type="radio" id="otro" {...register("rol", { required: true })} value="4" style={{ marginRight: "10px" }} />
-              <label htmlFor="otro">Otro</label>
-            </div>             
-            {errors.rol && <span>Este campo es requerido</span>}
+              {roles.map((rol) => (
+                <label key={rol.id}  style={{ marginRight: "30px" }} >
+                  <input
+                    type="radio"
+                    name="rol"
+                    value={rol.id}
+                    {...register("rol", { required: true })}
+                    className="mr-2"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {rol.nombre}
+                </label>
+              ))}
           </div>
 
           <div className=" relative  mb-6">
@@ -139,7 +139,7 @@ export function RegistroIncidencias() {
                 {...register("nombre", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.nombre && <span>This field is required</span>}
+              {errors.nombre && <span>Este campo es requerido</span>}
             </div>
             <div className="w-full md:w-1/2 px-3 mb-3">
               <label htmlFor="apellidos">Apellidos</label>
@@ -149,7 +149,7 @@ export function RegistroIncidencias() {
                 {...register("apellido", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.apellido && <span>This field is required</span>}
+              {errors.apellido && <span>Este campo es requerido</span>}
             </div>
           </div>
 
@@ -162,7 +162,7 @@ export function RegistroIncidencias() {
                 {...register("dni", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.dni && <span>This field is required</span>}
+              {errors.dni && <span>Este campo es requerido</span>}
             </div>
             <div className="w-full md:w-1/2 px-3 mb-3">
               <label htmlFor="cui">CUI</label>
@@ -172,7 +172,7 @@ export function RegistroIncidencias() {
                 {...register("cui", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.cui && <span>This field is required</span>}
+              {errors.cui && <span>Este campo es requerido</span>}
             </div>
           </div>
 
@@ -215,7 +215,7 @@ export function RegistroIncidencias() {
               {...register("direccion", { required: true })}
               className="bg-zinc-300 p-3 rounded-lg block w-full mb-3"
             />
-            {errors.direccion && <span>This field is required</span>}
+            {errors.direccion && <span>Este campo es requerido</span>}
           </div>
 
           <div className="flex flex-wrap -mx-3 mb-3">
@@ -227,7 +227,7 @@ export function RegistroIncidencias() {
                 {...register("telefono", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.telefono && <span>This field is required</span>}
+              {errors.telefono && <span>Este campo es requerido</span>}
             </div>
 
             <div className="w-full md:w-1/2 px-3 mb-3">
@@ -238,26 +238,27 @@ export function RegistroIncidencias() {
                 {...register("correo", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.correo && <span>This field is required</span>}
+              {errors.correo && <span>Este campo es requerido</span>}
             </div>
           </div>
 
-          <div>
-            <label className="relative  mb-6">Tipo de Tramite</label>
-            <div className="my-3">
-              <input type="radio" id="queja" {...register("tipo", { required: true })} value="1" style={{ marginRight: "10px" }} />
-              <label htmlFor="queja" style={{ marginRight: "50px" }}>Queja</label>
+        
 
-              <input type="radio" id="reclamo" {...register("tipo", { required: true })} value="2" style={{ marginRight: "10px" }} />
-              <label htmlFor="reclamo" style={{ marginRight: "50px" }}>Reclamo</label>
-
-              <input type="radio" id="sugerencia" {...register("tipo", { required: true })} value="3" style={{ marginRight: "10px" }} />
-              <label htmlFor="sugerencia" style={{ marginRight: "50px" }}>Sugerencia</label>
-
-              <input type="radio" id="consulta" {...register("tipo", { required: true })} value="4" style={{ marginRight: "10px" }} />
-              <label htmlFor="consulta">Consulta</label>
-            </div>  
-            {errors.tipo && <span>Este campo es requerido</span>}
+          <div className="my-3">
+            
+              {tipos.map((tipo) => (
+                <label key={tipo.id}  style={{ marginRight: "50px" }}>
+                  <input
+                    type="radio"
+                    name="tipo"
+                    value={tipo.id}
+                    {...register("tipo", { required: true })}
+                    className="mr-2"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {tipo.nombre}
+                </label>
+              ))}
           </div>
 
           <div className=" relative  ">
@@ -307,16 +308,6 @@ export function RegistroIncidencias() {
               Registrar
             </button>
           </div>
-          
-
-
-
-
-
-
-
-          
-          
           
         </form>
       </div>

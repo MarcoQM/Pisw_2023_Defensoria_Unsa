@@ -6,7 +6,7 @@ export function Login() {
   
     return (
         
-            <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-grayscale-50 relative flex justify-center items-center" >            
+            <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-grayscale-50 relative flex justify-center items-center "  >            
                 <div className=" relative w-8/12 h-screen justify-center items-center">
                     <div className="relative flex items-top justify-center min-h-screen sm:items-center bg-zinc-800 bg-blend-screen py-4 sm:pt-0 bg-cover bg-center">
                         <div className="text-center flex flex-col justify-center">
