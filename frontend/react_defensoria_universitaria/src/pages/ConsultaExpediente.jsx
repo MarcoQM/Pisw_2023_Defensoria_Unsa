@@ -8,6 +8,7 @@ export function ConsultaExpediente() {
     const [expediente, setExpediente] = useState("");
     const [clave, setClave] = useState("");
     const [mostrarResultados, setMostrarResultados] = useState(false);
+    
 
     const handleBuscar = () => {
         // Aquí, normalmente realizarías la búsqueda con los valores de expediente y clave.

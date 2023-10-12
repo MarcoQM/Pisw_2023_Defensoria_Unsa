@@ -4,10 +4,17 @@ import { getAllSedes, getAllRoles, getAllTipo, createRegistro } from "../api/reg
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
+import { toast } from 'react-hot-toast';
+
+import { useNavigate } from "react-router-dom";
 //import axios from "axios";
 
 
 export function RegistroIncidencias() {
+
+
+  const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
@@ -15,8 +22,26 @@ export function RegistroIncidencias() {
   } = useForm();
 
   const onSubmit=handleSubmit(async data=>{
-    const res3= await createRegistro(data);
-    console.log(res3);
+
+  
+      const res3 = await createRegistro(data);
+      console.log(res3);
+
+      toast.success('El registro se ha completado con éxito.', {
+        duration: 2000, // Duración en milisegundos
+       
+      });
+      
+      navigate("/login") 
+
+      if (res3.success===true) {
+        // Registro exitoso, mostrar toast y redirigir a la página de inicio de sesión.
+       
+      } else {
+        toast.success('Hubo un problema al registrar. Por favor, inténtalo de nuevo.');
+      }
+      
+      
   });
   //para almacenar roles, sedes y tipo
   const [roles, setRoles] = useState([]);
@@ -28,7 +53,7 @@ export function RegistroIncidencias() {
     async function loadRoles(){
       const res1 = await getAllRoles();
       setRoles(res1.data);
-      console.log(res1);
+      //console.log(res1);
     } 
     loadRoles();
 
@@ -36,7 +61,7 @@ export function RegistroIncidencias() {
     async function loadSedes(){
       const res = await getAllSedes();
       setSedes(res.data);
-      console.log(res);
+      //console.log(res);
     } 
     loadSedes();
 
@@ -44,7 +69,7 @@ export function RegistroIncidencias() {
     async function loadTipos(){
       const res2 = await getAllTipo();
       setTipos(res2.data);
-      console.log(res2);
+      //console.log(res2);
     } 
     loadTipos();
     

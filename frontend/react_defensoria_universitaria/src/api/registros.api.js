@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+
+
 export const getAllRegistros=() => {
     return axios.get('http://localhost:8000/api/solicitudes/')
 };
@@ -15,3 +17,7 @@ export const getAllRoles = () => {
 export const getAllTipo = () => {
     return axios.get('http://localhost:8000/api/solicitudes/tipo/');
 };
+
+export const getExpediente = (id) => {
+    return axios.get(`http://localhost:8000/api/solicitudes/${id}/`);
+}
