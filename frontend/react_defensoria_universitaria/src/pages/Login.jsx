@@ -27,7 +27,6 @@ export function Login() {
                                 <button type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-gris hover:bg-grisclaro active:bg-gris focus:border-grisclaro text-white px-4 md:px-12 text-sm lg:text-lg w-fit self-center mt-2"
                                 >                                    
                                 INGRESO DOCENTE/ADMINISTRATIVO 
-
                                 </button>
                             </a>
                         </div>

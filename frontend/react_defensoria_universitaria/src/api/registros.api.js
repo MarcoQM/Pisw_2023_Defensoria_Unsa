@@ -19,5 +19,5 @@ export const getAllTipo = () => {
 };
 
 export const getExpediente = (id) => {
-    return axios.get(`http://localhost:8000/api/solicitudes/${id}/`);
+    return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
 }

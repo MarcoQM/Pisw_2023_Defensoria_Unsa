@@ -27,19 +27,14 @@ export function RegistroIncidencias() {
       const res3 = await createRegistro(data);
       console.log(res3);
 
-      toast.success('El registro se ha completado con éxito.', {
-        duration: 2000, // Duración en milisegundos
+      toast.success('El registro se ha completado con éxito.  Se le enviara un e-mail con los detalles de su solicitud', {
+        duration: 5000, // Duración en milisegundos
        
       });
       
       navigate("/login") 
 
-      if (res3.success===true) {
-        // Registro exitoso, mostrar toast y redirigir a la página de inicio de sesión.
-       
-      } else {
-        toast.success('Hubo un problema al registrar. Por favor, inténtalo de nuevo.');
-      }
+      
       
       
   });
