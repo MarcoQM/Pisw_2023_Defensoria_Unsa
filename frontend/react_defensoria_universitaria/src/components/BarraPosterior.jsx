@@ -16,7 +16,8 @@ export function BarraPosteriorSolicitud(){
                     />
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl">
+                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl"
+                onClick={() => navigate("/consulta")}>
                     Consulta por expediente
                 </button>
             </div>
@@ -39,7 +40,8 @@ export function BarraPosteriorExpediente(){
                     />
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl">
+                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl"
+                >
                     Realizar Solicitud
                 </button>
             </div>
