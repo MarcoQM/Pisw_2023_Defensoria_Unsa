@@ -20,6 +20,7 @@ class TipoSolicitud(models.Model):
     
 class Solicitud(models.Model):
     rol = models.ForeignKey(RolSolicitud, on_delete=models.CASCADE) 
+    otro_rol = models.CharField(max_length=50, null=True)
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     dni = models.CharField(max_length=8)
@@ -30,7 +31,14 @@ class Solicitud(models.Model):
     correo = models.CharField(max_length=30)
     tipo = models.ForeignKey(TipoSolicitud, on_delete=models.CASCADE)
     descripcion = models.CharField(max_length=250)
+    prueba_1 = models.FileField(upload_to='files/file_1/', null=True)
+    prueba_2 = models.FileField(upload_to='files/file_2/', null=True)
+    prueba_3 = models.FileField(upload_to='files/file_3/', null=True)
+    prueba_4 = models.FileField(upload_to='files/file_4/', null=True)
+    prueba_5 = models.FileField(upload_to='files/file_5/', null=True)
     estado = models.BooleanField(default=True)
+    encargado = models.CharField(max_length=80, null=True)
+    organo_universitario = models.CharField(max_length=80, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     def __str__(self):
