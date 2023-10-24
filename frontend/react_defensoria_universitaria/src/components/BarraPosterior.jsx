@@ -6,7 +6,7 @@ export function BarraPosteriorSolicitud(){
     const navigate = useNavigate();
 
     return(
-        <div className="fixed top-0 w-full z-10">
+        <div className="fixed top-0 w-full z-50">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
                 <div className="flex items-center" onClick={() => navigate("/login")}>
                     <img

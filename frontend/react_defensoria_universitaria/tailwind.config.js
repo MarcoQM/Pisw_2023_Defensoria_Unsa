@@ -18,6 +18,7 @@ export default {
       amber: colors.amber,
       gray: colors.gray,
       yellow: colors.yellow,
+      red: colors.red,
       'granate': '#5e151d',
       'white': '#ffffff',
       'gris': '#999999',

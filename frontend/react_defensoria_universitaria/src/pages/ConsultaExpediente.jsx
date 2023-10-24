@@ -39,10 +39,10 @@ export function ConsultaExpediente() {
     return (
 
         <div className="Relative" >
-            <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10 ">
+            <div className="max-w-7xl mx-auto  bg-grisclaro rounded-lg shadow-lg p-10 my-10 h-full">
                 <h4 className="text-granate text-3xl font-bold text-center mb-4">CONSULTA RÁPIDA POR EXPEDIENTE</h4>
 
-                <div className=" flex  flex-col items-center  h-screen">
+                <div className=" flex  flex-col items-center ">
                     <p className="" >Ingrese el codigo de expediente  </p>
                     <form  onSubmit={onSubmit} className="flex ">
                         
@@ -64,7 +64,8 @@ export function ConsultaExpediente() {
                         </button>
                     </form>
                     {mostrarResultados && (
-                    <div className=" w-full flex  flex-col items-center  h-screen mt-4  ">
+                    
+                    <div className="w-full flex flex-col items-center mt-4">
                         <h4 className="text-granate text-2xl font-bold text-center ">RECLAMO XYZ-123</h4>    
                         {/* Aquí mostrarías los resultados reales de la búsqueda */}
                         <p>Organo Universitario: Departamento de Psicología </p>
@@ -77,42 +78,50 @@ export function ConsultaExpediente() {
                                 
                                 <ol className="relative flex w-full flex-row items-center gap-x-4">
                                 <div className="static flex h-12 w-full rounded-full bg-gray-400 p-1">
-                                    <li className="static z-50 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-indigo-700 to-indigo-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
+                                    <li className="static z-40 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-yellow-500 to-yellow-600 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
                                     <div className="flex h-10 items-center justify-between">
                                         <div className="m-2 h-3 w-3 rounded-full bg-white p-1 shadow-lg shadow-black"></div>
                                         <a  className="text-sm font-medium text-indigo-50 transition duration-300 ease-in-out hover:text-indigo-100 focus:underline">Recibido</a>
                                         <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 text-indigo-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-indigo-700" viewBox="0 0 512 512"><path d="M440.9 136.3a4 4 0 000-6.91L288.16 40.65a64.14 64.14 0 00-64.33 0L71.12 129.39a4 4 0 000 6.91L254 243.88a4 4 0 004.06 0zM54 163.51a4 4 0 00-6 3.49v173.89a48 48 0 0023.84 41.39L234 479.51a4 4 0 006-3.46V274.3a4 4 0 00-2-3.46zM272 275v201a4 4 0 006 3.46l162.15-97.23A48 48 0 00464 340.89V167a4 4 0 00-6-3.45l-184 108a4 4 0 00-2 3.45z" /></svg>
+                                            <svg className="fill-yellow-400  w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM11.9805 17H13.9561V7.0332H13.7441L9.62207 8.50977V10.1162L11.9805 9.38477V17Z"/>
+                                            </svg>
                                         </div>
                                     </div>
                                     </li>
 
-                                    <li className="static z-40 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-violet-700 to-violet-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
+                                    <li className="static z-30 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-red-500 to-red-700 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
                                     <div className="flex h-10 items-center justify-between">
                                         <div className="m-2 h-3 w-3 rounded-full bg-white p-1 shadow-lg shadow-black"></div>
                                         <a href="#!" className="text-sm font-medium text-violet-50 transition duration-300 ease-in-out hover:text-violet-100 focus:underline">Aprobado</a>
                                         <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 text-violet-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-violet-700" viewBox="0 0 512 512"><path d="M479.66 268.7l-32-151.81C441.48 83.77 417.68 64 384 64H128c-16.8 0-31 4.69-42.1 13.94s-18.37 22.31-21.58 38.89l-32 151.87A16.65 16.65 0 0032 272v112a64 64 0 0064 64h320a64 64 0 0064-64V272a16.65 16.65 0 00-.34-3.3zm-384-145.4v-.28c3.55-18.43 13.81-27 32.29-27H384c18.61 0 28.87 8.55 32.27 26.91 0 .13.05.26.07.39l26.93 127.88a4 4 0 01-3.92 4.82H320a15.92 15.92 0 00-16 15.82 48 48 0 11-96 0A15.92 15.92 0 00192 256H72.65a4 4 0 01-3.92-4.82z"/></svg>
+                                            <svg className="fill-red-500 w-10" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM9.15723 17H15.9795V15.4072H11.7002L13.9629 13.0215C14.5827 12.3424 15.0202 11.7477 15.2754 11.2373C15.5306 10.7269 15.6582 10.2256 15.6582 9.7334C15.6582 8.83561 15.3734 8.14062 14.8037 7.64844C14.2386 7.15625 13.4434 6.91016 12.418 6.91016C11.748 6.91016 11.1488 7.05371 10.6201 7.34082C10.0915 7.62337 9.68131 8.0153 9.38965 8.5166C9.10254 9.0179 8.95898 9.57161 8.95898 10.1777H10.9414C10.9414 9.67643 11.069 9.27311 11.3242 8.96777C11.584 8.65788 11.9372 8.50293 12.3838 8.50293C12.7985 8.50293 13.1175 8.63053 13.3408 8.88574C13.5641 9.13639 13.6758 9.48275 13.6758 9.9248C13.6758 10.2484 13.5687 10.5902 13.3545 10.9502C13.1449 11.3102 12.819 11.7318 12.377 12.2148L9.15723 15.6465V17Z" />
+                                            </svg>
                                         </div>            
                                     </div>
                                     </li>
 
-                                    <li className="static z-30 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-emerald-700 to-emerald-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
+                                    <li className="static z-20 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-indigo-700 to-indigo-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
                                     <div className="flex h-10 items-center justify-between">
                                         <div className="m-2 h-3 w-3 rounded-full bg-white p-1 shadow-lg shadow-black"></div>
                                         <a href="#!" className="text-sm font-medium text-indigo-50 transition duration-300 ease-in-out hover:text-emerald-100 focus:underline">En Proceso</a>
                                         <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 text-emerald-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-emerald-700" viewBox="0 0 512 512"><path d="M479.66 268.7l-32-151.81C441.48 83.77 417.68 64 384 64H128c-16.8 0-31 4.69-42.1 13.94s-18.37 22.31-21.58 38.89l-32 151.87A16.65 16.65 0 0032 272v112a64 64 0 0064 64h320a64 64 0 0064-64V272a16.65 16.65 0 00-.34-3.3zm-384-145.4v-.28c3.55-18.43 13.81-27 32.29-27H384c18.61 0 28.87 8.55 32.27 26.91 0 .13.05.26.07.39l26.93 127.88a4 4 0 01-3.92 4.82H320a15.92 15.92 0 00-16 15.82 48 48 0 11-96 0A15.92 15.92 0 00192 256H72.65a4 4 0 01-3.92-4.82z"/><path d="M368 160H144a16 16 0 010-32h224a16 16 0 010 32zM384 224H128a16 16 0 010-32h256a16 16 0 010 32z"/></svg>
+                                            <svg className="fill-indigo-800 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM12.2197 11.1484H11.167V12.6934H12.2129C13.3066 12.6934 13.8535 13.1901 13.8535 14.1836C13.8535 14.5938 13.7191 14.9242 13.4502 15.1748C13.1859 15.4209 12.819 15.5439 12.3496 15.5439C11.9395 15.5439 11.5931 15.4255 11.3105 15.1885C11.0326 14.9515 10.8936 14.6462 10.8936 14.2725H8.91797C8.91797 15.1338 9.23242 15.8265 9.86133 16.3506C10.4948 16.8747 11.3083 17.1367 12.3018 17.1367C13.3636 17.1367 14.2158 16.8701 14.8584 16.3369C15.5055 15.8037 15.8291 15.0951 15.8291 14.2109C15.8291 13.6641 15.6901 13.1901 15.4121 12.7891C15.1387 12.388 14.7217 12.0872 14.1611 11.8867C14.6123 11.6816 14.9769 11.3877 15.2549 11.0049C15.5329 10.6221 15.6719 10.2028 15.6719 9.74707C15.6719 8.86296 15.3734 8.17025 14.7764 7.66895C14.1794 7.16309 13.3545 6.91016 12.3018 6.91016C11.6956 6.91016 11.1396 7.02637 10.6338 7.25879C10.1325 7.49121 9.74056 7.81478 9.45801 8.22949C9.18001 8.63965 9.04102 9.10449 9.04102 9.62402H11.0166C11.0166 9.29134 11.1442 9.02246 11.3994 8.81738C11.6546 8.60775 11.9714 8.50293 12.3496 8.50293C12.7689 8.50293 13.097 8.61458 13.334 8.83789C13.5755 9.0612 13.6963 9.37337 13.6963 9.77441C13.6963 10.1891 13.5755 10.5218 13.334 10.7725C13.0924 11.0231 12.721 11.1484 12.2197 11.1484Z"/>
+                                            </svg>    
                                         </div>
                                     </div>
                                     </li>
 
-                                    <li className="static z-20 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-amber-700 to-amber-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
+                                    <li className="static z-10 -ml-5 min-w-fit rounded-r-full bg-gradient-to-tl from-emerald-700 to-emerald-900 transition-transform first:ml-0 first:rounded-full last:mr-0 last:w-full hover:scale-[1.02]">
                                     <div className="flex h-10 items-center justify-between">
                                         <div className="m-2 h-3 w-3 rounded-full bg-white p-1 shadow-lg shadow-black"></div>
                                         <a href="#!" className="text-sm font-medium text-amber-50 transition duration-300 ease-in-out hover:text-amber-100 focus:underline">Terminado</a>
                                         <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 text-amber-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-amber-700" viewBox="0 0 512 512"><path d="M447.68 220.78a16 16 0 00-1-3.08l-37.78-88.16C400.19 109.17 379 96 354.89 96H157.11c-24.09 0-45.3 13.17-54 33.54L65.29 217.7A15.72 15.72 0 0064 224v176a16 16 0 0016 16h32a16 16 0 0016-16v-16h256v16a16 16 0 0016 16h32a16 16 0 0016-16V224a16.15 16.15 0 00-.32-3.22zM144 320a32 32 0 1132-32 32 32 0 01-32 32zm224 0a32 32 0 1132-32 32 32 0 01-32 32zM104.26 208l28.23-65.85C136.11 133.69 146 128 157.11 128h197.78c11.1 0 21 5.69 24.62 14.15L407.74 208z"/></svg>
+                                            <svg className="fill-emerald-900 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15.1299 13.2539H14.002V7.04688H12.0059L7.85645 13.6025L7.94531 14.8467H12.0264V17H14.002V14.8467H15.1299V13.2539ZM12.0264 13.2539H9.8252L11.8965 9.96582L12.0264 9.74023V13.2539Z"/>
+                                            </svg>
                                         </div>
                                     </div>
                                     </li>
@@ -122,11 +131,12 @@ export function ConsultaExpediente() {
                             </div>
                         </div>
 
-                        <div className="w-full flex  flex-col items-center  h-screen ">
+                        <div className="w-full flex  flex-col items-center   ">
                             <div className="w-full flex   border-2 border-yellow-400 rounded-lg items-center ">
                                 <div className="flex-initial w-1/6  px-2 mx-4 ">
-                                <svg xmlns="http://www.w3.org/2000/svg"  className="fill-amber-700" viewBox="0 0 30 30"><path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM11.9805 17H13.9561V7.0332H13.7441L9.62207 8.50977V10.1162L11.9805 9.38477V17Z"/></svg>
- 
+                                    <svg className="fill-yellow-400 w-32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM11.9805 17H13.9561V7.0332H13.7441L9.62207 8.50977V10.1162L11.9805 9.38477V17Z"/>
+                                    </svg>
                                 </div>
                                 <div className="flex-initial w-4/6 py-2 px-4  ">
                                     <h5 className=" text-xl font-bold">Titulo del Proceso </h5>
@@ -138,13 +148,35 @@ export function ConsultaExpediente() {
                                 </div>
                                 <div className="flex-initial w-1/6 py-2 px-4  ">
                                     
-                                    <p className=" self-end">Fecha:24/10/2023</p>
+                                    <p className=" self-end">Fecha: dd-mm-aaaa</p>
                                 </div>
                             </div>
 
-                            <div className="w-full flex mt-5  border-2 border-blue rounded-lg items-center ">
+                            <div className="w-full flex mt-5  border-2 border-red-500 rounded-lg items-center ">
                                 <div className="flex-initial w-1/6  px-2 mx-4 ">
-                                <svg xmlns="http://www.w3.org/2000/svg"  className="fill-amber-700" viewBox="0 0 30 30"><path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM11.9805 17H13.9561V7.0332H13.7441L9.62207 8.50977V10.1162L11.9805 9.38477V17Z"/></svg>
+                                    <svg className="fill-red-500 w-32" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM9.15723 17H15.9795V15.4072H11.7002L13.9629 13.0215C14.5827 12.3424 15.0202 11.7477 15.2754 11.2373C15.5306 10.7269 15.6582 10.2256 15.6582 9.7334C15.6582 8.83561 15.3734 8.14062 14.8037 7.64844C14.2386 7.15625 13.4434 6.91016 12.418 6.91016C11.748 6.91016 11.1488 7.05371 10.6201 7.34082C10.0915 7.62337 9.68131 8.0153 9.38965 8.5166C9.10254 9.0179 8.95898 9.57161 8.95898 10.1777H10.9414C10.9414 9.67643 11.069 9.27311 11.3242 8.96777C11.584 8.65788 11.9372 8.50293 12.3838 8.50293C12.7985 8.50293 13.1175 8.63053 13.3408 8.88574C13.5641 9.13639 13.6758 9.48275 13.6758 9.9248C13.6758 10.2484 13.5687 10.5902 13.3545 10.9502C13.1449 11.3102 12.819 11.7318 12.377 12.2148L9.15723 15.6465V17Z" />
+                                    </svg> 
+                                </div>
+                                <div className="flex-initial w-4/6 py-2 px-4  ">
+                                    <h5 className=" text-xl font-bold">Titulo del Proceso </h5>
+                                    <p className=" ">Descripción del Proceso: Lorem ipsum dolor sit amet consectetur 
+                                    adipisicing elit. Earum, nisi autem? Est veniam, architecto neque, at esse molestiae 
+                                    odio aliquid explicabo animi quod magnam nobis eveniet, quasi impedit dolorum incidunt.</p>
+                                    <p className=" ">Encargado: Dr. Jorge Luis Perez Alvarez</p>
+                                    <p className=" ">Estado: Aprobado</p>
+                                </div>
+                                <div className="flex-initial w-1/6 py-2 px-4  ">
+                                    
+                                    <p className=" self-end">Fecha: dd-mm-aaaa</p>
+                                </div>
+                            </div>
+
+                            <div className="w-full flex mt-5  border-2 border-indigo-800 rounded-lg items-center ">
+                                <div className="flex-initial w-1/6  px-2 mx-4 ">
+                                    <svg className="fill-indigo-800 w-32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM12.2197 11.1484H11.167V12.6934H12.2129C13.3066 12.6934 13.8535 13.1901 13.8535 14.1836C13.8535 14.5938 13.7191 14.9242 13.4502 15.1748C13.1859 15.4209 12.819 15.5439 12.3496 15.5439C11.9395 15.5439 11.5931 15.4255 11.3105 15.1885C11.0326 14.9515 10.8936 14.6462 10.8936 14.2725H8.91797C8.91797 15.1338 9.23242 15.8265 9.86133 16.3506C10.4948 16.8747 11.3083 17.1367 12.3018 17.1367C13.3636 17.1367 14.2158 16.8701 14.8584 16.3369C15.5055 15.8037 15.8291 15.0951 15.8291 14.2109C15.8291 13.6641 15.6901 13.1901 15.4121 12.7891C15.1387 12.388 14.7217 12.0872 14.1611 11.8867C14.6123 11.6816 14.9769 11.3877 15.2549 11.0049C15.5329 10.6221 15.6719 10.2028 15.6719 9.74707C15.6719 8.86296 15.3734 8.17025 14.7764 7.66895C14.1794 7.16309 13.3545 6.91016 12.3018 6.91016C11.6956 6.91016 11.1396 7.02637 10.6338 7.25879C10.1325 7.49121 9.74056 7.81478 9.45801 8.22949C9.18001 8.63965 9.04102 9.10449 9.04102 9.62402H11.0166C11.0166 9.29134 11.1442 9.02246 11.3994 8.81738C11.6546 8.60775 11.9714 8.50293 12.3496 8.50293C12.7689 8.50293 13.097 8.61458 13.334 8.83789C13.5755 9.0612 13.6963 9.37337 13.6963 9.77441C13.6963 10.1891 13.5755 10.5218 13.334 10.7725C13.0924 11.0231 12.721 11.1484 12.2197 11.1484Z"/>
+                                    </svg>
  
                                 </div>
                                 <div className="flex-initial w-4/6 py-2 px-4  ">
@@ -153,16 +185,35 @@ export function ConsultaExpediente() {
                                     adipisicing elit. Earum, nisi autem? Est veniam, architecto neque, at esse molestiae 
                                     odio aliquid explicabo animi quod magnam nobis eveniet, quasi impedit dolorum incidunt.</p>
                                     <p className=" ">Encargado: Dr. Jorge Luis Perez Alvarez</p>
-                                    <p className=" ">Estado: Recibido</p>
+                                    <p className=" ">Estado: En Proceso</p>
                                 </div>
                                 <div className="flex-initial w-1/6 py-2 px-4  ">
                                     
-                                    <p className=" self-end">Fecha:24/10/2023</p>
-                                </div>
+                                    <p className=" self-end">Fecha: dd-mm-aaaa</p>
+                                </div>                               
+                            </div>
+
+                            <div className="w-full flex mt-5  border-2 border-emerald-900 rounded-lg items-center ">
+                                    <div className="flex-initial w-1/6  px-2 mx-4 ">
+                                        <svg className="fill-emerald-900 w-32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15.1299 13.2539H14.002V7.04688H12.0059L7.85645 13.6025L7.94531 14.8467H12.0264V17H14.002V14.8467H15.1299V13.2539ZM12.0264 13.2539H9.8252L11.8965 9.96582L12.0264 9.74023V13.2539Z"/>
+                                        </svg>
+    
+                                    </div>
+                                    <div className="flex-initial w-4/6 py-2 px-4  ">
+                                        <h5 className=" text-xl font-bold">Titulo del Proceso </h5>
+                                        <p className=" ">Descripción del Proceso: Lorem ipsum dolor sit amet consectetur 
+                                        adipisicing elit. Earum, nisi autem? Est veniam, architecto neque, at esse molestiae 
+                                        odio aliquid explicabo animi quod magnam nobis eveniet, quasi impedit dolorum incidunt.</p>
+                                        <p className=" ">Encargado: Dr. Jorge Luis Perez Alvarez</p>
+                                        <p className=" ">Estado: Terminado</p>
+                                    </div>
+                                    <div className="flex-initial w-1/6 py-2 px-4  ">
+                                        
+                                        <p className=" self-end">Fecha: dd-mm-aaaa</p>
+                                    </div>
                             </div>
                         </div>
-
-
                     </div>
 
                     
@@ -172,7 +223,7 @@ export function ConsultaExpediente() {
                         
 
 
-
+                    
 
                     )}
                 </div>
