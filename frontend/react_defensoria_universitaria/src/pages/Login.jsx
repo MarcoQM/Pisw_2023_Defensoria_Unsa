@@ -29,6 +29,10 @@ export function Login() {
                                 INGRESO DOCENTE/ADMINISTRATIVO 
                                 </button>
                             </a>
+                            <a className="align-middle mt-3" href="">
+                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
+                                onClick={() => navigate("/admin")}>Ingreso Administrador</button>
+                            </a>
                         </div>
                     </div>
                 </div>                        
