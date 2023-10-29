@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { getAllSedes, getAllRoles, getAllTipo, createRegistro } from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
@@ -21,8 +20,10 @@ export function RegistroIncidencias() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit=handleSubmit(async data=>{
+  const [autorizaNotificacion, setAutorizaNotificacion] = useState(false);
 
+  const onSubmit=handleSubmit(async (data) =>{
+      
   
       const res3 = await createRegistro(data);
       console.log(res3);
@@ -38,10 +39,16 @@ export function RegistroIncidencias() {
       
       
   });
+
+  const rolesData = ["Estudiante", "Docente", "Administrativo", "Otros"];
+
   //para almacenar roles, sedes y tipo
   const [roles, setRoles] = useState([]);
   const [sedes, setSedes] = useState([]);
   const [tipos, setTipos] = useState([]);
+  //const [isOtroSelected, setIsOtroSelected] = useState(false); 
+  const [selectedRol, setSelectedRol] = useState("Estudiante");
+  // Nuevo estado para controlar la entrada de texto
 
   useEffect(() => {
     // Obtener lista de roles
@@ -100,53 +107,51 @@ export function RegistroIncidencias() {
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
 
         <form onSubmit={onSubmit} >
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full md:w-5/6 px-3 mb-3">
-                <label>Rol que desempeña:</label>
-            </div>
-            <div className="w-full md:w-1/6 px-3 mb-3">
-              <div
-                className="ml-2 w-8 h-8 bg-granate text-white rounded-full flex items-center justify-center cursor-pointer"
-                onClick={() => {
-                      // Mostrar mensaje de ayuda al hacer clic en el ícono
-                      
-                      alert("El rol es la actividad que cumple dentro o fuera de la universidad, postulante universitario, madre o padre del estudiante, etc.");
-                    }}
-                  >
-                <span className="text-lg font-bold">?</span>
-                
-              </div>
-            </div>
+        <div className="flex flex-wrap -mx-3 mb-3">
+          <div className="w-full md:w-5/6 px-3 mb-3">
+            <label>Rol que desempeña:</label>
+          </div>
+          <div className="w-full md:w-1/6 px-3 mb-3">
+            <div
+              className="ml-2 w-8 h-8 bg-granate text-white rounded-full flex items-center justify-center cursor-pointer"
+              onClick={() => {
+                // Mostrar mensaje de ayuda al hacer clic en el ícono
+                alert("El rol es la actividad que cumple dentro o fuera de la universidad, postulante universitario, madre o padre del estudiante, etc.");
+              }}
+            >
+              <span className="text-lg font-bold">?</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex" }}>
+        {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
+          <div key={rol} style={{ marginRight: "20px" }}>
+            <label>
+              <input
+                type="radio"
+                name="rol"
+                value={rol}
+                checked={selectedRol === rol}
+                onChange={() => setSelectedRol(rol)}
+              />
+              {rol}
+            </label>
+          </div>
+        ))}
+      </div>
 
 
-          </div>
-                                                    
-          <div className="my-3">
-            
-              {roles.map((rol) => (
-                <label key={rol.id}  style={{ marginRight: "30px" }} >
-                  <input
-                    type="radio"
-                    name="rol"
-                    value={rol.id}
-                    {...register("rol", { required: true })}
-                    className="mr-2"
-                    style={{ marginRight: "10px" }}
-                  />
-                  {rol.nombre}
-                </label>
-              ))}
-          </div>
 
           <div className=" relative  mb-6">
             <label>Si usted tiene otro Rol, detalle</label>
             <input
               type="text"
               placeholder="Detalle"
-              {...register("direccion", )}
+              {...register("rolDetalle")}
               className="bg-grisclaro border border-white p-3 rounded-lg block w-full mb-3 "
+              disabled={selectedRol !== "Otros"}
             />
-
           </div>
 
 
@@ -159,7 +164,7 @@ export function RegistroIncidencias() {
                 {...register("nombre", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.nombre && <span>Este campo es requerido</span>}
+              {errors.nombre && <span className="font-bold">Este campo es requerido</span>}
             </div>
             <div className="w-full md:w-1/2 px-3 mb-3">
               <label htmlFor="apellidos">Apellidos</label>
@@ -169,7 +174,7 @@ export function RegistroIncidencias() {
                 {...register("apellido", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.apellido && <span>Este campo es requerido</span>}
+              {errors.apellido && <span className="font-bold">Este campo es requerido</span>}
             </div>
           </div>
 
@@ -179,20 +184,34 @@ export function RegistroIncidencias() {
               <input
                 type="text"
                 placeholder="DNI"
-                {...register("dni", { required: true })}
+                {...register("dni", { 
+                  required: "Este campo es requerido",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Este campo solo acepta numeros",
+                  },
+                })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
+                maxLength="8"
               />
-              {errors.dni && <span>Este campo es requerido</span>}
+              {errors.dni && <span className="font-bold">{errors.dni.message}</span>}
             </div>
+            
             <div className="w-full md:w-1/2 px-3 mb-3">
               <label htmlFor="cui">CUI</label>
               <input
                 type="text"
                 placeholder="CUI"
-                {...register("cui", { required: true })}
+                {...register("cui", { 
+                  required: "Este campo es requerido",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Este campo solo acepta numeros",
+                  },
+                })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.cui && <span>Este campo es requerido</span>}
+              {errors.cui && <span className="font-bold">{errors.cui.message}</span>}
             </div>
           </div>
 
@@ -211,7 +230,7 @@ export function RegistroIncidencias() {
                     </option>
                   ))}
                 </select>
-              {errors.sede && <span>Este campo es requerido</span>}
+              {errors.sede && <span className="font-bold">Este campo es requerido</span>}
             </div>
 
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -235,7 +254,7 @@ export function RegistroIncidencias() {
               {...register("direccion", { required: true })}
               className="bg-zinc-300 p-3 rounded-lg block w-full mb-3"
             />
-            {errors.direccion && <span>Este campo es requerido</span>}
+            {errors.direccion && <span className="font-bold text-center">Este campo es requerido</span>}
           </div>
 
           <div className="flex flex-wrap -mx-3 mb-3">
@@ -244,10 +263,16 @@ export function RegistroIncidencias() {
               <input
                 type="text"
                 placeholder="Numero Telefonico"
-                {...register("telefono", { required: true })}
+                {...register("telefono", { 
+                  required: "Este campo es requerido",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Este campo solo acepta numeros",
+                  },
+                })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.telefono && <span>Este campo es requerido</span>}
+              {errors.telefono && <span className="font-bold">{errors.telefono.message}</span>}
             </div>
 
             <div className="w-full md:w-1/2 px-3 mb-3">
@@ -255,30 +280,42 @@ export function RegistroIncidencias() {
               <input
                 type="text"
                 placeholder="Correo Electronico"
-                {...register("correo", { required: true })}
+                {...register("correo", {
+                  required: "Este campo es requerido",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, // Expresión regular para validar un correo electrónico
+                    message: "No es un correo válido",
+                  },
+                })}
+            
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
-              {errors.correo && <span>Este campo es requerido</span>}
+              {errors.correo && <span className="font-bold">{errors.correo.message}</span>}
             </div>
           </div>
 
-        
-
-          <div className="my-3">
-            
-              {tipos.map((tipo) => (
-                <label key={tipo.id}  style={{ marginRight: "50px" }}>
+          <div className=" relative mb-6">
+            <label className=" font-bold">Tipo de Solicitud</label>
+                      
+            <p>Seleccione el tipo de solicitud que quiere presentar:</p>
+            <div style= {{ display: "flex"}}>
+            {["Queja", "Reclamo", "Sugerencia", "Consulta"].map((option) => (
+              <div key={option} style= {{marginRight: "20px"}}>
+                <label>
                   <input
                     type="radio"
                     name="tipo"
-                    value={tipo.id}
+                    value={option.toLowerCase()}
                     {...register("tipo", { required: true })}
                     className="mr-2"
-                    style={{ marginRight: "10px" }}
-                  />
-                  {tipo.nombre}
+                />
+                {option}
                 </label>
-              ))}
+              </div>
+            ))}
+            </div>
+            {errors.tipo && <span className="font-bold text-center">Este campo es requerido</span>}
+            
           </div>
 
           <div className=" relative  ">
@@ -292,7 +329,7 @@ export function RegistroIncidencias() {
               className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-24 "
               placeholder="Escribe algo..." {...register("descripcion" , { required: true})}
             />
-            {errors.descripcion && <span>Este campo es requerido</span>}
+            {errors.descripcion && <span className="font-bold text-center">Este campo es requerido</span>}
           </div>
 
           <div className="relative  mb-6">
@@ -312,8 +349,14 @@ export function RegistroIncidencias() {
           </div>
 
           <div className="relative  mb-6">
-            <input type="checkbox" id="miCheckbox" className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-400" />
-            <label htmlFor="miCheckbox" className="ml-2">Autoriza Ud. ser notificado a través de su correo Electronico</label>
+            <input type="checkbox" id="miCheckbox" className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-400" 
+              checked={autorizaNotificacion}
+              onChange={() => setAutorizaNotificacion(!autorizaNotificacion)}
+            />
+            <label htmlFor="miCheckbox" className="ml-2">
+              Autoriza Ud. ser notificado a través de su correo Electronico
+              <span className="text-sm text-red-500 font-bold ml-1">*necesario*</span>
+            </label>
           </div>
 
           <div className="relative  mb-6">
@@ -324,7 +367,9 @@ export function RegistroIncidencias() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white">
+              className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
+                disabled={!autorizaNotificacion}
+              >
               Registrar
             </button>
           </div>

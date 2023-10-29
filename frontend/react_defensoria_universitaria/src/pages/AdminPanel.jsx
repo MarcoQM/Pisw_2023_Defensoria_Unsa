@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
+
 import { FaEnvelope, FaHome, FaSearch, FaExclamationCircle, FaComments, FaFile } from "react-icons/fa";
 
 export function AdminPanel() {
-    const navigate = useNavigate();
+    
 
     const sugerenciasPendientes = 10;
     const consultasPendientes = 5;
@@ -36,7 +36,7 @@ export function AdminPanel() {
                             <a href="/reclamos" className="block py-2">Panel de Reclamos</a>
                         </li>
                     </div>
-                    <div className="hidden lg:block w-5 h-5 sm:w-20 sm:h-20 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 mt-4idden lg:block w-5 h-5 sm:w-20 sm:h-20 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 mt-4">
+                    <div className="hidden  mt-4idden lg:block w-5 h-5 sm:w-20 sm:h-20 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 mt-4">
                         <img
                             src="/defensoria.png"
                             alt="Defensoria"
