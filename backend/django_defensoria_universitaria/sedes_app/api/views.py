@@ -5,7 +5,13 @@ from sedes_app.api.serializers import SedeSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 class ListarSedesAV(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         sedes = Sede.objects.all()
         serializer = SedeSerializer(sedes, many=True)
@@ -23,6 +29,9 @@ class ListarSedesAV(APIView):
         
 
 class DetalleSedeAV(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, pk):
         try:
             sede = Sede.objects.get(pk=pk)
