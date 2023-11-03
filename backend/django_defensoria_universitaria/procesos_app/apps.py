@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExpedientesAppConfig(AppConfig):
+class ProcesosAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'expedientes_app'
+    name = 'procesos_app'
