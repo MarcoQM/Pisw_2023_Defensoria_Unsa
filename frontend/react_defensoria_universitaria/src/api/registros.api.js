@@ -21,3 +21,7 @@ export const getAllTipo = () => {
 export const getExpediente = (id) => {
     return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
 }
+
+export const login = (login) => {
+    return axios.post('http://localhost:8000/api/authentication/login/',login);
+}

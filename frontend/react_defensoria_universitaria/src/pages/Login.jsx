@@ -1,42 +1,103 @@
+import { useForm } from "react-hook-form";
+import DjangoCSRFToken from 'django-react-csrftoken'
+import { login } from "../api/registros.api";
 import { useNavigate } from "react-router-dom";
 
-export function Login() {    
+export function Login() {  
 
     const navigate = useNavigate();
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+
+    const onSubmit=handleSubmit(async (data) =>{
+      const res3 = await login(data);
+      console.log(res3)
+      navigate("/admin")
+
+        
+    });
+
   
     return (
-        
-            <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-grayscale-50 relative flex justify-center items-center "  >            
-                <div className=" relative w-8/12 h-screen justify-center items-center">
-                    <div className="relative flex items-top justify-center min-h-screen sm:items-center bg-zinc-800 bg-blend-screen py-4 sm:pt-0 bg-cover bg-center">
-                        <div className="text-center flex flex-col justify-center">
-                            <a href="">
-                                <img src ="../unsa-escudo.png" className="mx-auto " />
-                            </a>                        
-                            <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro">
-                                Bienvenidos a Defensoria Universitaria
-                            </div>
-                            <div className="text-grisclaro font-semibold text-xl uppercase">
-                                Sistema Electrónico de Defensoria Universitaria
-                            </div>
-                            <a className="align-middle mt-3" href="">
-                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
-                                onClick={() => navigate("/registro-incidencias")}>Realizar una Denuncia</button>
-                            </a>
-                            <a className="align-middle mt-3">
-                                <button type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-gris hover:bg-grisclaro active:bg-gris focus:border-grisclaro text-white px-4 md:px-12 text-sm lg:text-lg w-fit self-center mt-2"
-                                >                                    
-                                INGRESO DOCENTE/ADMINISTRATIVO 
-                                </button>
-                            </a>
-                            <a className="align-middle mt-3" href="">
-                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
-                                onClick={() => navigate("/admin")}>Ingreso Administrador</button>
-                            </a>
-                        </div>
-                    </div>
-                </div>                        
-            </div>        
+
+
+        <div className="Relative" >
+        <div className="absolute top-50 right-40">
+          <div className="hidden lg:block w-20 h-20 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 ">
+            <img
+              src="\defensoria.png" 
+              alt="Defensoria"
+              className="w-full h-full object-contain" 
+            />
+          </div>
+          <div className="bg-white rounded-lg p-4 w-80 h-90 mx-auto top-80 mt-8 hidden lg:block  sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
+              {/* Aumentamos el margen superior a "mt-8" para un espacio más ancho */}
+              <h5 className="text-black text-xl font-bold mb-2">Estamos para escucharte</h5>
+              <p className="mb-2">Llena el formulario de atención para que podamos ver tu caso. Si tienes alguna duda, puedes revisar nuestra sección sobre</p>
+              <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoria Universitaria?</h5>
+              <img
+                src="\Alumnos.jpg"
+                alt="Imagen"
+                className="w-60 h-48 mx-auto object-contain"
+              />
+          </div>
+        </div>
+  
+  
+        <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 lg:ml-40 lg:mt-10  ">
+          <h4 className="text-granate text-3xl font-bold text-center mb-4">LOGIN</h4>
+  
+          <form onSubmit={onSubmit} >
+            <DjangoCSRFToken/>
+          
+  
+            <div className="flex flex-wrap -mx-3 mb-3 items-center">
+              <div className="w-full md:w-1/2 px-3 mb-3">
+                <label htmlFor="usuario">Usuario</label>
+                <input
+                  type="text"
+                  placeholder="Usuario"
+                  {...register("username", { required: true })}
+                  className="bg-zinc-300 p-3 rounded-lg block w-full"
+                />
+                {errors.usuario && <span className="font-bold">Este campo es requerido</span>}
+              </div>
+              
+            </div>
+  
+            <div className="flex flex-wrap -mx-3 mb-3">
+              <div className="w-full md:w-1/2 px-3 mb-3">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  {...register("password", { 
+                    required: "Este campo es requerido",            
+                  })}
+                  className="bg-zinc-300 p-3 rounded-lg block w-full"
+                  maxLength="8"
+                />
+                {errors.password && <span className="font-bold">Este campo es requerido</span>}
+              </div>
+            </div>
+  
+           
+            <div className="text-center">
+              <button
+                type="submit"
+                className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
+                  >
+                Ingresar
+              </button>
+            </div>
+            
+          </form>
+        </div>
+      </div>  
 
     );
 }
