@@ -8,7 +8,7 @@ export function BarraPosteriorSolicitud(){
     return(
         <div className="fixed top-0 w-full z-50">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
-                <div className="flex items-center" onClick={() => navigate("/login")}>
+                <div className="flex items-center" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"
@@ -32,7 +32,7 @@ export function BarraPosteriorExpediente(){
     return(
         <div className="fixed top-0 w-full z-10">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
-                <div className="flex items-center" onClick={() => navigate("/login")}>
+                <div className="flex items-center" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"

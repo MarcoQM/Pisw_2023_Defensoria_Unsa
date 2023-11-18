@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import { getAllSedes, getAllRoles, getAllTipo, createRegistro } from "../api/registros.api";
+import { getAllSedes,  createRegistro } from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
 import { toast } from 'react-hot-toast';
 
+
 import { useNavigate } from "react-router-dom";
-//import axios from "axios";
+
+
+
+
+
 
 
 export function RegistroIncidencias() {
@@ -40,40 +45,37 @@ export function RegistroIncidencias() {
       
   });
 
-  const rolesData = ["Estudiante", "Docente", "Administrativo", "Otros"];
+  //const rolesData = ["Estudiante", "Docente", "Administrativo", "Otros"];
 
   //para almacenar roles, sedes y tipo
-  const [roles, setRoles] = useState([]);
+
   const [sedes, setSedes] = useState([]);
-  const [tipos, setTipos] = useState([]);
   //const [isOtroSelected, setIsOtroSelected] = useState(false); 
   const [selectedRol, setSelectedRol] = useState("Estudiante");
   // Nuevo estado para controlar la entrada de texto
 
   useEffect(() => {
-    // Obtener lista de roles
-    async function loadRoles(){
-      const res1 = await getAllRoles();
-      setRoles(res1.data);
-      //console.log(res1);
-    } 
-    loadRoles();
+ 
+    
 
     // Obtener lista de sedes
     async function loadSedes(){
-      const res = await getAllSedes();
-      setSedes(res.data);
-      //console.log(res);
+
+      try{
+        const res = await getAllSedes();
+        setSedes(res.data);
+        console.log(res);
+      }catch(error){
+        console.error('Error al obtener datos de la API', error);
+      }
+      
+      
+      
     } 
     loadSedes();
 
-    // Obtener lista de tipos
-    async function loadTipos(){
-      const res2 = await getAllTipo();
-      setTipos(res2.data);
-      //console.log(res2);
-    } 
-    loadTipos();
+   
+    
     
   }, []);
 

@@ -1,9 +1,12 @@
 import { useForm } from "react-hook-form";
-import DjangoCSRFToken from 'django-react-csrftoken'
-import { login } from "../api/registros.api";
+//import { useState, useEffect  } from 'react';
+import { login, getAllSedes } from "../api/registros.api";
 import { useNavigate } from "react-router-dom";
+import DjangoCSRFToken from 'django-react-csrftoken'
+
 
 export function Login() {  
+
 
     const navigate = useNavigate();
     
@@ -13,13 +16,18 @@ export function Login() {
         formState: { errors },
       } = useForm();
 
-    const onSubmit=handleSubmit(async (data) =>{
-      const res3 = await login(data);
-      console.log(res3)
-      navigate("/admin")
+   
 
-        
-    });
+    const onSubmit=handleSubmit(async (data) =>{
+ 
+      const res3 = await login(data);
+      console.log(res3.data);   
+      //const res = await getAllSedes(res3.data);
+      //console.log(res.data); 
+  
+ 
+      navigate("/admin")
+    }); 
 
   
     return (
