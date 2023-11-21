@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
 //import { useState, useEffect  } from 'react';
-import { login, getAllSedes } from "../api/registros.api";
+import { login } from "../api/registros.api";
 import { useNavigate } from "react-router-dom";
 import DjangoCSRFToken from 'django-react-csrftoken'
 
 
 export function Login() {  
+    
+
+  const userName = 'user_name';
 
 
     const navigate = useNavigate();
@@ -20,12 +23,11 @@ export function Login() {
 
     const onSubmit=handleSubmit(async (data) =>{
  
-      const res3 = await login(data);
-      console.log(res3.data);   
-      //const res = await getAllSedes(res3.data);
-      //console.log(res.data); 
+      await login(data);
+      console.log(data);
+     
   
- 
+      localStorage.setItem(userName, JSON.stringify(data.username));
       navigate("/admin")
     }); 
 

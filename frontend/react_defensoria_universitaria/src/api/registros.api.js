@@ -1,6 +1,9 @@
 import axios from 'axios'
 
+
 const tokenName = 'user_uaeh_token';
+const userName = 'user_name';
+
 
 const getLocalToken = () => {  
     return JSON.parse(localStorage.getItem(tokenName));  
@@ -11,12 +14,30 @@ const getLocalToken = () => {
 export const getAllRegistros=() => {
     return axios.get('http://localhost:8000/api/solicitudes/')
 };
-export const createRegistro = (solicitudes_app) => {
-    return axios.post('http://localhost:8000/api/solicitudes/',solicitudes_app);
-};
-export const getAllSedes = (token) => {   
-    return axios.get('http://localhost:8000/api/sedes/',token);
-};
+
+
+
+
+export const createRegistro = (post) => {  
+    return new Promise( (resolve, reject) => {  
+        const instance = axios.create({  
+            baseURL : 'http://localhost:8000/api/solicitudes/',  
+            headers: {  
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + getLocalToken()  
+            }  
+        });  
+ 
+        instance.post('',post)  
+        .then(r => {   
+            resolve(r.data);  
+        }).catch(e => {  
+            console.log(e);  
+            reject(e.response);  
+        });  
+    }); 
+};  
+
 export const getAllRoles = () => {
 
     return axios.get('http://localhost:8000/api/solicitudes/rol/');
@@ -28,6 +49,8 @@ export const getAllTipo = () => {
 export const getExpediente = (id) => {
     return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
 }
+
+
 
 export const login = (login) => {
 
@@ -43,7 +66,8 @@ export const login = (login) => {
         }); 
         instance.post('login/', login)  
             .then(r => {                  
-                localStorage.setItem(tokenName, JSON.stringify(r.data.key));               
+                localStorage.setItem(tokenName, JSON.stringify(r.data.key)); 
+                console.log(r.data)              
                 resolve(r.data);  
             }).catch(e => {  
                 console.log(e);  
@@ -52,5 +76,48 @@ export const login = (login) => {
 
     });
 
-    //return axios.post('http://localhost:8000/api/authentication/login/',login);
+
 }
+
+export const getAllSedes = () => {  
+    return new Promise( (resolve, reject) => {  
+        const instance = axios.create({  
+            baseURL : 'http://localhost:8000/api/sedes/',  
+            headers: {  
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + getLocalToken()  
+            }  
+        });  
+ 
+        instance.get()  
+        .then(r => {   
+            resolve(r.data);  
+        }).catch(e => {  
+            console.log(e);  
+            reject(e.response);  
+        });  
+    }); 
+};
+
+export const logOut = () => {  
+    return new Promise((resolve, reject) => {  
+        const instance = axios.create({  
+            baseURL: 'http://127.0.0.1:8000/api/authentication',  
+            headers: {  
+                'Content-Type': 'application/json'  
+            }  
+        });  
+
+        instance.post('logout/', {})  
+        .then(r => {  
+            localStorage.removeItem(tokenName);  
+            localStorage.removeItem(userName); 
+            resolve(r.data);  
+        }).catch(e => {  
+            console.log(e);  
+            reject(e.response);  
+        }); 
+    }); 
+};
+
+

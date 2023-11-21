@@ -28,10 +28,12 @@ export function RegistroIncidencias() {
   const [autorizaNotificacion, setAutorizaNotificacion] = useState(false);
 
   const onSubmit=handleSubmit(async (data) =>{
+      data.organo_universitario="Defensoria Universitaria"
+      data.sede=1
       
-  
-      const res3 = await createRegistro(data);
-      console.log(res3);
+      console.log(data);
+      await createRegistro(data);
+      
 
       toast.success('El registro se ha completado con éxito.  Se le enviara un e-mail con los detalles de su solicitud', {
         duration: 5000, // Duración en milisegundos
@@ -51,7 +53,7 @@ export function RegistroIncidencias() {
 
   const [sedes, setSedes] = useState([]);
   //const [isOtroSelected, setIsOtroSelected] = useState(false); 
-  const [selectedRol, setSelectedRol] = useState("Estudiante");
+  const [selectedRol] = useState("Estudiante");
   // Nuevo estado para controlar la entrada de texto
 
   useEffect(() => {
@@ -63,8 +65,8 @@ export function RegistroIncidencias() {
 
       try{
         const res = await getAllSedes();
-        setSedes(res.data);
-        console.log(res);
+        setSedes(res);
+        //console.log(res);
       }catch(error){
         console.error('Error al obtener datos de la API', error);
       }
@@ -126,32 +128,31 @@ export function RegistroIncidencias() {
         </div>
       </div>
 
-      <div style={{ display: "flex" }}>
-        {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
-          <div key={rol} style={{ marginRight: "20px" }}>
-            <label>
-              <input
-                type="radio"
-                name="rol"
-                value={rol}
-                checked={selectedRol === rol}
-                onChange={() => setSelectedRol(rol)}
-              />
-              {rol}
-            </label>
+          <div style={{ display: "flex" }}>
+            {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
+              <div key={rol} style={{ marginRight: "20px" }}>
+                <label>
+                  <input
+                    type="radio"
+                    name="rol"
+                    value={rol}
+                    {...register("rol", { required: true })}               
+                  />
+                  {rol}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-
 
           <div className=" relative  mb-6">
             <label>Si usted tiene otro Rol, detalle</label>
             <input
               type="text"
               placeholder="Detalle"
-              {...register("rolDetalle")}
-              className="bg-grisclaro border border-white p-3 rounded-lg block w-full mb-3 "
+           
+              className={`${
+                selectedRol === "Otros" ? "bg-white" && {...register("rol")} : "bg-grisclaro"
+              } border border-white p-3 rounded-lg block w-full mb-3`}
               disabled={selectedRol !== "Otros"}
             />
           </div>
@@ -227,7 +228,7 @@ export function RegistroIncidencias() {
                 >
                   <option value="">Selecciona una sede...</option>
                   {sedes.map((sede) => (
-                    <option key={sede.id} value={sede.id}>
+                    <option key={sede.id} value={parseInt(sede.id,10)}>
                       {sede.nombre}
                     </option>
                   ))}
@@ -308,7 +309,7 @@ export function RegistroIncidencias() {
                     type="radio"
                     name="tipo"
                     value={option.toLowerCase()}
-                    {...register("tipo", { required: true })}
+                    {...register("tipo_solicitud", { required: true })}
                     className="mr-2"
                 />
                 {option}
