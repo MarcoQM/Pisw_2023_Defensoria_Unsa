@@ -6,11 +6,14 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 class ListarSedesAV(APIView):
+    
     authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [IsAuthenticated]
+    
     
     def get(self, request):
         sedes = Sede.objects.all()
