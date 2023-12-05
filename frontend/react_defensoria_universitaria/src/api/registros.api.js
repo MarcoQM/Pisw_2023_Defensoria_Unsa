@@ -50,6 +50,11 @@ export const getExpediente = (id) => {
     return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
 }
 
+export const getAllSedes = () => { 
+    return axios.get('http://localhost:8000/api/sedes/');
+
+
+}
 
 
 export const login = (login) => {
@@ -79,6 +84,8 @@ export const login = (login) => {
 
 }
 
+
+/*
 export const getAllSedes = () => {  
     return new Promise( (resolve, reject) => {  
         const instance = axios.create({  
@@ -98,7 +105,7 @@ export const getAllSedes = () => {
         });  
     }); 
 };
-
+*/
 export const logOut = () => {  
     return new Promise((resolve, reject) => {  
         const instance = axios.create({  

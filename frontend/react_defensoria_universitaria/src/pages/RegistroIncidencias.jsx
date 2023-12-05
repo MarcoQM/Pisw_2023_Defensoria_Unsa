@@ -9,11 +9,6 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 
 
-
-
-
-
-
 export function RegistroIncidencias() {
 
 
@@ -65,8 +60,8 @@ export function RegistroIncidencias() {
 
       try{
         const res = await getAllSedes();
-        setSedes(res);
-        //console.log(res);
+        setSedes(res.data);
+        console.log(res.data);
       }catch(error){
         console.error('Error al obtener datos de la API', error);
       }
@@ -227,6 +222,7 @@ export function RegistroIncidencias() {
                   {...register("sede", { required: true })}
                 >
                   <option value="">Selecciona una sede...</option>
+                  
                   {sedes.map((sede) => (
                     <option key={sede.id} value={parseInt(sede.id,10)}>
                       {sede.nombre}
