@@ -5,11 +5,12 @@ from rest_framework import status
 from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer
 from solicitudes_app.models import Solicitud, Archivo
 
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny 
 
 
 class ListarSolicitudAV(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     
     def get(self, request):
         solicitudes = Solicitud.objects.all()
