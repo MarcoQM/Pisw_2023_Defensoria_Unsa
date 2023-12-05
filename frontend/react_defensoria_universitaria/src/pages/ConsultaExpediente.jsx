@@ -24,6 +24,7 @@ export function ConsultaExpediente() {
         const res = await getExpediente(data.codigo)
         
         setSolicitud(res.data);
+        console.log(res.data)
 
 
 
@@ -55,14 +56,14 @@ export function ConsultaExpediente() {
                         className="mb-2 p-2 border-2 border-gray-500 rounded-lg"
                         />
                         {errors.nombre && <span>Este campo es requerido</span>}
-                        <input
+                        {/*<input
                         type="password"
                         placeholder="Clave"
                         {...register("clave", )}
                         value={clave}
                         onChange={(e) => setClave(e.target.value)}
                         className="mb-2 p-2 border-2 border-gray-500 rounded-lg"
-                        />
+                        /> */}
 
                         <button
                         type="submit"
@@ -73,9 +74,9 @@ export function ConsultaExpediente() {
                     {mostrarResultados && (
                     
                     <div className=" w-full flex flex-col items-center mt-4">
-                        <h4 className="text-granate text-2xl font-bold text-center ">RECLAMO XYZ-123</h4>    
+                        <h4 className="text-granate text-2xl font-bold text-center ">RECLAMO {solicitud.codigo_expediente}</h4>    
                         {/* Aquí mostrarías los resultados reales de la búsqueda */}
-                        <p className="text-center">Organo Universitario: Departamento de Psicología </p>
+                        <p className="text-center">Organo Universitario: {solicitud.organo_universitario} </p>
                         <p className="text-center">Encargado: {solicitud.nombre} </p>
                         
                     
