@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "django-react-csrftoken": "^1.0.4",
+    "js-cookie": "^3.0.5",
+    "universal-cookie": "^4.0.4"
+  }
+}

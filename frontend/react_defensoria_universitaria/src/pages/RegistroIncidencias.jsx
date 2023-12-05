@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import { getAllSedes, getAllRoles, getAllTipo, createRegistro } from "../api/registros.api";
+import { getAllSedes,  createRegistro } from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
 import { toast } from 'react-hot-toast';
 
+
 import { useNavigate } from "react-router-dom";
-//import axios from "axios";
+
+
+
+
+
 
 
 export function RegistroIncidencias() {
@@ -23,10 +28,12 @@ export function RegistroIncidencias() {
   const [autorizaNotificacion, setAutorizaNotificacion] = useState(false);
 
   const onSubmit=handleSubmit(async (data) =>{
+      data.organo_universitario="Defensoria Universitaria"
+      data.sede=1
       
-  
-      const res3 = await createRegistro(data);
-      console.log(res3);
+      console.log(data);
+      await createRegistro(data);
+      
 
       toast.success('El registro se ha completado con éxito.  Se le enviara un e-mail con los detalles de su solicitud', {
         duration: 5000, // Duración en milisegundos
@@ -40,40 +47,37 @@ export function RegistroIncidencias() {
       
   });
 
-  const rolesData = ["Estudiante", "Docente", "Administrativo", "Otros"];
+  //const rolesData = ["Estudiante", "Docente", "Administrativo", "Otros"];
 
   //para almacenar roles, sedes y tipo
-  const [roles, setRoles] = useState([]);
+
   const [sedes, setSedes] = useState([]);
-  const [tipos, setTipos] = useState([]);
   //const [isOtroSelected, setIsOtroSelected] = useState(false); 
-  const [selectedRol, setSelectedRol] = useState("Estudiante");
+  const [selectedRol] = useState("Estudiante");
   // Nuevo estado para controlar la entrada de texto
 
   useEffect(() => {
-    // Obtener lista de roles
-    async function loadRoles(){
-      const res1 = await getAllRoles();
-      setRoles(res1.data);
-      //console.log(res1);
-    } 
-    loadRoles();
+ 
+    
 
     // Obtener lista de sedes
     async function loadSedes(){
-      const res = await getAllSedes();
-      setSedes(res.data);
-      //console.log(res);
+
+      try{
+        const res = await getAllSedes();
+        setSedes(res);
+        //console.log(res);
+      }catch(error){
+        console.error('Error al obtener datos de la API', error);
+      }
+      
+      
+      
     } 
     loadSedes();
 
-    // Obtener lista de tipos
-    async function loadTipos(){
-      const res2 = await getAllTipo();
-      setTipos(res2.data);
-      //console.log(res2);
-    } 
-    loadTipos();
+   
+    
     
   }, []);
 
@@ -124,32 +128,31 @@ export function RegistroIncidencias() {
         </div>
       </div>
 
-      <div style={{ display: "flex" }}>
-        {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
-          <div key={rol} style={{ marginRight: "20px" }}>
-            <label>
-              <input
-                type="radio"
-                name="rol"
-                value={rol}
-                checked={selectedRol === rol}
-                onChange={() => setSelectedRol(rol)}
-              />
-              {rol}
-            </label>
+          <div style={{ display: "flex" }}>
+            {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
+              <div key={rol} style={{ marginRight: "20px" }}>
+                <label>
+                  <input
+                    type="radio"
+                    name="rol"
+                    value={rol}
+                    {...register("rol", { required: true })}               
+                  />
+                  {rol}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-
 
           <div className=" relative  mb-6">
             <label>Si usted tiene otro Rol, detalle</label>
             <input
               type="text"
               placeholder="Detalle"
-              {...register("rolDetalle")}
-              className="bg-grisclaro border border-white p-3 rounded-lg block w-full mb-3 "
+           
+              className={`${
+                selectedRol === "Otros" ? "bg-white" && {...register("rol")} : "bg-grisclaro"
+              } border border-white p-3 rounded-lg block w-full mb-3`}
               disabled={selectedRol !== "Otros"}
             />
           </div>
@@ -225,7 +228,7 @@ export function RegistroIncidencias() {
                 >
                   <option value="">Selecciona una sede...</option>
                   {sedes.map((sede) => (
-                    <option key={sede.id} value={sede.id}>
+                    <option key={sede.id} value={parseInt(sede.id,10)}>
                       {sede.nombre}
                     </option>
                   ))}
@@ -306,7 +309,7 @@ export function RegistroIncidencias() {
                     type="radio"
                     name="tipo"
                     value={option.toLowerCase()}
-                    {...register("tipo", { required: true })}
+                    {...register("tipo_solicitud", { required: true })}
                     className="mr-2"
                 />
                 {option}
