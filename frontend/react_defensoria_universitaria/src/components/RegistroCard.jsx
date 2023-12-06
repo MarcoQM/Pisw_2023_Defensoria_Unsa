@@ -1,8 +1,17 @@
 export function RegistroCard({registro}){
     return(
-        <div>
-            <h1>{registro.nombre}    /   {registro.rol}</h1>
-            <hr />
-        </div>
+
+        
+        
+            <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <a>{registro.id}</a> {/* ID */}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                     {registro.nombre} {/* Nombre */}
+                </td>
+            </tr>
+            
+       
     );
 }

@@ -1,14 +1,32 @@
 
+import { getAllSolicitudes } from "../api/registros.api";
 import { FaFile } from "react-icons/fa";
-import Sidebar from "../components/SideBar";
+import { RegistroCard } from "../components/RegistroCard";
+import { RegistrosList } from "../components/RegistrosList";
+import { useEffect,useState } from "react";
+import { Sidebar } from "../components/Sidebar";
 
 export function AdminPanel() {
-    
+
+
+
 
     const sugerenciasPendientes = 10;
     const consultasPendientes = 5;
     const quejasEnProceso = 3;
     const reclamosEnProceso = 7;
+
+
+    const [registros, setRegistros]=useState({});
+    
+    useEffect(() => {
+        async function loadRegistros(){
+            const res = await getAllSolicitudes();
+            setRegistros(res.data);
+            
+        }
+        loadRegistros();
+    },[]);
 
     return (
 
@@ -67,18 +85,15 @@ export function AdminPanel() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <a>001</a> {/* ID */}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        Juan Perez {/* Nombre */}
-                                    </td>
-                                    {/* Otras celdas para las otras columnas */}
-                                </tr>
+                               
+                                <RegistrosList/>
                             </tbody>
+
+                            
                         </table>
                     </div>
+
+                        
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { getAllSedes,  createRegistro } from "../api/registros.api";
+import { getAllSedes,  createIncidencia } from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
@@ -23,11 +23,36 @@ export function RegistroIncidencias() {
   const [autorizaNotificacion, setAutorizaNotificacion] = useState(false);
 
   const onSubmit=handleSubmit(async (data) =>{
-      data.organo_universitario="Defensoria Universitaria"
-      data.sede=1
+      const formData = new FormData();
+
+      formData.append("organo_universitario","Defensoria Universitaria");
+      formData.append("apellido",data.apellido);
+      formData.append("correo", data.correo);
+      formData.append("cui",data.cui);
+      formData.append("descripcion", data.descripcion);
+      formData.append("direccion",data.direccion);
+      formData.append("dni",data.dni);
+      formData.append("nombre",data.nombre);
+      formData.append("rol",data.rol);
+      formData.append("sede",data.sede);
+      formData.append("telefono",data.telefono);
+      formData.append("tipo_solicitud",data.tipo_solicitud);
       
-      console.log(data);
-      await createRegistro(data);
+
+
+      const adjuntosInput = document.getElementById("adjuntos");
+      for (let i = 0; i < adjuntosInput.files.length; i++) {
+        formData.append("archivos", adjuntosInput.files[i]);
+      }
+
+      
+      
+
+      
+      for (const pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+      await createIncidencia(formData);
       
 
       toast.success('El registro se ha completado con éxito.  Se le enviara un e-mail con los detalles de su solicitud', {
@@ -35,7 +60,7 @@ export function RegistroIncidencias() {
        
       });
       
-      navigate("/login") 
+      navigate("/inicio") 
 
       
       

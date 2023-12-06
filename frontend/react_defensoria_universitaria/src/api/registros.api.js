@@ -7,17 +7,31 @@ const userName = 'user_name';
 
 const getLocalToken = () => {  
     return JSON.parse(localStorage.getItem(tokenName));  
-};  
-
-
-
-export const getAllRegistros=() => {
-    return axios.get('http://localhost:8000/api/solicitudes/')
 };
 
 
 
 
+
+
+export const getAllSolicitudes=() => {
+    return axios.get('http://localhost:8000/api/solicitudes/')
+};
+
+export const createIncidencia = (formData) => {  
+    return axios.post('http://localhost:8000/api/solicitudes/', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }
+    
+    
+    );
+
+    
+}
+
+/*
 export const createRegistro = (post) => {  
     return new Promise( (resolve, reject) => {  
         const instance = axios.create({  
@@ -36,7 +50,7 @@ export const createRegistro = (post) => {
             reject(e.response);  
         });  
     }); 
-};  
+}; */ 
 
 export const getAllRoles = () => {
 
