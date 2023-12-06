@@ -4,7 +4,7 @@ import { FaFile } from "react-icons/fa";
 import { RegistroCard } from "../components/RegistroCard";
 import { RegistrosList } from "../components/RegistrosList";
 import { useEffect,useState } from "react";
-import { Sidebar } from "../components/Sidebar";
+import Sidebar from "../components/SideBar";
 
 export function AdminPanel() {
 
@@ -29,14 +29,12 @@ export function AdminPanel() {
     },[]);
 
     return (
-
         <div className="flex">
             {/* Panel de Administración */}
-            <Sidebar />
-            
+            <Sidebar/>
 
             {/* Contenido Principal */}
-            <div className="ml-14 w-full p-4">
+            <div className="w-3/4 p-4">
                 <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
                     <h2 className="text-granate text-3xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS POR DEFENSORIA UNIVERSITARIA</h2>
                     <div className="flex space-x-4 mb-4">
