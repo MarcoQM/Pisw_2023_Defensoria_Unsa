@@ -25,6 +25,7 @@ export default {
       'grisclaro': '#d6d6d6',
       'blue': '#141E42',
       'black': '#000000',
+      'granate-claro': '#942129',
       // Configure your color palette here
     }
   },

@@ -9,7 +9,7 @@ export function BarraPosteriorSolicitud(){
     return(
         <div className="fixed top-0 w-full z-50">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
-                <div className="flex items-center" onClick={() => navigate("/inicio")}>
+                <div className="flex items-center cursor-pointer" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"
@@ -17,7 +17,7 @@ export function BarraPosteriorSolicitud(){
                     />
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl"
+                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm sm:text-base border-2"
                 onClick={() => navigate("/consulta")}>
                     Consulta por expediente
                 </button>
@@ -33,7 +33,7 @@ export function BarraPosteriorExpediente(){
     return(
         <div className="fixed top-0 w-full z-10">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
-                <div className="flex items-center" onClick={() => navigate("/inicio")}>
+                <div className="flex items-center cursor-pointer" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"
@@ -41,9 +41,9 @@ export function BarraPosteriorExpediente(){
                     />
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm  sm:text-xl"
+                <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm-base border-2  sm:text-base"
                 >
-                    Realizar Solicitud
+                    Presentar solicitud
                 </button>
             </div>
         </div>    
@@ -72,7 +72,7 @@ export function BarraPosteriorLogeado(){
     return(
         <div className="fixed top-0 w-full z-10">
             <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
-                <div className="flex items-center" onClick={() => navigate("/inicio")}>
+                <div className="flex items-center cursor-pointer" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
                     alt="Logo UNSA"

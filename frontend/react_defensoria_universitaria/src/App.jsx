@@ -44,7 +44,7 @@ function App() {
           </Routes>
 
           <div className=" mt-10">
-          <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-grayscale-50 w-/12 py-9">
+          <div className="bg-cover bg-center h-screen bg-grayscale-50 w-/12 py-9">
           <Routes>
             <Route path="/" element={<Navigate to="/inicio" />} />
             <Route path="/registro-incidencias" element={<RegistroIncidencias />} />
