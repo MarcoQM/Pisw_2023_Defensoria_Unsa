@@ -7,6 +7,7 @@ import {Toaster} from "react-hot-toast";
 import { Inicio} from "./pages/Inicio";
 import { AdminPanel} from "./pages/AdminPanel";
 import { Login } from "./pages/Login";
+import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -28,16 +29,10 @@ function App() {
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
             
             </>}/>
-
+ 
             <Route path="/admin" element={<> <BarraPosteriorLogeado />
             
             </>}/>
-
-
-
-
-
-
 
 
 
@@ -50,7 +45,7 @@ function App() {
             <Route path="/registro-incidencias" element={<RegistroIncidencias />} />
             <Route path="/registros-page" element={<RegistrosPage />} />
             <Route path="/inicio" element={<Inicio />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
           </Routes>
