@@ -42,7 +42,7 @@ export function BarraPosteriorExpediente(){
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
                 <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm-base border-2  sm:text-base"
-                >
+                onClick={() => navigate("/registro-incidencias")}>
                     Presentar solicitud
                 </button>
             </div>

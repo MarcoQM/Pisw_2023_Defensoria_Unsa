@@ -34,7 +34,7 @@ export function AdminPanel() {
             <Sidebar/>
 
             {/* Contenido Principal */}
-            <div className="w-3/4 p-4">
+            <div className="ml-14 p-4 w-full">
                 <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
                     <h2 className="text-granate text-3xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS POR DEFENSORIA UNIVERSITARIA</h2>
                     <div className="flex space-x-4 mb-4">
