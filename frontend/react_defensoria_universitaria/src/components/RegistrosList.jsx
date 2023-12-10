@@ -5,7 +5,8 @@ import {RegistroCard} from './RegistroCard';
 
 export function RegistrosList(){
     const [registros, setRegistros]=useState([]);
-    
+
+
     useEffect(() => {
         async function loadRegistros(){
             const res = await getAllSolicitudes();
@@ -15,10 +16,14 @@ export function RegistrosList(){
     },[]);
 
     return (
-        <div>
-        {registros.map((registro) =>(
-                <RegistroCard Key={registro.id} registro={registro} />
-        ))}
-        </div>     
+        <>
+        
+        {registros.map((registro, index) =>(
+                <RegistroCard Key={registro.id} registro={registro} index={index}/>
+       
+       
+       ))}
+            
+        </>     
 )
 }
