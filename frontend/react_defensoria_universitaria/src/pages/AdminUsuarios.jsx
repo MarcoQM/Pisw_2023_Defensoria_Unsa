@@ -6,7 +6,7 @@ import { RegistrosList } from "../components/RegistrosList";
 import { useEffect,useState } from "react";
 import Sidebar from "../components/SideBar";
 
-export function AdminPanel() {
+export function AdminUsuarios() {
 
 
 
@@ -36,31 +36,10 @@ export function AdminPanel() {
             {/* Contenido Principal */}
             <div className="ml-14 p-4 w-full">
                 <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
-                    <h2 className="text-granate text-3xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS POR DEFENSORIA UNIVERSITARIA</h2>
-                    <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md text-center w-full sm:w-1/4">
-                            <FaFile className="text-xl sm:text-2xl text-gray-600 mb-2" />
-                            <div className="text-xl sm:text-2xl">Sugerencias</div>
-                            <div className="text-green-500">{sugerenciasPendientes} Pendientes</div>
-                        </div>
-                        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md text-center w-full sm:w-1/4">
-                            <FaFile className="text-xl sm:text-2xl text-gray-600 mb-2" />
-                            <div className="text-xl sm:text-2xl">Consultas</div>
-                            <div className="text-green-500">{consultasPendientes} Pendientes</div>
-                        </div>
-                        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md text-center w-full sm:w-1/4">
-                            <FaFile className="text-xl sm:text-2xl text-gray-600 mb-2" />
-                            <div className="text-xl sm:text-2xl">Quejas en Proceso</div>
-                            <div className="text-green-500">{quejasEnProceso} En Proceso</div>
-                        </div>
-                        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md text-center w-full sm:w-1/4">
-                            <FaFile className="text-xl sm:text-2xl text-gray-600 mb-2" />
-                            <div className="text-xl sm:text-2xl">Reclamos en Proceso</div>
-                            <div className="text-green-500">{reclamosEnProceso} En Proceso</div>
-                        </div>
-                    </div>
+                    <h2 className="text-granate text-3xl font-bold text-center mb-4">USUARIOS</h2>
+                
 
-                    <a className="text-black text-2xl font-bold text-center mb-4">Listado de solicitudes</a>
+                    <a className="text-black text-2xl font-bold text-center mb-4">Listado de usuarios</a>
                     {/* Tabla de Datos */}
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <table className="min-w-full divide-y divide-gray-200">

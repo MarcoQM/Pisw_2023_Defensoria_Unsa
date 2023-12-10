@@ -29,28 +29,34 @@ function Sidebar() {
             <div className="flex flex-col justify-center items-center h-full">
                 <ul className=" py-4 w-full ">
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer">
-                        
                         <Link to="/admin" className='flex space-x-4'>
                         <FaHome className='text-2xl'/>
                         {isOpen && <span>Dashboard</span>}
                         </Link>
-                        
                     </li>
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer ">
-                        <FaFileAlt className='text-2xl'/>
-                        {isOpen && <span>Reportes</span>}
+                        <Link to="/reportes" className='flex space-x-4'>
+                            <FaFileAlt className='text-2xl' />
+                            {isOpen && <span>Reportes</span>}
+                        </Link>
                     </li>
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer">
-                        <FaChartBar className='text-2xl'/>
-                        {isOpen && <span>Reportes Gráficos</span>}
+                        <Link to="/reportesg" className='flex space-x-4'>
+                            <FaChartBar className='text-2xl' />
+                            {isOpen && <span>Reportes Gráficos</span>}
+                        </Link>
                     </li>
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer">
-                        <FaBell className='text-2xl'/>
-                        {isOpen && <span>Notificaciones</span>}
+                        <Link to="/notificaciones" className='flex space-x-4'>
+                            <FaBell className='text-2xl' />
+                            {isOpen && <span>Mis Notificaciones</span>}
+                        </Link>
                     </li>
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer">
-                        <FaUsers className='text-2xl'/>
-                        {isOpen && <span>Usuarios</span>}
+                        <Link to="/usuarios" className='flex space-x-4'>
+                            <FaUsers className='text-2xl' />
+                            {isOpen && <span>Usuarios registrados</span>}
+                        </Link>
                     </li>
                 </ul>
 
