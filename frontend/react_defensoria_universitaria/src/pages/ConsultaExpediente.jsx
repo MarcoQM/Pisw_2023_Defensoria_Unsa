@@ -14,7 +14,7 @@ export function ConsultaExpediente() {
       } = useForm();
 
     const [solicitud, setSolicitud] = useState("");
-    const [clave, setClave] = useState("");
+    //const [clave, setClave] = useState("");
     const [expediente, setExpediente] = useState("");
  
     const [mostrarResultados, setMostrarResultados] = useState(false);

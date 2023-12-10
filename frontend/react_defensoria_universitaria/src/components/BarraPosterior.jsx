@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../api/registros.api";
+import { FaBell } from 'react-icons/fa'; 
 
 
 export function BarraPosteriorSolicitud(){
@@ -80,7 +81,8 @@ export function BarraPosteriorLogeado(){
                     />
                     <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
                 </div>
-                <div className=" text-white  py-2 px-4 rounded text-sm  sm:text-xl">
+                <div className="flex items-center text-white  py-2 px-4 rounded text-sm  sm:text-xl">
+                    <FaBell className='text-xl mr-2 hover:text-gris cursor-pointer' />
                     <span className=" text-sm  sm:text-xl font-semibold">Hola {getLocalUserName()}      </span>
                     <button  className=" hover:text-gris bg-indigo-700"
                     onClick={handleLogout}>
