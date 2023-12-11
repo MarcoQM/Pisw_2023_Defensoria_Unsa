@@ -4,8 +4,6 @@ import { FaFile } from "react-icons/fa";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { useState } from 'react';
 import Sidebar from "../components/SideBar";
-
-import SoliDetails from "../components/SoliDetails";
 import FiltroFechas from '../components/FiltroFechas';
 import BarraBusquedaExp from '../components/BarraBusquedaExp';
 import TablaExpediente from '../components/TablaExpediente';
@@ -97,15 +95,9 @@ export function AdminPanel() {
                         <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>
                         
                         <TablaExpediente />
-                    </div>
-
-                    
-
-                    
-
-                        
+                    </div>     
                 </div>
-            </div> */}  
+            </div>
             
             
         </div>

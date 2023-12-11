@@ -31,6 +31,10 @@ export const createIncidencia = (formData) => {
     
 }
 
+export const getSolicitudDetalle = (id) => {
+    return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
+}
+
 /*
 export const createRegistro = (post) => {  
     return new Promise( (resolve, reject) => {  

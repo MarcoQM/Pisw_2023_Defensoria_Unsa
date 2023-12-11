@@ -13,6 +13,7 @@ import { AdminNotificaciones} from "./pages/AdminNotificaciones";
 import { Login } from "./pages/Login";
 import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
+import  SoliDetails  from "./components/SoliDetails";
 
 
 
@@ -46,9 +47,7 @@ function App() {
             </>}/>
             <Route path="/usuarios" element={<> <BarraPosteriorLogeado />
             </>}/>
-            
-
-
+            <Route path="/solicitudes/:solicitudId" element={ <BarraPosteriorLogeado />} />
 
           </Routes>
 
@@ -66,6 +65,8 @@ function App() {
             <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
             <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
+
+            <Route path="/solicitudes/:solicitudId" element={<SoliDetails/>} />
           </Routes>
           </div>
           </div>
