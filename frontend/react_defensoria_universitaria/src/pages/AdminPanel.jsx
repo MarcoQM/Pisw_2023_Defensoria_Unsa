@@ -9,10 +9,6 @@ import BarraBusquedaExp from '../components/BarraBusquedaExp';
 import TablaExpediente from '../components/TablaExpediente';
 
 export function AdminPanel() {
-
-
-
-
     const sugerenciasPendientes = 10;
     const consultasPendientes = 5;
     const quejasEnProceso = 3;
@@ -99,15 +95,11 @@ export function AdminPanel() {
                         <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>
                         
                         <TablaExpediente />
-                    </div>
-
-                    
-
-                    
-
-                        
+                    </div>     
                 </div>
             </div>
+            
+            
         </div>
     );
 }
