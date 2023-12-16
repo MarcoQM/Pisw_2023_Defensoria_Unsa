@@ -19,7 +19,7 @@ export function RegistrosList(){
         <>
         
         {registros.map((registro, index) =>(
-                <RegistroCard Key={registro.id} registro={registro} index={index}/>
+                <RegistroCard key={registro.id} registro={registro} index={index}/>
        
        
        ))}
