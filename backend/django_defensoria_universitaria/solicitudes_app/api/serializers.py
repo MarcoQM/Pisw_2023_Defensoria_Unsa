@@ -1,11 +1,17 @@
 from rest_framework import serializers
-from solicitudes_app.models import Solicitud, Archivo
+from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud
 
 class ArchivoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Archivo
         fields = '__all__' 
         # fields = ('id', 'nombre', 'archivo')
+        
+        
+class TipoSolicitudSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipoSolicitud
+        fields = '__all__' 
 
 class SolicitudSerializer(serializers.ModelSerializer):
     
