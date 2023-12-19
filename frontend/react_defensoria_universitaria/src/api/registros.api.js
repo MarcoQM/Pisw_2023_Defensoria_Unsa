@@ -5,6 +5,7 @@ const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
 
+// eslint-disable-next-line no-unused-vars
 const getLocalToken = () => {  
     return JSON.parse(localStorage.getItem(tokenName));  
 };
@@ -85,7 +86,8 @@ export const login = (login) => {
             // headers es lo necesario para hacer la petición  
             headers: {  
                 'Content-Type': 'application/json'  
-            }  
+            },
+             
         }); 
         instance.post('login/', login)  
             .then(r => {                  

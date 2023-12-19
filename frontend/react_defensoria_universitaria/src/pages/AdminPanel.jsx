@@ -47,19 +47,7 @@ export function AdminPanel() {
             <div className="w-screen">
                 <div className="max-w-full mx-auto bg-grisclaro rounded-lg shadow-lg ml-14 p-10"> {/* cuadro gris*/}
                     <h2 className="text-granate text-4xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS</h2>
-                    <div className="mt-10 flex flex-wrap"> 
-                        <div className="md:w-4/6 ">
-                            <BarraBusquedaExp onSearchChange={handleSearchChange} />
-                        </div>
-                        <div className=" md:w-2/6 ">
-                            <FiltroFechas onFilterChange={handleDateFilterChange} />
-                        </div>
-                            
-
-
-                    </div>
-
-
+                    
                     <div className="flex   space-x-4 mb-4 mt-10">
                         {/* Cuadro de Sugerencias */}
                         <button className="w-full  bg-granate hover:bg-granate-claro p-4 rounded-lg shadow-md text-center">
@@ -89,7 +77,8 @@ export function AdminPanel() {
                             <div className="text-green-500 text-white">{reclamosEnProceso} En Proceso</div>
                         </button>
                     </div>
-
+                    
+                   
 
                     <div className="container mx-auto mt-10 p-4">
                         <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>
