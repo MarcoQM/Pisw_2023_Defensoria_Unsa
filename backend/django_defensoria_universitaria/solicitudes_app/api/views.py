@@ -1,21 +1,29 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
+from rest_framework import generics
 
-from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer
-from solicitudes_app.models import Solicitud, Archivo
+from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer, TipoSolicitudSerializer
+from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny 
 
+from django_filters.rest_framework import DjangoFilterBackend
 
-class ListarSolicitudAV(APIView):
+
+class ListarSolicitudAV(generics.ListAPIView):
     #permission_classes = [IsAuthenticatedOrReadOnly]
     permission_classes = [AllowAny]
+    queryset = Solicitud.objects.all()
+    serializer_class = SolicitudSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['tipo_solicitud']
     
-    def get(self, request):
-        solicitudes = Solicitud.objects.all()
-        serializer = SolicitudSerializer(solicitudes, many=True)
-        return Response(serializer.data)
+    #def get(self, request):
+    #    solicitudes = Solicitud.objects.all()
+    #    serializer = SolicitudSerializer(solicitudes, many=True)
+    #    return Response(serializer.data)
     
     def post(self, request):
         try:
@@ -149,3 +157,91 @@ class DetalleArchivoAV(APIView):
         # Manejo personalizado de solicitudes HTTP no permitidas
         mensaje = "Método no permitido para esta vista."
         return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+    
+class ListarTipoSolicitudAV(APIView):
+    
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [IsAuthenticated]
+    
+    
+    def get(self, request):
+        tipoSolicitud = TipoSolicitud.objects.all()
+        serializer = TipoSolicitudSerializer(tipoSolicitud, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        try:
+            serializer = TipoSolicitudSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class DetalleTipoSolicitudAV(APIView):
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
+    
+    def get(self, request, pk):
+        try:
+            tipoSolicitud = TipoSolicitud.objects.get(pk=pk)
+        except TipoSolicitud.DoesNotExist:
+            return Response({'error':'Tipo de solicitud no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = TipoSolicitudSerializer(tipoSolicitud)
+        return Response(serializer.data)
+        
+    def delete(self, request, pk):
+        try:
+            tipoSolicitud = TipoSolicitud.objects.get(pk=pk)
+            tipoSolicitud.delete()
+            return Response({"mensaje": "Tipo de solicitud eliminada correctamente."}, status=status.HTTP_204_NO_CONTENT)
+        except TipoSolicitud.DoesNotExist:
+            return Response({"error": "El tipo de solicitud no existe."}, status=status.HTTP_404_NOT_FOUND)
+        
+    def put(self, request, pk):
+        try:
+            tipoSolicitud = TipoSolicitud.objects.get(pk=pk)
+            serializer = TipoSolicitudSerializer(tipoSolicitud, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except TipoSolicitud.DoesNotExist:
+            return Response({"error": "El tipo de solicitud no existe."}, status=status.HTTP_404_NOT_FOUND)
+        
+    def http_method_not_allowed(self, request, *args, **kwargs):
+        # Manejo personalizado de solicitudes HTTP no permitidas
+        mensaje = "Método no permitido para esta vista."
+        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)         
+    
+    
+    
+class DetalleSolicitudExpedienteAV(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        try:
+            codigo_expediente = request.data.get('codigo_expediente')
+
+            if not codigo_expediente:
+                raise ValueError('El código de expediente no se proporcionó en la solicitud.')
+
+            solicitud = get_object_or_404(Solicitud, codigo_expediente=codigo_expediente)
+            serializer = SolicitudSerializer(solicitud)
+            return Response(serializer.data)
+
+        except Solicitud.DoesNotExist:
+            return Response({'error': 'No se encontró ninguna solicitud con el código de expediente proporcionado.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def http_method_not_allowed(self, request, *args, **kwargs):
+        # Manejo personalizado de solicitudes HTTP no permitidas
+        mensaje = "Método no permitido para esta vista."
+        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    

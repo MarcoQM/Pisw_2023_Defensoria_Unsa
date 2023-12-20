@@ -6,9 +6,18 @@ import { ConsultaExpediente } from "./pages/ConsultaExpediente";
 import {Toaster} from "react-hot-toast";
 import { Inicio} from "./pages/Inicio";
 import { AdminPanel} from "./pages/AdminPanel";
+<<<<<<< HEAD
 import { Reporte } from "./pages/Reporte";
+=======
+import { AdminReportes} from "./pages/AdminReportes";
+import { AdminReportesG} from "./pages/AdminReportesG";
+import { AdminUsuarios} from "./pages/AdminUsuarios";
+import { AdminNotificaciones} from "./pages/AdminNotificaciones";
+import { Login } from "./pages/Login";
+>>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
 import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
+import  SoliDetails  from "./components/SoliDetails";
 
 
 
@@ -25,7 +34,11 @@ function App() {
             <Route path="/inicio" element={<BarraPosteriorSolicitud />} />
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
+<<<<<<< HEAD
            
+=======
+            
+>>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
 
             {/* Ruta con BarraPosteriorPendiente */}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
@@ -33,10 +46,17 @@ function App() {
             </>}/>
  
             <Route path="/admin" element={<> <BarraPosteriorLogeado />
-            
+          
             </>}/>
-
-
+            <Route path="/reportes" element={<> <BarraPosteriorLogeado />
+            </>}/>
+            <Route path="/reportesg" element={<> <BarraPosteriorLogeado />
+            </>}/>
+            <Route path="/notificaciones" element={<> <BarraPosteriorLogeado />
+            </>}/>
+            <Route path="/usuarios" element={<> <BarraPosteriorLogeado />
+            </>}/>
+            <Route path="/solicitudes/:solicitudId" element={ <BarraPosteriorLogeado />} />
 
           </Routes>
 
@@ -51,8 +71,17 @@ function App() {
             <Route path="/reporte" element={<Reporte />} />
             <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
+            <Route path="/reportes" element={<ProtectedRoute element={<AdminReportes />} />} />
+            <Route path="/reportesg" element={<ProtectedRoute element={<AdminReportesG />} />} />
+            <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
+            <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
+<<<<<<< HEAD
            
+=======
+
+            <Route path="/solicitudes/:solicitudId" element={<SoliDetails/>} />
+>>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
           </Routes>
           </div>
           </div>
