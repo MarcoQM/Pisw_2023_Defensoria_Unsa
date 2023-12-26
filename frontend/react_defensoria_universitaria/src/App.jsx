@@ -6,15 +6,12 @@ import { ConsultaExpediente } from "./pages/ConsultaExpediente";
 import {Toaster} from "react-hot-toast";
 import { Inicio} from "./pages/Inicio";
 import { AdminPanel} from "./pages/AdminPanel";
-<<<<<<< HEAD
 import { Reporte } from "./pages/Reporte";
-=======
 import { AdminReportes} from "./pages/AdminReportes";
 import { AdminReportesG} from "./pages/AdminReportesG";
 import { AdminUsuarios} from "./pages/AdminUsuarios";
 import { AdminNotificaciones} from "./pages/AdminNotificaciones";
 import { Login } from "./pages/Login";
->>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
 import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 import  SoliDetails  from "./components/SoliDetails";
@@ -34,11 +31,6 @@ function App() {
             <Route path="/inicio" element={<BarraPosteriorSolicitud />} />
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
-<<<<<<< HEAD
-           
-=======
-            
->>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
 
             {/* Ruta con BarraPosteriorPendiente */}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
@@ -76,12 +68,9 @@ function App() {
             <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
             <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
-<<<<<<< HEAD
-           
-=======
 
             <Route path="/solicitudes/:solicitudId" element={<SoliDetails/>} />
->>>>>>> 56ea14c96ab9e98474d9976e890782f77eb4da58
+
           </Routes>
           </div>
           </div>

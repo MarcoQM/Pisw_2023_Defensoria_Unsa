@@ -5,7 +5,6 @@ import { FaFile } from "react-icons/fa";
 //import { useState } from 'react';
 import Sidebar from "../components/SideBar";
 import FiltroFechas from '../components/FiltroFechas';
-import BarraBusquedaExp from '../components/BarraBusquedaExp';
 import TablaExpediente from '../components/TablaExpediente';
 
 export function AdminPanel() {
