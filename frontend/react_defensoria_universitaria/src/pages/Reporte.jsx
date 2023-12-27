@@ -1,8 +1,11 @@
 import React from 'react';
-import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import { VictoryBar, VictoryChart, VictoryLine, VictoryTheme } from 'victory';
+import { useState, useEffect } from 'react';
+import { Bar } from 'react-chartjs-2';
+
 
 
 export function Reporte({ tableData }) {
@@ -64,18 +67,7 @@ export function Reporte({ tableData }) {
     'ÚLTIMA ACTUACIÓN',
     'REMITIDO',
     'RECOMENDACIÓN',
-  ];
-
-  const cellWidths = [ 5, 10, 10, 10, 20, 20, 15, 15, 40, 25, 15, 15, 15, 40, 15, 15];    
-
-  /*const exportToExcel = () => {
-    const wsData = [headers, ...data.map(Object.values)];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'tableData.xlsx');
-  };*/
-
+  ];    
   
   const exportToExcelJS = () => {
     const workbook = new ExcelJS.Workbook();
@@ -141,6 +133,7 @@ export function Reporte({ tableData }) {
     
   };
 
+
   return (
     <div className= "w-11/12 mx-auto bg-white">     
       <button onClick={exportToExcelJS}
@@ -174,7 +167,7 @@ export function Reporte({ tableData }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>            
     </div>
   );
 }

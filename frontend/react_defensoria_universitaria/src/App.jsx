@@ -11,8 +11,8 @@ import { AdminReportes} from "./pages/AdminReportes";
 import { AdminReportesG} from "./pages/AdminReportesG";
 import { AdminUsuarios} from "./pages/AdminUsuarios";
 import { AdminNotificaciones} from "./pages/AdminNotificaciones";
-import { Login } from "./pages/Login";
-import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
+import { Dashboard } from "./pages/Dashboard";
+import { LoginAdministrativos } from "./pages/LoginAdministrativos";
 import ProtectedRoute from "./components/ProtectedRoute";
 import  SoliDetails  from "./components/SoliDetails";
 
@@ -61,6 +61,7 @@ function App() {
             <Route path="/registros-page" element={<RegistrosPage />} />
             <Route path="/inicio" element={<Inicio />} />
             <Route path="/reporte" element={<Reporte />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
             <Route path="/reportes" element={<ProtectedRoute element={<AdminReportes />} />} />

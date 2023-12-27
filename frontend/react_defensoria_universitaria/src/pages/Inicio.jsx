@@ -14,7 +14,7 @@ export function Inicio() {
                             <a href="">
                                 <img src ="../unsa-escudo.png" className="mx-auto " />
                             </a>                        
-                            <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro">
+                            <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro underline">
                                 Bienvenidos a Defensoria Universitaria
                             </div>
                             <div className="text-grisclaro font-semibold text-xl uppercase">
