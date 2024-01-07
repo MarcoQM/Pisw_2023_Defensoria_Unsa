@@ -3,31 +3,8 @@ import {useState, useEffect} from "react";
 import {getAllSolicitudes} from "../api/registros.api";
 import {rankItem} from '@tanstack/match-sorter-utils';
 import FiltroFechas from '../components/FiltroFechas';
-// eslint-disable-next-line react/prop-types
-/*
-const TablaExpediente = () => {
-  return (
-    <table className="w-full my-4 border-collapse border border-gray-400">
-      <thead className="bg-gray-200">
-        <tr>
-          <th className="py-2 px-4 border">Nro</th>
-          <th className="py-2 px-4 border">Nro de Expediente</th>
-          <th className="py-2 px-4 border">Solicitante</th>
-          <th className="py-2 px-4 border">Tipo de Solicitud</th>
-          <th className="py-2 px-4 border">Estado</th>
-          <th className="py-2 px-4 border">Encargado</th>
-          <th className="py-2 px-4 border">Fecha de Recepción</th>
-          <th className="py-2 px-4 border">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <RegistrosList/>
-      </tbody>
-    </table>
-  );
-};
+import { Link } from 'react-router-dom';
 
-export default TablaExpediente;*/
 import {
   flexRender,
   getCoreRowModel,
@@ -60,11 +37,14 @@ const TablaExpediente = () => {
 
   const columns = [
     {
-      accessorKey: 'Nro' 
+      accessorKey: 'Nro',
+      cell: ({ row }) => (
+        <div>{row.index + 1}</div>
+      ),
     },
     {
       header : 'Nro de Expediente',
-      accessorKey: 'id'
+      accessorKey: 'codigo_expediente'
     },
     {
       header : 'Solicitante',
@@ -75,19 +55,42 @@ const TablaExpediente = () => {
       accessorKey: 'tipo_solicitud'
     },
     {
-      header : 'Estado',
-      accessorKey: 'Estado'
+      
+      accessorKey: 'Estado',
+      cell: () => (
+        <div className="flex">
+          Estado
+        </div>
+      ),
     },
     {
-      header : 'Encargado',
-      accessorKey: 'Encargado'
+      
+      accessorKey: 'Encargado',
+      cell: () => (
+        <div className="flex">
+          Encargado
+        </div>
+      ),
+
+
     },
     {
       header : 'Fecha de Recepcion',
       accessorKey: 'fecha_creacion'
     },
     {
-      accessorKey: 'Acciones'
+      accessorKey: 'Acciones',
+     
+      cell: ({ row }) => (
+        <div className="flex">
+          {/*botón para redirigir a los detalles de la solicitud */}
+          <Link to={`/detalles-solicitud/${row.original.id}`}>
+            <button className="bg-granate hover:bg-granate-claro text-white  py-1 px-4 rounded">
+              Detalles
+            </button>
+          </Link>
+        </div>
+      ),
     }
 
   ]
