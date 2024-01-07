@@ -1,13 +1,22 @@
 import{ useState } from 'react';
 
  // eslint-disable-next-line react/prop-types
- const FiltroFechas = ({ onFilterChange }) => {
+ const FiltroFechas = ({  onFilterChange, onClearFilters }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [filtersApplied, setFiltersApplied] = useState(false);
 
     const handleFilterChange = () => {
         onFilterChange({ startDate, endDate });
+        setFiltersApplied(true);
     };
+
+    const handleClearFilters = () => {
+        setStartDate('');
+        setEndDate('');
+        onClearFilters();
+        setFiltersApplied(false);
+      };
 
     return (
         <div className="my-4">
@@ -25,8 +34,17 @@ import{ useState } from 'react';
             onChange={(e) => setEndDate(e.target.value)}
             className="mr-2 px-2 py-1 border rounded"
         />
-        <button onClick={handleFilterChange} className="px-3 py-1 bg-blue-500 text-white  bg-granate rounded">
+        <button 
+            onClick={handleFilterChange} 
+            className={`px-3 py-1  ${filtersApplied ? 'bg-gray-400' : 'bg-blue-500'} text-white bg-granate rounded`}
+            disabled={filtersApplied}>
             Filtrar
+        </button>
+        <button 
+            onClick={handleClearFilters} 
+            className={`px-3 py-1 ml-2 text-white ${!filtersApplied ? 'bg-gray-400' : 'bg-granate'} rounded`}
+            disabled={!filtersApplied}>
+            Limpiar Filtros
         </button>
         </div>
     );

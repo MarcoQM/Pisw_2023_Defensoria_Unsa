@@ -4,6 +4,7 @@ import {getAllSolicitudes} from "../api/registros.api";
 import {rankItem} from '@tanstack/match-sorter-utils';
 import FiltroFechas from '../components/FiltroFechas';
 import { Link } from 'react-router-dom';
+import { parseISO } from 'date-fns';
 
 import {
   flexRender,
@@ -23,11 +24,41 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 
 const TablaExpediente = () => {
 
+  async function loadRegistros(){
+    const res = await getAllSolicitudes();
+    setData(res.data);
+  }
+
 
   // eslint-disable-next-line no-unused-vars
   const handleDateFilterChange = ({ startDate, endDate }) => {
-    // Lógica para filtrar los datos por fechas
+
+   
+    const parsedStartDate = startDate ? parseISO(startDate) : null;
+    const parsedEndDate = endDate ? parseISO(endDate) : null;
+
+    // Filtra los datos según el rango de fechas
+    const filteredData = data.filter((item) => {
+      const itemDate = parseISO(item.fecha_creacion); // Ajusta la propiedad según la estructura de tus datos
+      return (
+        (!parsedStartDate || itemDate >= parsedStartDate) &&
+        (!parsedEndDate || itemDate <= parsedEndDate)
+      );
+    });
+
     // Actualiza el estado con los datos filtrados
+    setData(filteredData);
+  };
+
+  const handleClearFilters = () => {
+    // Lógica para limpiar los filtros y restaurar la data original
+    setGlobalFilter('');
+    // Vuelve a cargar la data original
+    async function loadRegistros() {
+      const res = await getAllSolicitudes();
+      setData(res.data);
+    }
+    loadRegistros();
   };
 
   
@@ -97,10 +128,7 @@ const TablaExpediente = () => {
 
 
   useEffect(() => {
-      async function loadRegistros(){
-          const res = await getAllSolicitudes();
-          setData(res.data);
-      }
+      
       loadRegistros();
   },[]);
 
@@ -123,7 +151,7 @@ const TablaExpediente = () => {
 
     <div className="px-6 py-4 ">
       <div className=" flex flex-wrap"> 
-        <div className="md:w-4/6 my-2 text-left">
+        <div className="md:w-3/6 my-2 text-left">
           <span className=" ">Busqueda : </span>
           <input type="text" 
             onChange={e => setGlobalFilter(e.target.value)}
@@ -131,8 +159,9 @@ const TablaExpediente = () => {
             placeholder="Buscar..."
           />
         </div>                  
-        <div className=" md:w-2/6 ">
-            <FiltroFechas onFilterChange={handleDateFilterChange} />
+        <div className=" md:w-3/6  ">
+            <FiltroFechas onFilterChange={handleDateFilterChange} onClearFilters={handleClearFilters}/>
+            
         </div>             
       </div>
       
