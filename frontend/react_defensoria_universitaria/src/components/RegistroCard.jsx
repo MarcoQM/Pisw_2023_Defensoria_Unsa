@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-
+import { Link } from "react-router-dom";
 
 export function RegistroCard({registro, index}){
     return(
@@ -31,10 +31,9 @@ export function RegistroCard({registro, index}){
                 </td> 
 
                 <td className="px-6 py-4 whitespace-nowrap">
-                     <button className="bg-granate px-5 py-1 text-white rounded-md ">
+                    <Link to={`/solicitudes/${registro.id}`} className="bg-granate px-5 py-1 text-white rounded-md">
                         Detalles
-
-                     </button>
+                    </Link>
                 </td> 
 
             </tr>

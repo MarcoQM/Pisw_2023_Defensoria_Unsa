@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'sedes_app',
     'solicitudes_app',
     'procesos_app',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated', 
     # ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 # Ruta para los archivos subidos

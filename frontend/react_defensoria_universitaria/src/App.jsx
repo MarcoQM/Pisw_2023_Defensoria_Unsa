@@ -1,18 +1,21 @@
-import {BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
-import {  BarraPosteriorSolicitud, BarraPosteriorExpediente, BarraPosteriorLogeado } from "./components/BarraPosterior";
+import { BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
+import { BarraPosteriorSolicitud, BarraPosteriorExpediente, BarraPosteriorLogeado } from "./components/BarraPosterior";
 import { RegistroIncidencias } from "./pages/RegistroIncidencias";
-import { RegistrosPage } from "./pages/RegistrosPage";
+import { RegistrosPage } from "./pages/RegistrosPage"
 import { ConsultaExpediente } from "./pages/ConsultaExpediente";
 import {Toaster} from "react-hot-toast";
 import { Inicio} from "./pages/Inicio";
 import { AdminPanel} from "./pages/AdminPanel";
+import { Reporte } from "./pages/Reporte";
 import { AdminReportes} from "./pages/AdminReportes";
 import { AdminReportesG} from "./pages/AdminReportesG";
 import { AdminUsuarios} from "./pages/AdminUsuarios";
 import { AdminNotificaciones} from "./pages/AdminNotificaciones";
-import { Login } from "./pages/Login";
-import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
+import { Dashboard } from "./pages/Dashboard";
+import { LoginAdministrativos } from "./pages/LoginAdministrativos";
 import ProtectedRoute from "./components/ProtectedRoute";
+import  SoliDetails  from "./components/SoliDetails";
+
 
 
 
@@ -28,7 +31,6 @@ function App() {
             <Route path="/inicio" element={<BarraPosteriorSolicitud />} />
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
-            
 
             {/* Ruta con BarraPosteriorPendiente */}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
@@ -46,19 +48,20 @@ function App() {
             </>}/>
             <Route path="/usuarios" element={<> <BarraPosteriorLogeado />
             </>}/>
-            
-
-
+            <Route path="/solicitudes/:solicitudId" element={ <BarraPosteriorLogeado />} />
 
           </Routes>
 
           <div className=" mt-10">
           <div className="bg-cover bg-center h-screen bg-grayscale-50 w-/12 py-9">
           <Routes>
-            <Route path="/" element={<Navigate to="/inicio" />} />
+            <Route path="/" element={<Navigate to="/reporte" />} />
+            
             <Route path="/registro-incidencias" element={<RegistroIncidencias />} />
             <Route path="/registros-page" element={<RegistrosPage />} />
             <Route path="/inicio" element={<Inicio />} />
+            <Route path="/reporte" element={<Reporte />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
             <Route path="/reportes" element={<ProtectedRoute element={<AdminReportes />} />} />
@@ -66,6 +69,9 @@ function App() {
             <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
             <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
+
+            <Route path="/solicitudes/:solicitudId" element={<SoliDetails/>} />
+
           </Routes>
           </div>
           </div>

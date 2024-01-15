@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+
 export function Inicio() {    
 
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function Inicio() {
                             <a href="">
                                 <img src ="../unsa-escudo.png" className="mx-auto " />
                             </a>                        
-                            <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro">
+                            <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro underline">
                                 Bienvenidos a Defensoria Universitaria
                             </div>
                             <div className="text-grisclaro font-semibold text-xl uppercase">
@@ -26,7 +27,7 @@ export function Inicio() {
                             <a className="align-middle mt-3" href="">
                                 <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
                                 onClick={() => navigate("/login")}>Ingreso Administrador</button>
-                            </a>
+                            </a>                           
                         </div>
                     </div>
                 </div>                        
