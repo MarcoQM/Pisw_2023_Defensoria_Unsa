@@ -164,8 +164,8 @@ const TablaExpediente = () => {
 
   return (
 
-    <div className="w-screen">
-      <div className="max-w-full mx-auto bg-grisclaro rounded-lg shadow-lg ml-14 p-10"> {/* cuadro gris*/}
+    <div className="w-full">
+      <div className="max-w-full m-10 p-10 bg-gray-300 rounded-lg shadow-lg "> {/* cuadro gris*/}
           <h2 className="text-granate text-4xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS</h2>
           
           <div className="flex   space-x-4 mb-4 mt-10">

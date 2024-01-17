@@ -29,9 +29,7 @@ export function AdminReportes() {
     },[]);
 
     return (
-        <div className="flex">
-            {/* Panel de Administración */}
-            <Sidebar/>
+        <div className="flex">            
 
             {/* Contenido Principal */}
             <div className="ml-14 p-4 w-full">

@@ -4,7 +4,6 @@ import { FaFile } from "react-icons/fa";
 import { RegistroCard } from "../components/RegistroCard";
 import { RegistrosList } from "../components/RegistrosList";
 import { useEffect,useState } from "react";
-import Sidebar from "../components/SideBar";
 
 export function AdminNotificaciones() {
 
@@ -29,9 +28,7 @@ export function AdminNotificaciones() {
     },[]);
 
     return (
-        <div className="flex">
-            {/* Panel de Administración */}
-            <Sidebar/>
+        <div className="flex">            
 
             {/* Contenido Principal */}
             <div className="ml-14 p-4 w-full">
