@@ -6,6 +6,8 @@
 import Sidebar from "../components/SideBar";
 
 import TablaExpediente from '../components/TablaExpediente';
+// import SoliDetails from "../components/SoliDetails";
+
 
 export function AdminPanel() {
 
@@ -16,6 +18,7 @@ export function AdminPanel() {
             {/* Panel de Administración */}
             <div className="w-full">
                 <Sidebar/>
+                
             </div>
 
             {/* Contenido Principal */}
