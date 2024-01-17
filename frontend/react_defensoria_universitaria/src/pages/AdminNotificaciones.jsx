@@ -33,7 +33,7 @@ export function AdminNotificaciones() {
             {/* Contenido Principal */}
             <div className="ml-14 p-4 w-full">
                 <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
-                    <h2 className="text-granate text-3xl font-bold text-center mb-4">NOTIFICACIONES</h2>
+                    <h2 className="text-granate-900 text-3xl font-bold text-center mb-4">NOTIFICACIONES</h2>
                 
 
                     <a className="text-black text-2xl font-bold text-center mb-4">Listado de notificaciones</a>

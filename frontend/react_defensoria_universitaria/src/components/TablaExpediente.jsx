@@ -165,10 +165,10 @@ const TablaExpediente = () => {
   return (
 
     <div className="w-full">
-      <div className="max-w-full m-10 p-10 bg-gray-300 rounded-lg shadow-lg "> {/* cuadro gris*/}
-          <h2 className="text-granate text-4xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS</h2>
+      <div className="max-w-full m-10 p-10 bg-grisclaro rounded-lg shadow-lg "> {/* cuadro gris*/}
+          <h2 className="text-granate-900 text-4xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS</h2>
           
-          <div className="flex   space-x-4 mb-4 mt-10">
+          <div className="flex space-x-4 mb-4 mt-10">
               {/* Cuadro de Quejas */}
               <BotonFiltroTipoSolicitud
                 icon={FaFile}
