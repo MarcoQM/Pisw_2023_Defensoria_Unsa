@@ -14,6 +14,8 @@ import { Login } from "./pages/Login";
 import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
+import SoliDetails from "./components/SoliDetails";
+
 
 
 
@@ -34,7 +36,6 @@ function App() {
             {/* Ruta con BarraPosteriorPendiente */}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
             
-            </>}/>                   
 
           </Routes>
 
@@ -56,6 +57,8 @@ function App() {
             </Route>
 
             <Route path="/consulta" element={<ConsultaExpediente />} />
+
+            <Route path="/detalles-solicitud/:solicitudId" element={<ProtectedRoute element={<SoliDetails />} />} />
           </Routes>
           </div>          
 
