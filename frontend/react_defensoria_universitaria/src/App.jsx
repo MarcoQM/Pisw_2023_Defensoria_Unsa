@@ -35,6 +35,7 @@ function App() {
 
             {/* Ruta con BarraPosteriorPendiente */}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
+            </>} />
             
 
           </Routes>
