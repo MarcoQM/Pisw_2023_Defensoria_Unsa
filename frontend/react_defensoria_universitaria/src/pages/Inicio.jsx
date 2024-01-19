@@ -6,7 +6,7 @@ export function Inicio() {
   
     return (
         
-            <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-grayscale-50 relative flex justify-center items-center "  >            
+            <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-gray-50 relative flex justify-center items-center "  >            
                 <div className=" relative w-8/12 h-screen justify-center items-center">
                     <div className="relative flex items-top justify-center min-h-screen sm:items-center bg-zinc-800 bg-blend-screen py-4 sm:pt-0 bg-cover bg-center">
                         <div className="text-center flex flex-col justify-center">
@@ -20,11 +20,11 @@ export function Inicio() {
                                 Sistema Electrónico de Defensoria Universitaria
                             </div>
                             <a className="align-middle mt-3" href="">
-                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
+                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate-800 hover:bg-granate-500 active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
                                 onClick={() => navigate("/registro-incidencias")}>Realizar una Denuncia</button>
                             </a>
                             <a className="align-middle mt-3" href="">
-                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate hover:bg-granateclaro active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
+                                <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-gray-500 hover:bg-gray-400 active:bg-gray-300 focus:border-unsa text-white px-12 lg:text-lg"
                                 onClick={() => navigate("/login")}>Ingreso Administrador</button>
                             </a>
                         </div>

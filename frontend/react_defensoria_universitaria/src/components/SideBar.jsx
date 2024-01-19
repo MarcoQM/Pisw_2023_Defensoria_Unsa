@@ -25,7 +25,7 @@ function Sidebar() {
     }, []);
 
     return (
-        <div className={`fixed top-10 left-0 h-screen transition-all duration-200 bg-granate-claro text-white ${isOpen ? 'w-64' : 'w-14'}`}>
+        <div className={`flex left-0 h-screen transition-all duration-200 bg-granate-claro text-white ${isOpen ? 'w-64' : 'w-14'}`}>
             <div className="flex flex-col justify-center items-center h-full">
                 <ul className=" py-4 w-full ">
                     <li className="flex items-center space-x-4 p-4 hover:bg-granate cursor-pointer">

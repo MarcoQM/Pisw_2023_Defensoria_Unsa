@@ -4,7 +4,6 @@ import { FaFile } from "react-icons/fa";
 import { RegistroCard } from "../components/RegistroCard";
 import { RegistrosList } from "../components/RegistrosList";
 import { useEffect,useState } from "react";
-import Sidebar from "../components/SideBar";
 
 export function AdminNotificaciones() {
 
@@ -29,14 +28,12 @@ export function AdminNotificaciones() {
     },[]);
 
     return (
-        <div className="flex">
-            {/* Panel de Administración */}
-            <Sidebar/>
+        <div className="flex">            
 
             {/* Contenido Principal */}
             <div className="ml-14 p-4 w-full">
                 <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
-                    <h2 className="text-granate text-3xl font-bold text-center mb-4">NOTIFICACIONES</h2>
+                    <h2 className="text-granate-900 text-3xl font-bold text-center mb-4">NOTIFICACIONES</h2>
                 
 
                     <a className="text-black text-2xl font-bold text-center mb-4">Listado de notificaciones</a>

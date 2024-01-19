@@ -4,7 +4,7 @@ import {FaExclamation } from "react-icons/fa";
 const BotonFiltroTipoSolicitud = ({ icon: Icon, label, type, pending, inProcess, onClick }) => {
   return (
     <button
-      className="w-full bg-granate hover:bg-granate-claro p-4 rounded-lg shadow-md text-center"
+      className="w-full bg-granate-800 hover:bg-granate-600 p-4 rounded-lg shadow-md text-center"
       onClick={() => onClick(type)}
     >
 
