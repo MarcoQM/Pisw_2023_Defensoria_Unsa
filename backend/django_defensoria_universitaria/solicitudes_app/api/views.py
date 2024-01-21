@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer
-from solicitudes_app.models import Solicitud, Archivo
+from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer, TipoSolicitudSerializer
+from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny 
 
@@ -149,3 +149,55 @@ class DetalleArchivoAV(APIView):
         # Manejo personalizado de solicitudes HTTP no permitidas
         mensaje = "Método no permitido para esta vista."
         return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+    
+class ListarTipoSolicitudAV(APIView):
+    def get(self, request):
+        sedes = TipoSolicitud.objects.all()
+        serializer = TipoSolicitudSerializer(sedes, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        try:
+            serializer = TipoSolicitudSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class DetalleTipoSolicitudAV(APIView):
+    
+    def get(self, request, pk):
+        try:
+            sede = TipoSolicitud.objects.get(pk=pk)
+        except TipoSolicitud.DoesNotExist:
+            return Response({'error':'Tipo de solicitud no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = TipoSolicitudSerializer(sede)
+        return Response(serializer.data)
+        
+    def delete(self, request, pk):
+        try:
+            sede = TipoSolicitud.objects.get(pk=pk)
+            sede.delete()
+            return Response({"mensaje": "Tipo de solicitud eliminada correctamente."}, status=status.HTTP_204_NO_CONTENT)
+        except TipoSolicitud.DoesNotExist:
+            return Response({"error": "El tipo de solicitud no existe."}, status=status.HTTP_404_NOT_FOUND)
+        
+    def put(self, request, pk):
+        try:
+            sede = TipoSolicitud.objects.get(pk=pk)
+            serializer = TipoSolicitudSerializer(sede, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except TipoSolicitud.DoesNotExist:
+            return Response({"error": "La sede no existe."}, status=status.HTTP_404_NOT_FOUND)
+        
+    def http_method_not_allowed(self, request, *args, **kwargs):
+        # Manejo personalizado de solicitudes HTTP no permitidas
+        mensaje = "Método no permitido para esta vista."
+        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)         
