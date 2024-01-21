@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud
+from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud, EstadoSolicitud
 
 class ArchivoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +13,10 @@ class TipoSolicitudSerializer(serializers.ModelSerializer):
         fields = '__all__' 
         # fields = ('id', 'nombre', 'archivo')
 
+class EstadoSolicitudSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EstadoSolicitud
+        fields = '__all__' 
 
 class SolicitudSerializer(serializers.ModelSerializer):
     
@@ -23,5 +27,5 @@ class SolicitudSerializer(serializers.ModelSerializer):
         model = Solicitud
         # fields = '__all__' 
         fields = ('id', 'codigo_expediente', 'rol', 'nombre', 'apellido', 'dni', 'cui', 'direccion',
-                  'telefono', 'correo', 'tipo_solicitud', 'descripcion', 'organo_universitario',
-                  'fecha_creacion', 'fecha_modificacion', 'sede', 'sede_nombre', 'archivos')
+                  'telefono', 'correo', 'tipo_solicitud', 'descripcion', 'organo_universitario', 'encargado',
+                  'estado_solicitud', 'fecha_creacion', 'fecha_modificacion', 'sede', 'sede_nombre', 'archivos')
