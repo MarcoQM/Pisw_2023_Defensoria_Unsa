@@ -10,8 +10,8 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 
 class ListarSedesAV(APIView):
     
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
     #permission_classes = [IsAuthenticated]
     
     
@@ -32,8 +32,8 @@ class ListarSedesAV(APIView):
         
 
 class DetalleSedeAV(APIView):
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     
     def get(self, request, pk):
         try:

@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class ListarProcesoAV(APIView):
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     
     def get(self, request):
         proceso = Proceso.objects.all()
@@ -28,8 +28,8 @@ class ListarProcesoAV(APIView):
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
         
 class DetalleProcesoAV(APIView):
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     
     def get(self, request, pk):
         try:
@@ -65,8 +65,8 @@ class DetalleProcesoAV(APIView):
     
 class ListarEstadoAV(APIView):
     
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     
     def get(self, request):
         estado = Estado.objects.all()
@@ -84,8 +84,8 @@ class ListarEstadoAV(APIView):
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
         
 class DetalleEstadoAV(APIView):
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [SessionAuthentication, TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     
     def get(self, request, pk):
         try:
