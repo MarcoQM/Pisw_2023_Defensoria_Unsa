@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'sedes_app',
     'solicitudes_app',
     'procesos_app',
+    'usuarios_app',
 ]
 
 MIDDLEWARE = [

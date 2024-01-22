@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/solicitudes/', include('solicitudes_app.api.urls')),
     path('api/authentication/', include('dj_rest_auth.urls')),
     path('api/registration/', include('dj_rest_auth.registration.urls')),
+    path('api/usuarios/', include('usuarios_app.api.urls')),
 ]
 
 
