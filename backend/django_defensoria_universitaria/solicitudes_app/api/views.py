@@ -2,18 +2,37 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer, TipoSolicitudSerializer
-from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud
+from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer, TipoSolicitudSerializer, EstadoSolicitudSerializer
+#from procesos_app.api.serializers import ProcesosSolicitudSerializer
+from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud, EstadoSolicitud
 
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny 
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
-
-class ListarSolicitudAV(APIView):
-    #permission_classes = [IsAuthenticatedOrReadOnly]
+class ListarSolicitudExpedienteAV(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     permission_classes = [AllowAny]
     
     def get(self, request):
-        solicitudes = Solicitud.objects.all()
+        codigo_expediente = request.data.get('codigo_expediente')
+        #dni = request.data.get('dni')
+        solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente)
+        #solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente, dni=dni)
+        serializer = SolicitudSerializer(solicitud, many=True)
+        return Response(serializer.data)
+
+class ListarSolicitudAV(APIView):
+    #permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [AllowAny]
+    
+    def get(self, request):
+        is_superuser = request.user.is_superuser
+        print(is_superuser)
+        if is_superuser:
+            solicitudes = Solicitud.objects.all()
+        else:
+            user_id = request.user.id
+            solicitudes = Solicitud.objects.filter(encargado_id=user_id)
         serializer = SolicitudSerializer(solicitudes, many=True)
         return Response(serializer.data)
     
@@ -30,7 +49,7 @@ class ListarSolicitudAV(APIView):
                     if archivo_serializer.is_valid():
                         archivo_serializer.save()
                     else:
-                        return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                        return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
@@ -58,22 +77,21 @@ class DetalleSolicitudAV(APIView):
     def put(self, request, pk):
         
         try:
-            return Response('Actualizado', status=status.HTTP_201_CREATED)
-            # solicitud = Solicitud.objects.get(pk=pk)
-            # serializer = SolicitudSerializer(solicitud, data=request.data)
-            # if serializer.is_valid():
-            #     solicitud_save = serializer.save()
-            #     # Luego de guardar la solicitud, guardo las imagenes
-            #     archivos = request.data.getlist('archivos')  # 'archivos' debe coincidir con el nombre del campo en tu solicitud POST
-            #     solicitud_id = solicitud_save.id
-            #     for archivo in archivos:
-            #         archivo_serializer = ArchivoSerializer(data={'solicitud': solicitud_id, 'archivo': archivo})
-            #         if archivo_serializer.is_valid():
-            #             archivo_serializer.save()
-            #         else:
-            #             return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-            # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            solicitud = Solicitud.objects.get(pk=pk)
+            serializer = SolicitudSerializer(solicitud, data=request.data)
+            if serializer.is_valid():
+                solicitud_save = serializer.save()
+                # Luego de guardar la solicitud, guardo las imagenes
+                archivos = request.data.getlist('archivos')  # 'archivos' debe coincidir con el nombre del campo en tu solicitud POST
+                solicitud_id = solicitud_save.id
+                for archivo in archivos:
+                    archivo_serializer = ArchivoSerializer(data={'solicitud': solicitud_id, 'archivo': archivo})
+                    if archivo_serializer.is_valid():
+                        archivo_serializer.save()
+                    else:
+                        return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Solicitud.DoesNotExist:
             return Response({"error": "El tipo de solicitud no existe."}, status=status.HTTP_404_NOT_FOUND) 
 
@@ -201,3 +219,59 @@ class DetalleTipoSolicitudAV(APIView):
         # Manejo personalizado de solicitudes HTTP no permitidas
         mensaje = "Método no permitido para esta vista."
         return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)         
+    
+class ListarEstadoSolicitudAV(APIView):
+    
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        estado = EstadoSolicitud.objects.all()
+        serializer = EstadoSolicitudSerializer(estado, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        try:
+            serializer = EstadoSolicitudSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
+        
+class DetalleEstadoSolicitudAV(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, pk):
+        try:
+            estado = EstadoSolicitud.objects.get(pk=pk)
+        except EstadoSolicitud.DoesNotExist:
+            return Response({'error':'Estado no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = EstadoSolicitudSerializer(estado)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        try:
+            estado = EstadoSolicitud.objects.get(pk=pk)
+            estado.delete()
+            return Response({"mensaje": "Estado eliminado correctamente."}, status=status.HTTP_204_NO_CONTENT)
+        except EstadoSolicitud.DoesNotExist:
+            return Response({"error": "El estado no existe."}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk):
+        try:
+            estado = EstadoSolicitud.objects.get(pk=pk)
+            serializer = EstadoSolicitudSerializer(estado, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except EstadoSolicitud.DoesNotExist:
+            return Response({"error": "El estado no existe."}, status=status.HTTP_404_NOT_FOUND)
+
+    def http_method_not_allowed(self, request, *args, **kwargs):
+        # Manejo personalizado de solicitudes HTTP no permitidas
+        mensaje = "Método no permitido para esta vista."
+        return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

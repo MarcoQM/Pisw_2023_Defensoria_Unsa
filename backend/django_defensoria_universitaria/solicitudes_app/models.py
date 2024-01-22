@@ -4,6 +4,7 @@ import uuid
 from uuid import uuid4
 from datetime import date
 import os
+from django.contrib.auth.models import User
 from  rest_framework.authtoken.models import Token
 
 # Create your models here.
@@ -14,6 +15,15 @@ class TipoSolicitud(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.nombre
+    
+class EstadoSolicitud(models.Model):
+    nombre = models.CharField(max_length=20)
+    estado = models.BooleanField(default=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True)
+     
     def __str__(self):
         return self.nombre
 
@@ -32,6 +42,8 @@ class Solicitud(models.Model):
     tipo_solicitud = models.ForeignKey(TipoSolicitud, on_delete=models.PROTECT)
     descripcion = models.CharField(max_length=250)
     organo_universitario = models.CharField(max_length=80, null=True)
+    encargado = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    estado_solicitud = models.ForeignKey(EstadoSolicitud, on_delete=models.PROTECT, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     

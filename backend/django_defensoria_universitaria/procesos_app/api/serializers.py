@@ -1,15 +1,11 @@
 from rest_framework import serializers
-from procesos_app.models import Proceso, Estado
-
-class EstadoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Estado
-        fields = '__all__' 
+from procesos_app.models import Proceso
 
 class ProcesoSerializer(serializers.ModelSerializer):
     #estado = serializers.CharField(source='estado.nombre')  # Incluye el nombre del estado en lugar del ID
-    estado_nombre = serializers.CharField(source='estado.nombre', read_only=True)  # Incluye el nombre del estado en lugar del ID
-
+    estado_solicitud_descripcion = serializers.CharField(source='estado_solicitud.nombre', read_only=True)  
+    nombre_usuario = serializers.CharField(source='user.username', read_only=True)  
     class Meta: 
         model = Proceso
-        fields = '__all__' 
+        #fields = '__all__' 
+        fields = ('id', 'observaciones', 'estado_proceso', 'fecha_creacion', 'solicitud', 'estado_solicitud', 'estado_solicitud_descripcion', 'user', 'nombre_usuario')
