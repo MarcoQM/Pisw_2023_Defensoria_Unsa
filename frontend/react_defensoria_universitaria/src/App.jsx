@@ -55,11 +55,12 @@ function App() {
               <Route path="/reportesg" element={<ProtectedRoute element={<AdminReportesG />} />} />
               <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
               <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
+              <Route path="/detalles-solicitud/:solicitudId" element={<ProtectedRoute element={<SoliDetails />} />} />
             </Route>
 
             <Route path="/consulta" element={<ConsultaExpediente />} />
 
-            <Route path="/detalles-solicitud/:solicitudId" element={<ProtectedRoute element={<SoliDetails />} />} />
+            
           </Routes>
           </div>          
 
