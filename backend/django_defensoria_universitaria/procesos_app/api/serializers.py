@@ -8,4 +8,8 @@ class ProcesoSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Proceso
         #fields = '__all__' 
-        fields = ('id', 'observaciones', 'estado_proceso', 'fecha_creacion', 'solicitud', 'estado_solicitud', 'estado_solicitud_descripcion', 'user', 'nombre_usuario')
+        fields = ('id', 'observaciones', 'estado_proceso', 
+                  'fecha_creacion', 'solicitud',
+                  'organo_universitario_encargado', 'estado_situacional',
+                  'remitido', 'recomendacion',  'estado_solicitud', 
+                  'estado_solicitud_descripcion', 'user', 'nombre_usuario')

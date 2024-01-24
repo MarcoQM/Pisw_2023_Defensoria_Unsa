@@ -157,5 +157,13 @@ MEDIA_URL = '/media/'
 # Ruta de sistema de archivos local para los archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
-SITE_ID = 1
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+#SITE_ID = 1
+
+# Configuración de envío de correos electrónicos
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'pisw2023.defensoria.univer@gmail.com'
+EMAIL_HOST_PASSWORD = 'ftae qiha qmdi qrak'
