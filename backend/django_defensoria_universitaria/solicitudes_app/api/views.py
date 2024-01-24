@@ -3,8 +3,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from solicitudes_app.api.serializers import SolicitudSerializer, ArchivoSerializer, TipoSolicitudSerializer, EstadoSolicitudSerializer
-#from procesos_app.api.serializers import ProcesosSolicitudSerializer
+from procesos_app.api.serializers import ProcesoSerializer
 from solicitudes_app.models import Solicitud, Archivo, TipoSolicitud, EstadoSolicitud
+from procesos_app.models import Proceso
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -45,11 +46,23 @@ class ListarSolicitudAV(APIView):
                 archivos = request.data.getlist('archivos')  # 'archivos' debe coincidir con el nombre del campo en tu solicitud POST
                 solicitud_id = solicitud_save.id
                 for archivo in archivos:
-                    archivo_serializer = ArchivoSerializer(data={'solicitud': solicitud_id, 'archivo': archivo})
+                    data = {'solicitud': solicitud_id, 
+                            'archivo': archivo}
+                    archivo_serializer = ArchivoSerializer(data=data)
                     if archivo_serializer.is_valid():
                         archivo_serializer.save()
                     else:
-                        return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
+                        return Response(archivo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+                ## Se graba un proceso en estado recibido por defecto
+                data = {'estado_solicitud': 1, 
+                        'observaciones': 'Solicitud recibida',
+                        'solicitud': solicitud_id
+                        }
+                proceso_serializer = ProcesoSerializer(data=data)
+                if proceso_serializer.is_valid():
+                    proceso_serializer.save()
+                else:
+                    return Response(proceso_serializer.errors, status=status.HTTP_400_BAD_REQUEST)        
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
@@ -79,6 +92,7 @@ class DetalleSolicitudAV(APIView):
         try:
             solicitud = Solicitud.objects.get(pk=pk)
             serializer = SolicitudSerializer(solicitud, data=request.data)
+            #print(request.data.get('estado_solicitud'))
             if serializer.is_valid():
                 solicitud_save = serializer.save()
                 # Luego de guardar la solicitud, guardo las imagenes
@@ -93,7 +107,7 @@ class DetalleSolicitudAV(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Solicitud.DoesNotExist:
-            return Response({"error": "El tipo de solicitud no existe."}, status=status.HTTP_404_NOT_FOUND) 
+            return Response({"error": "La solicitud no existe."}, status=status.HTTP_404_NOT_FOUND) 
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         # Manejo personalizado de solicitudes HTTP no permitidas
