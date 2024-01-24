@@ -9,6 +9,12 @@ from procesos_app.models import Proceso
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from smtplib import SMTPAuthenticationError
+
+from django.core.mail import send_mail
+from django_defensoria_universitaria.settings import EMAIL_HOST_USER
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 class ListarSolicitudExpedienteAV(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -16,9 +22,9 @@ class ListarSolicitudExpedienteAV(APIView):
     
     def get(self, request):
         codigo_expediente = request.data.get('codigo_expediente')
-        #dni = request.data.get('dni')
-        solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente)
-        #solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente, dni=dni)
+        dni = request.data.get('dni')
+        #solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente)
+        solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente, dni=dni)
         serializer = SolicitudSerializer(solicitud, many=True)
         return Response(serializer.data)
 
@@ -61,10 +67,39 @@ class ListarSolicitudAV(APIView):
                 proceso_serializer = ProcesoSerializer(data=data)
                 if proceso_serializer.is_valid():
                     proceso_serializer.save()
+                    
+                    solicitud_name = solicitud_save.nombre
+                    solicitud_codigo_expediente = solicitud_save.codigo_expediente
+                    solicitud_dni = solicitud_save.dni
+                    solicitud_correo = solicitud_save.correo
+                    
+                    # Envío de correo electrónico
+                    #asunto = 'Asunto del Correo'
+                    #mensaje = 'Contenido del correo electrónico.'
+                    #destinatarios = ['marcoq558@gmail.com']
+                    #send_mail(asunto, mensaje, EMAIL_HOST_USER, destinatarios, fail_silently=False)
+                    
+                    # Renderizar la plantilla HTML a una cadena
+                    html_message = render_to_string('correo_template.html', 
+                                                    {'nombre': solicitud_name,
+                                                     'codigo_expediente': solicitud_codigo_expediente,
+                                                     'dni': solicitud_dni})
+
+                    
+                    asunto = 'Ingreso de Solicitud Defensoria Universitaria'
+                    mensaje = 'Contenido del correo electrónico.'
+                    destinatarios = [solicitud_correo]
+                    send_mail(asunto, strip_tags(html_message), EMAIL_HOST_USER, destinatarios, fail_silently=False, html_message=html_message)
+                    
+ 
                 else:
                     return Response(proceso_serializer.errors, status=status.HTTP_400_BAD_REQUEST)        
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        except SMTPAuthenticationError as e:
+            print(e)
+            return Response({"error": "Error de autenticación SMTP:"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
         
