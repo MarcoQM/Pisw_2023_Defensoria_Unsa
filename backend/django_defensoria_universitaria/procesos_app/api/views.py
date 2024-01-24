@@ -2,9 +2,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from procesos_app.api.serializers import ProcesoSerializer
+from solicitudes_app.api.serializers import SolicitudSerializer
 from procesos_app.models import Proceso
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+from solicitudes_app.models import Solicitud
 
 
 class ListarProcesoAV(APIView):
@@ -28,6 +30,17 @@ class ListarProcesoAV(APIView):
             serializer = ProcesoSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                
+                # actualizo la solicitud 
+                codigo_solicitud = request.data.get('solicitud')
+                estado_solicitud = request.data.get('estado_solicitud')
+                encargado_solicitud = request.data.get('user')
+                
+                solicitud = Solicitud.objects.get(pk=codigo_solicitud)
+                solicitud.estado_solicitud_id = estado_solicitud
+                solicitud.encargado_id = encargado_solicitud
+                solicitud.save()
+
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
