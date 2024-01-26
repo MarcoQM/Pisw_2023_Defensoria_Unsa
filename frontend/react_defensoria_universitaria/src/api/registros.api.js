@@ -10,17 +10,12 @@ const getLocalToken = () => {
     return JSON.parse(localStorage.getItem(tokenName));  
 };
 
-
-
-
-
-
 export const getAllSolicitudes=() => {
-    return axios.get('http://localhost:8000/api/solicitudes/')
+    return axios.get('http://vps-3870710-x.dattaweb.com:8000/api/solicitudes/')
 };
 
 export const createIncidencia = (formData) => {  
-    return axios.post('http://localhost:8000/api/solicitudes/', formData, {
+    return axios.post('http://vps-3870710-x.dattaweb.com:8000/api/solicitudes/', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -55,18 +50,18 @@ export const createRegistro = (post) => {
 
 export const getAllRoles = () => {
 
-    return axios.get('http://localhost:8000/api/solicitudes/rol/');
+    return axios.get('http://vps-3870710-x.dattaweb.com:8000/api/solicitudes/rol/');
 };
 export const getAllTipo = () => {
-    return axios.get('http://localhost:8000/api/solicitudes/tipo/');
+    return axios.get('http://vps-3870710-x.dattaweb.com:8000/api/solicitudes/tipo/');
 };
 
 export const getExpediente = (id) => {
-    return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
+    return axios.get(`http://vps-3870710-x.dattaweb.com:8000/api/solicitudes/${id}`);
 }
 
 export const getAllSedes = () => { 
-    return axios.get('http://localhost:8000/api/sedes/');
+    return axios.get('http://vps-3870710-x.dattaweb.com:8000/api/sedes/');
 
 
 }
@@ -78,7 +73,7 @@ export const login = (login) => {
 
         const instance = axios.create({  
               
-            baseURL: 'http://localhost:8000/api/authentication',  
+            baseURL: 'http://vps-3870710-x.dattaweb.com:8000/api/authentication',  
             // headers es lo necesario para hacer la petición  
             headers: {  
                 'Content-Type': 'application/json'  
@@ -125,7 +120,7 @@ export const getAllSedes = () => {
 export const logOut = () => {  
     return new Promise((resolve, reject) => {  
         const instance = axios.create({  
-            baseURL: 'http://127.0.0.1:8000/api/authentication',  
+            baseURL: 'http://vps-3870710-x.dattaweb.com:8000/api/authentication',  
             headers: {  
                 'Content-Type': 'application/json'  
             }  

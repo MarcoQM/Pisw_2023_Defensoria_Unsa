@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
+
 export function Inicio() {    
 
     const navigate = useNavigate();
+
   
+
+
+    
     return (
         
             <div className="bg-[url('../portada2.1.jpg')] bg-cover bg-center h-screen bg-gray-50 relative flex justify-center items-center "  >            

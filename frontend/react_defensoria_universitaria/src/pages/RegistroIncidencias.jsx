@@ -117,7 +117,7 @@ export function RegistroIncidencias() {
             {/* Aumentamos el margen superior a "mt-8" para un espacio más ancho */}
             <h5 className="text-black text-xl font-bold mb-2">Estamos para escucharte</h5>
             <p className="mb-2">Llena el formulario de atención para que podamos ver tu caso. Si tienes alguna duda, puedes revisar nuestra sección sobre</p>
-            <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoria Universitaria?</h5>
+            <h5 className="text-granate text-xl font-bold mb-2">¿Cómo funciona la Defensoría Universitaria?</h5>
             <img
               src="\Alumnos.jpg"
               alt="Imagen"
@@ -169,7 +169,7 @@ export function RegistroIncidencias() {
             <input
               type="text"
               placeholder="Detalle"
-           
+              //VER ESTA PARTE ' NO FUNCIONA 
               className={`${
                 selectedRol === "Otros" ? "bg-white" && {...register("rol")} : "bg-grisclaro"
               } border border-white p-3 rounded-lg block w-full mb-3`}
@@ -391,7 +391,7 @@ export function RegistroIncidencias() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
+              className=" bg-red-800 p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
                 disabled={!autorizaNotificacion}
               >
               Registrar

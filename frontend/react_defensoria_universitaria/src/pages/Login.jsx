@@ -99,7 +99,7 @@ export function Login() {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
+                className=" bg-red-900 p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
                   >
                 Ingresar
               </button>

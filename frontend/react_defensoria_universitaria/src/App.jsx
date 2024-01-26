@@ -1,5 +1,5 @@
 import {BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
-import {  BarraPosteriorSolicitud, BarraPosteriorExpediente, BarraPosteriorLogeado } from "./components/BarraPosterior";
+import {  BarraPosteriorSolicitud, BarraPosteriorExpediente,  } from "./components/BarraPosterior";
 import { RegistroIncidencias } from "./pages/RegistroIncidencias";
 import { RegistrosPage } from "./pages/RegistrosPage";
 import { ConsultaExpediente } from "./pages/ConsultaExpediente";
@@ -10,7 +10,7 @@ import { AdminReportes} from "./pages/AdminReportes";
 import { AdminReportesG} from "./pages/AdminReportesG";
 import { AdminUsuarios} from "./pages/AdminUsuarios";
 import { AdminNotificaciones} from "./pages/AdminNotificaciones";
-import { Login } from "./pages/Login";
+
 import { LoginAdministrativos } from "./pages/LoginAdministrativos"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
