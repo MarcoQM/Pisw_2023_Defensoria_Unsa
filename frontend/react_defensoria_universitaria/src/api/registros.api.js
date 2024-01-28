@@ -63,7 +63,19 @@ export const getAllTipo = () => {
 
 export const getExpediente = (id) => {
     return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
-}
+};
+/*export const getExpediente = (id, dni = false) => {
+    // Utiliza un operador ternario para construir la URL en función de si se proporciona un DNI o un ID
+    const apiUrl = dni
+        ? `http://localhost:8000/api/solicitudes/?dni=${id}`
+        : `http://localhost:8000/api/solicitudes/${dni}`;
+
+    return axios.get(apiUrl);
+};*/
+export const getDni = (dni) => {
+    return axios.get(`http://localhost:8000/api/solicitudes/${dni}`);
+};
+
 
 export const getAllSedes = () => { 
     return axios.get('http://localhost:8000/api/sedes/');

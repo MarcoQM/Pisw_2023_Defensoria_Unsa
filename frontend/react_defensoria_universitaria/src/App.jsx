@@ -31,9 +31,11 @@ function App() {
             <Route path="/inicio" element={<BarraPosteriorSolicitud />} />
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
-            
+
 
             {/* Ruta con BarraPosteriorPendiente */}
+            {/*<Route path="/consulta" element={<> <BarraPosteriorExpediente />
+            </>} />*/}
             <Route path="/consulta" element={<> <BarraPosteriorExpediente />
             </>} />
             
@@ -48,6 +50,7 @@ function App() {
             <Route path="/registros-page" element={<RegistrosPage />} />
             <Route path="/inicio" element={<Inicio />} />
             <Route path="/login" element={<LoginAdministrativos />} />
+            <Route path="/consulta" element={<ConsultaExpediente />} />
             
             <Route path="/" element={<Layout/>}>  
               <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
@@ -58,7 +61,7 @@ function App() {
               <Route path="/detalles-solicitud/:solicitudId" element={<ProtectedRoute element={<SoliDetails />} />} />
             </Route>
 
-            <Route path="/consulta" element={<ConsultaExpediente />} />
+            
 
             
           </Routes>

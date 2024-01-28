@@ -158,7 +158,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
-#SITE_ID = 1
+SITE_ID = 1
 
 # Configuración de envío de correos electrónicos
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
