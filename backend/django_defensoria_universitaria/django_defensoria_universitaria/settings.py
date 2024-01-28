@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'solicitudes_app',
     'procesos_app',
     'usuarios_app',
+    'resumen_tipo_solicitud',
 ]
 
 MIDDLEWARE = [
@@ -157,7 +158,7 @@ MEDIA_URL = '/media/'
 # Ruta de sistema de archivos local para los archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 SITE_ID = 1
 
 # Configuración de envío de correos electrónicos
