@@ -33,7 +33,7 @@ export function BarraPosteriorExpediente(){
 
     return(
         <div className="fixed top-0 w-full z-10">
-            <div className=" bg-granate text-white p-4 flex justify-between items-center  ">
+            <div className=" bg-granate-900 text-white p-4 flex justify-between items-center  ">
                 <div className="flex items-center cursor-pointer" onClick={() => navigate("/inicio")}>
                     <img
                     src="\unsa-oficinas.png"
