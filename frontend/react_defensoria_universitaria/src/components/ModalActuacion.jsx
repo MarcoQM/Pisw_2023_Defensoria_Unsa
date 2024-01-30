@@ -1,11 +1,39 @@
 
-
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { getAllUsers } from '../api/registros.api';
+import { getAllEstados } from '../api/registros.api';
+
+
 
 
 const ModalActuacion = ({ open, onClose }) => {
-    if (!open) return null;
 
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getAllUsers();
+            setUsers(res.data);
+        };
+
+        fetchData();
+    }, []);
+
+    const [estados, setEstados] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getAllEstados();
+            setEstados(res.data);
+            console.log("ESTADOS >>>> ", res.data);
+        };
+        fetchData();
+    }, []);
+
+
+    if (!open) return null;
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -14,32 +42,39 @@ const ModalActuacion = ({ open, onClose }) => {
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-                <div className="flex justify-end items-center border-b p-2 font-semibold text-xs space-x-4">
-                    <div className="text-gray-600">
-                        {new Date().toLocaleString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    <div className="flex justify-end items-center border-b p-2 font-semibold text-xs space-x-4">
+                        <div className="text-gray-600">
+                            {new Date().toLocaleString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                        <button className="bg-red-500 hover:bg-red-700 text-white px-1 rounded text-sm" onClick={onClose}>
+                            X
+                        </button>
                     </div>
-                    <button className="bg-red-500 hover:bg-red-700 text-white px-1 rounded text-sm" onClick={onClose}>
-                        X
-                    </button>
-                </div>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <h2 className="text-granate text-3xl font-bold text-center text-granate-900 mb-4">ACTUALIZAR EXPEDIENTE </h2>
                         <form onSubmit={""} >
                             <div className="mb-6">
                                 <label htmlFor="sedes" className="block mb-2 text-sm font-medium text-gray-90">Proceso</label>
-                                    <select id="sedes" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option selected>Aceptado</option>
-                                    <option value="">Subsanar</option>
-                                    <option value="">Improcedente</option>
-                                    <option value="">Finalizado</option>
-                                    <option value="">Recibido</option>
-                                    </select>
+                                <select name="sedes" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option selected>Selecciona un estado</option>
+                                    {estados.map((estado) => (
+                                        <option key={estado.id} value={parseInt(estado.id, 10)}>
+                                            {estado.nombre}
+                                        </option>
+                                    ))}
+
+                                </select>
                             </div>
                             <div className="mb-6">
                                 <label htmlFor="users" className="block mb-2 text-sm font-medium text-gray-90">Encargado</label>
-                                    <select id="users" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option selected>Jorge Espinoza</option>
-                                    <option value="">Armando Lopez</option>
+                                <select name="users" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                >
+                                    <option value="">Selecciona un usuario</option>
+                                    {users.map((user) => (
+                                        <option key={user.id} value={parseInt(user.id, 10)}>
+                                            {user.username}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="mb-6">
@@ -70,7 +105,7 @@ const ModalActuacion = ({ open, onClose }) => {
                             <div className="flex justify-center space-x-4">
                                 <button
                                     type="submit"
-                                    className="bg-blue p-3 rounded-lg w-72 text-white hover:bg-granate-claro"
+                                    className="bg-blue-500 p-3 rounded-lg w-72 text-white hover:bg-granate-claro"
                                     disabled={false} >
                                     Actualizar
                                 </button>

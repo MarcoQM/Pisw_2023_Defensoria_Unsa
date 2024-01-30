@@ -6,8 +6,8 @@ const userName = 'user_name';
 
 
 // eslint-disable-next-line no-unused-vars
-const getLocalToken = () => {  
-    return JSON.parse(localStorage.getItem(tokenName));  
+const getLocalToken = () => {
+    return JSON.parse(localStorage.getItem(tokenName));
 };
 
 
@@ -15,21 +15,21 @@ const getLocalToken = () => {
 
 
 
-export const getAllSolicitudes=() => {
+export const getAllSolicitudes = () => {
     return axios.get('http://localhost:8000/api/solicitudes/')
 };
 
-export const createIncidencia = (formData) => {  
+export const createIncidencia = (formData) => {
     return axios.post('http://localhost:8000/api/solicitudes/', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     }
-    
-    
+
+
     );
 
-    
+
 }
 
 /*
@@ -51,7 +51,7 @@ export const createRegistro = (post) => {
             reject(e.response);  
         });  
     }); 
-}; */ 
+}; */
 
 export const getAllRoles = () => {
 
@@ -77,35 +77,46 @@ export const getDni = (dni) => {
 };
 
 
-export const getAllSedes = () => { 
+export const getAllSedes = () => {
     return axios.get('http://localhost:8000/api/sedes/');
+}
 
+// obtener tipo de solicitud por id
+export const getTipoById = (id) => {
+    return axios.get(`http://localhost:8000/api/solicitudes/tipo/${id}`);
+}
 
+export const getAllUsers = () => {
+    return axios.get('http://localhost:8000/api/usuarios/');
+}
+
+export const getAllEstados = () => {
+    return axios.get('http://127.0.0.1:8000/api/solicitudes/estados/');
 }
 
 
 export const login = (login) => {
 
-    return new Promise((resolve, reject) => {  
+    return new Promise((resolve, reject) => {
 
-        const instance = axios.create({  
-              
-            baseURL: 'http://localhost:8000/api/authentication',  
+        const instance = axios.create({
+
+            baseURL: 'http://localhost:8000/api/authentication',
             // headers es lo necesario para hacer la petición  
-            headers: {  
-                'Content-Type': 'application/json'  
+            headers: {
+                'Content-Type': 'application/json'
             },
-             
-        }); 
-        instance.post('login/', login)  
-            .then(r => {                  
-                localStorage.setItem(tokenName, JSON.stringify(r.data.key)); 
-                console.log(r.data)              
-                resolve(r.data);  
-            }).catch(e => {  
-                console.log(e);  
-                reject(e.response);  
-            }); 
+
+        });
+        instance.post('login/', login)
+            .then(r => {
+                localStorage.setItem(tokenName, JSON.stringify(r.data.key));
+                console.log(r.data)
+                resolve(r.data);
+            }).catch(e => {
+                console.log(e);
+                reject(e.response);
+            });
 
     });
 
@@ -134,25 +145,25 @@ export const getAllSedes = () => {
     }); 
 };
 */
-export const logOut = () => {  
-    return new Promise((resolve, reject) => {  
-        const instance = axios.create({  
-            baseURL: 'http://127.0.0.1:8000/api/authentication',  
-            headers: {  
-                'Content-Type': 'application/json'  
-            }  
-        });  
+export const logOut = () => {
+    return new Promise((resolve, reject) => {
+        const instance = axios.create({
+            baseURL: 'http://127.0.0.1:8000/api/authentication',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-        instance.post('logout/', {})  
-        .then(r => {  
-            localStorage.removeItem(tokenName);  
-            localStorage.removeItem(userName); 
-            resolve(r.data);  
-        }).catch(e => {  
-            console.log(e);  
-            reject(e.response);  
-        }); 
-    }); 
+        instance.post('logout/', {})
+            .then(r => {
+                localStorage.removeItem(tokenName);
+                localStorage.removeItem(userName);
+                resolve(r.data);
+            }).catch(e => {
+                console.log(e);
+                reject(e.response);
+            });
+    });
 };
 
 

@@ -20,7 +20,10 @@ export default {
       yellow: colors.yellow,
       red: colors.red,
       sky: colors.sky,
+      blue: colors.blue,
+      orange: colors.orange,
       teal: colors.teal,
+
       granate: {
         50: '#fce8e8',
         100: '#f9c6c6',
@@ -36,7 +39,7 @@ export default {
       'white': '#ffffff',
       'gris': '#999999',
       'grisclaro': '#d6d6d6',
-      'blue': '#141E42',
+      'azul': '#141E42',
       'black': '#000000',
       'granate-claro': '#942129',
       // Configure your color palette here

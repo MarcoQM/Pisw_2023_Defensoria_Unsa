@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
     'django.contrib.sites',
-    'allauth', 
-    'allauth.account', 
+    'allauth',
+    'allauth.account',
     # 'allauth.socialaccount' # si queremos implementar autenticación usando redes sociales
     'corsheaders',
     'rest_framework',
@@ -142,13 +142,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 REST_FRAMEWORK = {
-    #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    # 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     'rest_framework.authentication.SessionAuthentication',
     #     'rest_framework.authentication.TokenAuthentication',
     # ],
     # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated', 
+    #     'rest_framework.permissions.IsAuthenticated',
     # ],
 }
 
