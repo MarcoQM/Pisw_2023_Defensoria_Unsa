@@ -10,8 +10,6 @@ function SoliDetails() {
   const { solicitudId } = useParams();
   console.log("SOLICITUD ID" + solicitudId);
   const [solicitudData, setSolicitudData] = useState([]);
-  const [tipoSolicitud, setTipoSolicitud] = useState([]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +30,33 @@ function SoliDetails() {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  function getIconForFileType(file) {
+    const extension = file.split('.').pop();
+    switch (extension) {
+      case 'pdf':
+        return '/archivos/pdf.png';
+      case 'doc':
+      case 'docx':
+        return '/archivos/doc.png';
+      case 'png':
+      case 'jpg':
+      case 'jpeg':
+        return '/archivos/image.png';
+      case 'mp4':
+      case 'avi':
+        return '/archivos/video.png';
+      default:
+        return '/archivos/file.png';
+    }
+  }
+
   return (
-    <section className="mx-20">
+    <section className="mx-20 overflow-auto">
       <h2 className="text-granate text-3xl font-bold text-center text-granate-900 my-4">DETALLES DE EXPEDIENTE {solicitudData.codigo_expediente}</h2>
       <div className="flex justify-end">
         <button
           onClick={() => setIsOpen(true)}
-          className="px-4 py-1 mb-4 bg-blue hover:bg-granate-claro text-white text-lg rounded " >
+          className="px-4 py-1 mb-4 bg-blue-500 hover:bg-granate-claro text-white text-lg rounded " >
           Agregar actuación
         </button>
       </div>
@@ -48,14 +66,14 @@ function SoliDetails() {
           <h3 className="font-bold">Informacion General</h3>
           <div className="grid grid-cols-2 gap-1 overflow-auto">
             <Details title="Fecha:" text={formatDate(solicitudData.fecha_creacion)} />
-            <Details title="Tipo de solicitud:" text={tipoSolicitud} />
+            <Details title="Tipo de solicitud:" text={solicitudData.tipo_solicitud} />
           </div>
         </div>
         <div className="card bg-white border border-transparent rounded-md p-2">
           <h3 className="font-bold">Solicita</h3>
           <div className="p-2 overflow-auto">
             <p>
-              {solicitudData.descripcion}
+              {solicitudData.solicita}
             </p>
           </div>
         </div>
@@ -80,7 +98,7 @@ function SoliDetails() {
           <h3 className="font-bold">Expone</h3>
           <div className="p-2 overflow-auto">
             <p>
-              {solicitudData.descripcion}
+              {solicitudData.expone}
             </p>
           </div>
         </div>
@@ -88,24 +106,14 @@ function SoliDetails() {
         <div className="card bg-white border border-transparent rounded-md p-2">
           <h3 className="font-bold">Documentos Adjuntos </h3>
           <ul className="space-y-2">
-            <li className="flex items-center">
-              <img src="/path/to/pdf-icon.svg" alt="" className="mr-2" />
-              <a href="#" className="text-blue-500">
-                Prueba1.pdf
-              </a>
-            </li>
-            <li className="flex items-center">
-              <img src="/path/to/pdf-icon.svg" alt="" className="mr-2" />
-              <a href="#" className="text-blue-500">
-                Prueba2.pdf
-              </a>
-            </li>
-            <li className="flex items-center">
-              <img src="/path/to/pdf-icon.svg" alt="" className="mr-2" />
-              <a href="#" className="text-blue-500">
-                Prueba3.pdf
-              </a>
-            </li>
+            {solicitudData && solicitudData.archivos && solicitudData.archivos.map((archivo, index) => (
+              <li key={index} className="flex items-center">
+                <img src={getIconForFileType(archivo.archivo)} alt="Archivo" className="w-8 h-8 m-2" />
+                <a href={archivo.archivo} className="text-sm font-medium text-blue-800 hover:underline">
+                  Prueba{index + 1}.{archivo.archivo.split('.').pop()}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="card bg-white border border-transparent rounded-md p-2 row-span-3">
@@ -114,21 +122,21 @@ function SoliDetails() {
             <ol className="relative border-s border-gray-500 mx-12">
               <HistorialItem
                 date={formatDate(solicitudData.fecha_creacion)}
-                estado="En Proceso"
+                estado={solicitudData.estado_solicitud_nombre}
                 encargado="Juan Perez"
                 remitido="No"
                 recomendacion="No"
               />
               <HistorialItem
                 date="25 - 12 - 2023"
-                estado="En Proceso"
+                estado="En proceso"
                 encargado="Juan Perez"
                 remitido="No"
                 recomendacion="No"
               />
               <HistorialItem
                 date="25 - 12 - 2023"
-                estado="En Proceso"
+                estado="Inadmisible"
                 encargado="Juan Perez"
                 remitido="No"
                 recomendacion="No"

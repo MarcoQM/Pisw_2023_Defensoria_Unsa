@@ -105,7 +105,7 @@ const ModalActuacion = ({ open, onClose }) => {
                             <div className="flex justify-center space-x-4">
                                 <button
                                     type="submit"
-                                    className="bg-blue p-3 rounded-lg w-72 text-white hover:bg-granate-claro"
+                                    className="bg-blue-500 p-3 rounded-lg w-72 text-white hover:bg-granate-claro"
                                     disabled={false} >
                                     Actualizar
                                 </button>
