@@ -81,3 +81,12 @@ class DetalleProcesoAV(APIView):
         # Manejo personalizado de solicitudes HTTP no permitidas
         mensaje = "Método no permitido para esta vista."
         return Response({"error": mensaje}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+class ListarSolicitudProcesoAV(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, pk):
+        procesos = Proceso.objects.filter(solicitud=pk)
+        serializer = ProcesoSerializer(procesos, many=True)
+        return Response(serializer.data)
