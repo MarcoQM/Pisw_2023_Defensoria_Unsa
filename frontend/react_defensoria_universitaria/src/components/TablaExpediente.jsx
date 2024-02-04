@@ -100,7 +100,7 @@ const TablaExpediente = () => {
       },
       {
         header : 'Tipo de Solicitud',
-        accessorKey: 'tipo_solicitud'
+        accessorKey: 'tipo_solicitud_nombre'
       },
       {
         
