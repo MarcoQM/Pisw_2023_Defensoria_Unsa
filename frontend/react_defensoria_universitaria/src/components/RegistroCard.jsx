@@ -10,21 +10,21 @@ export function RegistroCard({registro, index}){
                     <a>{index+1}</a> {/* Nro */}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <a>{registro.id}</a> {/* Nro Expediente */}
+                    <a>{registro.codigo_expediente}</a> {/* Nro Expediente */}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                      {registro.nombre} {/* Solicitante */}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap">
-                     {registro.tipo_solicitud} {/* Tipo Solicitud */}
+                     {registro.tipo_solicitud_nombre} {/* Tipo Solicitud */}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap">
-                     Falta Agregar{/* Estado */}
+                    {registro.estado_solicitud_nombre}{/* Estado */}
                 </td> 
                 <td className="px-6 py-4 whitespace-nowrap">
-                     Falta Agregar{/* Estado */}
+                    {registro.encargado_nombre}{/* Estado */}
                 </td> 
 
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -34,7 +34,6 @@ export function RegistroCard({registro, index}){
                 <td className="px-6 py-4 whitespace-nowrap">
                      <Link to={`/solicitudes/${registro.id}`} className="bg-granate px-5 py-1 text-white rounded-md ">
                         Detalles
-
                      </Link>
                 </td> 
 
