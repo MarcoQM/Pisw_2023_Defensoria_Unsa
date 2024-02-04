@@ -16,9 +16,9 @@ def resumen(request):
     estados = Estado.objects.all()
     resumen = {}
     for ts in tipoSolicitud:
-        resumen[ts.descripcion]={}
+        resumen[ts.nombre]={}
         for e in estados:
-            resumen[ts.descripcion][e.nombre]=0
+            resumen[ts.nombre][e.nombre]=0
         
 
     solicitudes = Solicitud.objects.all()
@@ -45,7 +45,7 @@ def grafico_barras(request): #dependencia por tipo de solicitud
             
             tipoSolicitud = TipoSolicitud.objects.all()
             for ts in tipoSolicitud:
-                tipoSolicitudPorSede[ts.descripcion]=0
+                tipoSolicitudPorSede[ts.nombre]=0
             
             try:
                 solicitudes = Solicitud.objects.filter(sede = id, fecha_creacion__year=año_actual)
@@ -99,7 +99,7 @@ def solicitudes_mes(request):
     for ts in tipoSolicitud:
         for mes in resumenPorMes:
             for nombre_mes, datos_mes in mes.items():
-                datos_mes[ts.descripcion]=0
+                datos_mes[ts.nombre]=0
     
     try:
         solicitudes = Solicitud.objects.filter(fecha_creacion__year=año_actual)
