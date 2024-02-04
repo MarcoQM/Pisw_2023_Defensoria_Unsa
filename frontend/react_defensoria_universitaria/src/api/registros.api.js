@@ -15,6 +15,7 @@ const getLocalToken = () => {
 export const getAllSolicitudes = () => {
     return axios.get('http://localhost:8000/api/solicitudes/', {
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Token '+getLocalToken()
         }
     });

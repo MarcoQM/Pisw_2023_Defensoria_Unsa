@@ -36,13 +36,13 @@ import{ useState } from 'react';
         />
         <button 
             onClick={handleFilterChange} 
-            className={`px-3 py-1  ${filtersApplied ? 'bg-gray-400' : 'bg-blue-500'} text-white bg-granate rounded`}
+            className={`px-3 py-1 m-3 ${filtersApplied ? 'bg-gray-400' : 'bg-granate-900'} text-white bg-granate rounded`}
             disabled={filtersApplied}>
             Filtrar
         </button>
         <button 
             onClick={handleClearFilters} 
-            className={`px-3 py-1 ml-2 text-white ${!filtersApplied ? 'bg-gray-400' : 'bg-granate'} rounded`}
+            className={`px-3 py-1 ml-2 text-white ${!filtersApplied ? 'bg-gray-400' : 'bg-granate-900'} rounded`}
             disabled={!filtersApplied}>
             Limpiar Filtros
         </button>

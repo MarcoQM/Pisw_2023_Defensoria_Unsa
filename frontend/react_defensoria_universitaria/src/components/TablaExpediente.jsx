@@ -87,7 +87,7 @@ const TablaExpediente = () => {
 
     const [data, setData]=useState([]);
     const [globalFilter, setGlobalFilter] = useState('');
-
+  
     const columns = [
       {
         accessorKey: 'Nro',
@@ -105,31 +105,21 @@ const TablaExpediente = () => {
       },
       {
         header : 'Tipo de Solicitud',
-        accessorKey: 'tipo_solicitud'
-      },
+        accessorKey: 'tipo_solicitud_nombre'
+      },    
       {
-        
-        accessorKey: 'Estado',
-        cell: () => (
-          <div className="flex">
-            Estado
-          </div>
-        ),
+        header : 'Estado',
+        accessorKey: 'estado_solicitud_nombre'
       },
-      {
-        
-        accessorKey: 'Encargado',
-        cell: () => (
-          <div className="flex">
-            Encargado
-          </div>
-        ),
-
-
-      },
+      
       {
         header : 'Fecha de Recepcion',
-        accessorKey: 'fecha_creacion'
+        accessorKey: 'fecha_creacion',
+        cell: ({ row }) => (
+          <div>
+            {new Date(row.original.fecha_creacion).toLocaleDateString()}
+          </div>
+        ),
       },
       {
         accessorKey: 'Acciones',
@@ -170,10 +160,10 @@ const TablaExpediente = () => {
   return (
 
     <div className="w-full">
-      <div className="max-w-full m-10 p-10 bg-grisclaro rounded-lg shadow-lg "> {/* cuadro gris*/}
-          <h2 className="text-granate-900 text-4xl font-bold text-center mb-4">SOLICITUDES RECIBIDAS</h2>
+      <div className="max-w-full bg-grisclaro rounded-lg shadow-lg md:m-10 md:p-10 "> {/* cuadro gris*/}
+          <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">SOLICITUDES RECIBIDAS</h2>
           
-          <div className="flex space-x-4 mb-4 mt-10">
+          <div className="space-x-4 mb-4 mt-10 hidden md:flex md:w-full md:h-40 lg:w-full lg:h-40">
               {/* Cuadro de Quejas */}
               <BotonFiltroTipoSolicitud
                 icon={FaFile}
@@ -220,11 +210,11 @@ const TablaExpediente = () => {
               
           </div>
 
-        <div className="container mx-auto mt-10 p-4">
+        <div className="container mx-auto md:mt-10 p-4">
           <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>                                                     
-          <div className="px-6 py-4 ">
+          <div className="md:px-6 md:py-4 ">
             <div className=" flex flex-wrap"> 
-              <div className="md:w-3/6 my-2 text-left">
+              <div className=" w-full md:w-3/6 my-2 text-left">
                 <span className=" ">Busqueda : </span>
                 <input type="text" 
                   onChange={e => setGlobalFilter(e.target.value)}
@@ -232,83 +222,84 @@ const TablaExpediente = () => {
                   placeholder="Buscar..."
                 />
               </div>                  
-              <div className=" md:w-3/6  ">
+              <div className="w-3/6 md:w-3/6  ">
                   <FiltroFechas onFilterChange={handleDateFilterChange} onClearFilters={handleClearFilters}/>
                   
               </div>             
             </div>
             
-            <table className="table-auto w-full bg-white ">
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id} className="border-b border-gray-300 text-granate bg-gray-100">
-                    {headerGroup.headers.map(header =>(
-                      <th key={header.id} className="py-2 px-4 text-left uppercase">
-                        {header.isPlaceholder
-                        ? null 
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border divide-y divide-gray-200 ">
+                <thead>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id} className="border-b border-gray-300 text-granate bg-gray-100">
+                      {headerGroup.headers.map(header =>(
+                        <th key={header.id} className="py-2 px-4 text-left uppercase">
+                          {header.isPlaceholder
+                          ? null 
+                          : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map(row => (
+                  <tr key={row.id} className="text-gray-900 hover:bg-gray-400">
+                    {row.getVisibleCells().map(cell => (
+                      <td key={cell.id} className="py-2 px-4">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
                         )}
-                      </th>
+                      </td>
                     ))}
                   </tr>
-                ))}
-              </thead>
-              <tbody>
-                {table.getRowModel().rows.map(row => (
-                <tr key={row.id} className="text-gray-900 hover:bg-gray-400">
-                  {row.getVisibleCells().map(cell => (
-                    <td key={cell.id} className="py-2 px-4">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
                   ))}
-                </tr>
-                ))}
 
-              </tbody>
+                </tbody>
 
-            </table>
-            <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300  
-                    disabled:hover:bg-white disabled:hover:text-gray-300"
-                      onClick={() => table.setPageIndex(0)}
-                      disabled={!table.getCanPreviousPage()}>
-                      {'<<'}
-                  </button>
-                  <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+              </table>
+              <div className="mt-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300  
                       disabled:hover:bg-white disabled:hover:text-gray-300"
-                      onClick={() => table.previousPage()}
-                      disabled={!table.getCanPreviousPage()}>
-                      {'<'}
-                  </button>
-                    {table.getPageOptions().map((value,key) => (
-                      <button key={key} className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
-                      disabled:hover:bg-white disabled:hover:text-gray-300"
-                      onClick={() => table.setPageIndex(value)}>
-                        {value + 1}
+                        onClick={() => table.setPageIndex(0)}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'<<'}
+                    </button>
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'<'}
+                    </button>
+                      {table.getPageOptions().map((value,key) => (
+                        <button key={key} className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.setPageIndex(value)}>
+                          {value + 1}
 
-                      </button>
-                    ))}
-                  <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        </button>
+                      ))}
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                          onClick={() => table.nextPage()}
+                          disabled={!table.getCanNextPage()}>
+                        {'>'}
+                    </button>
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
                       disabled:hover:bg-white disabled:hover:text-gray-300"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}>
-                      {'>'}
-                  </button>
-                  <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
-                    disabled:hover:bg-white disabled:hover:text-gray-300"
-                      onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                      disabled={!table.getCanPreviousPage()}>
-                      {'>>'}
-                  </button>
+                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'>>'}
+                    </button>
 
                 </div>
-
+            </div>               
           </div>
         </div>
       </div>
