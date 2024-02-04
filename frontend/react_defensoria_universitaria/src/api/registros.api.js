@@ -5,19 +5,40 @@ const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
 
+
 // eslint-disable-next-line no-unused-vars
 const getLocalToken = () => {
     return JSON.parse(localStorage.getItem(tokenName));
 };
 
 
-
-
-
-
 export const getAllSolicitudes = () => {
-    return axios.get('http://localhost:8000/api/solicitudes/')
-};
+    return axios.get('http://localhost:8000/api/solicitudes/', {
+        headers: {
+            'Authorization': 'Token '+getLocalToken()
+        }
+    });
+}
+
+
+// export const getAllSolicitudes = () => {  
+//     return new Promise( (resolve, reject) => {  
+//         const instance = axios.create({  
+//             baseURL : 'http://localhost:8000/api/solicitudes/',  
+//             headers: {  
+//                 'Content-Type': 'application/json',
+//                 'Authorization': 'Token '+getLocalToken() 
+//            }  
+//         });   
+//         instance.get()  
+//         .then(r => {   
+//             resolve(r.data);  
+//         }).catch(e => {  
+//             console.log(e);  
+//             reject(e.response)
+//         });  
+//     }); 
+// };
 
 export const createIncidencia = (formData) => {
     return axios.post('http://localhost:8000/api/solicitudes/', formData, {
@@ -96,54 +117,42 @@ export const getAllEstados = () => {
 
 
 export const login = (login) => {
-
     return new Promise((resolve, reject) => {
-
         const instance = axios.create({
-
             baseURL: 'http://localhost:8000/api/authentication',
-            // headers es lo necesario para hacer la petición  
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-
         });
+
         instance.post('login/', login)
             .then(r => {
+                // Guardar el token en localStorage
                 localStorage.setItem(tokenName, JSON.stringify(r.data.key));
-                console.log(r.data)
+
+                // Obtener las cookies de la respuesta
+                const cookies = r.headers['set-cookie'];
+                if (cookies) {
+                    // Iterar sobre las cookies y guardar las que necesitas
+                    cookies.forEach(cookie => {
+                        if (cookie.includes('csrftoken') || cookie.includes('sessionid')) {
+                            document.cookie = cookie;
+                            
+                        }
+                    });
+                }
+                console.log(r.data);
                 resolve(r.data);
-            }).catch(e => {
+            })
+            .catch(e => {
                 console.log(e);
                 reject(e.response);
             });
-
     });
-
-
-}
-
+};
 
 /*
-export const getAllSedes = () => {  
-    return new Promise( (resolve, reject) => {  
-        const instance = axios.create({  
-            baseURL : 'http://localhost:8000/api/sedes/',  
-            headers: {  
-                'Content-Type': 'application/json',
-                'Authorization': 'Token ' + getLocalToken()  
-            }  
-        });  
- 
-        instance.get()  
-        .then(r => {   
-            resolve(r.data);  
-        }).catch(e => {  
-            console.log(e);  
-            reject(e.response);  
-        });  
-    }); 
-};
+
 */
 export const logOut = () => {
     return new Promise((resolve, reject) => {

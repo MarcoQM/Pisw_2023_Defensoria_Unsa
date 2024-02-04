@@ -37,14 +37,10 @@ const TablaExpediente = () => {
     const sugerenciasEnProceso = 2;
     const consultasPendientes = 5;
     const consultasEnProceso = 5;
-    const totalPendientes = 10;
-    const totalEnProceso = 20;    
+    
     
 
-    async function loadRegistros(){
-      const res = await getAllSolicitudes();
-      setData(res.data);
-    }
+    
 
 
     // eslint-disable-next-line no-unused-vars
@@ -67,16 +63,25 @@ const TablaExpediente = () => {
       setData(filteredData);
     };
 
+    async function loadRegistros(){
+      const res = await getAllSolicitudes();
+      setData(res.data);
+      console.log(res.data)
+      
+    }
+
     const handleClearFilters = () => {
       // Lógica para limpiar los filtros y restaurar la data original
       setGlobalFilter('');
       // Vuelve a cargar la data original
       async function loadRegistros() {
         const res = await getAllSolicitudes();
-        setData(res.data);
+        setData(res);
       }
       loadRegistros();
     };
+
+    
 
     
 
@@ -133,7 +138,7 @@ const TablaExpediente = () => {
           <div className="flex">
             {/*botón para redirigir a los detalles de la solicitud */}
             <Link to={`/detalles-solicitud/${row.original.id}`}>
-              <button className="bg-granate hover:bg-granate-claro text-white  py-1 px-4 rounded">
+              <button className="bg-granate-900 hover:bg-granate-claro text-white  py-1 px-4 rounded">
                 Detalles
               </button>
             </Link>
@@ -210,14 +215,7 @@ const TablaExpediente = () => {
               />
 
               {/* Cuadro de Total */}
-              <BotonFiltroTipoSolicitud
-                icon={FaFile}
-                label="Total"
-                type=""
-                pending={totalPendientes}
-                inProcess={totalEnProceso}
-                onClick={setGlobalFilter}
-              />
+              
 
               
           </div>
