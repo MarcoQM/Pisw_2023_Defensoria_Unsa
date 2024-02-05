@@ -233,6 +233,14 @@ const TablaExpediente = () => {
               /> */}
 
               {/* Cuadro de Total */}
+              <BotonFiltroTipoSolicitud
+                icon={FaFile}
+                label="Total"
+                type=""
+                pending={totalPendientes}
+                inProcess={totalEnProceso}
+                onClick={setGlobalFilter}
+              />
               
 
               
