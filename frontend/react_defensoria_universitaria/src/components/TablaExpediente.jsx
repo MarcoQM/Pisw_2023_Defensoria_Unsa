@@ -162,8 +162,8 @@ const TablaExpediente = () => {
         const tipoSolicitud = dataTarjetas[i][0];
         const cantidadEstados = dataTarjetas[i][1];
 
-        const pendiente = cantidadEstados['Solicitado']
-        const proceso = cantidadEstados['Proceso']
+        const pendiente = cantidadEstados['Recibido']
+        const proceso = cantidadEstados['En proceso']
 
         totalPendientes += pendiente
         totalEnProceso += proceso

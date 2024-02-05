@@ -32,7 +32,8 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
         const formData = new FormData();
         formData.append('solicitud', solicitudId);
         formData.append('estado_solicitud', data.estado_solicitud);
-        formData.append('users', data.users);
+        formData.append('estado_proceso', 1); //Siempre 1
+        formData.append('user', data.users);
         console.log('users', data.users);
         formData.append('observaciones', data.observaciones);
         formData.append('organo_universitario_encargado', data.organo_universitario_encargado);

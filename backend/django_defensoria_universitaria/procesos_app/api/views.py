@@ -28,6 +28,7 @@ class ListarProcesoAV(APIView):
     def post(self, request):
         try:
             serializer = ProcesoSerializer(data=request.data)
+            print(request.data)
             if serializer.is_valid():
                 # actualizo la solicitud 
                 codigo_solicitud = request.data.get('solicitud')
