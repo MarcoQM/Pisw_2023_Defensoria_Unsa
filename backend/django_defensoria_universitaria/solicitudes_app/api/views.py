@@ -40,6 +40,7 @@ class ListarSolicitudAV(APIView):
         else:
             user_id = request.user.id
             solicitudes = Solicitud.objects.filter(encargado_id=user_id)
+        solicitudes = Solicitud.objects.all()
         serializer = SolicitudSerializer(solicitudes, many=True)
         return Response(serializer.data)
     

@@ -29,12 +29,18 @@ class ListarProcesoAV(APIView):
         try:
             serializer = ProcesoSerializer(data=request.data)
             if serializer.is_valid():
-                serializer.save()
-                
                 # actualizo la solicitud 
                 codigo_solicitud = request.data.get('solicitud')
                 estado_solicitud = request.data.get('estado_solicitud')
                 encargado_solicitud = request.data.get('user')
+                
+                # Busco el proceso para desactivarlo
+                proceso_anterior = Proceso.objects.get(solicitud_id=codigo_solicitud, estado_proceso=True)
+                proceso_anterior.estado_proceso = False
+                proceso_anterior.save()
+                
+                # Guardo el proceso
+                serializer.save()
                 
                 solicitud = Solicitud.objects.get(pk=codigo_solicitud)
                 solicitud.estado_solicitud_id = estado_solicitud

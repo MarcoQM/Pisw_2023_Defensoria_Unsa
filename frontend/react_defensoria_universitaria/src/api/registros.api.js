@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-
+const host = 'http://127.0.0.1:8000';
+//const host = 'http://vps-3870710-x.dattaweb.com:8000';
 const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
+
 
 
 // eslint-disable-next-line no-unused-vars
@@ -10,17 +12,39 @@ const getLocalToken = () => {
     return JSON.parse(localStorage.getItem(tokenName));
 };
 
-
-
-
-
-
 export const getAllSolicitudes = () => {
-    return axios.get('http://localhost:8000/api/solicitudes/')
-};
+    return axios.get('http://localhost:8000/api/solicitudes/', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token '+getLocalToken()
+        }
+    });
+}
+
+
+// export const getAllSolicitudes = () => {  
+//     return new Promise( (resolve, reject) => {  
+//         const instance = axios.create({  
+//             baseURL : 'http://localhost:8000/api/solicitudes/',  
+//             headers: {  
+//                 'Content-Type': 'application/json',
+//                 'Authorization': 'Token '+getLocalToken() 
+//            }  
+//         });   
+//         instance.get()  
+//         .then(r => {   
+//             resolve(r.data);  
+//         }).catch(e => {  
+//             console.log(e);  
+//             reject(e.response)
+//         });  
+//     }); 
+// };
+
+
 
 export const createIncidencia = (formData) => {
-    return axios.post('http://localhost:8000/api/solicitudes/', formData, {
+    return axios.post(`${host}/api/solicitudes/`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -55,14 +79,14 @@ export const createRegistro = (post) => {
 
 export const getAllRoles = () => {
 
-    return axios.get('http://localhost:8000/api/solicitudes/rol/');
+    return axios.get(`${host}/api/solicitudes/rol/`);
 };
 export const getAllTipo = () => {
-    return axios.get('http://localhost:8000/api/solicitudes/tipo/');
+    return axios.get(`${host}/api/solicitudes/tipo/`);
 };
 
 export const getExpediente = (id) => {
-    return axios.get(`http://localhost:8000/api/solicitudes/${id}`);
+    return axios.get(`${host}/api/solicitudes/${id}`);
 };
 /*export const getExpediente = (id, dni = false) => {
     // Utiliza un operador ternario para construir la URL en función de si se proporciona un DNI o un ID
@@ -73,33 +97,32 @@ export const getExpediente = (id) => {
     return axios.get(apiUrl);
 };*/
 export const getDni = (dni) => {
-    return axios.get(`http://localhost:8000/api/solicitudes/${dni}`);
+    return axios.get(`${host}/api/solicitudes/${dni}`);
 };
 
 
 export const getAllSedes = () => {
-    return axios.get('http://localhost:8000/api/sedes/');
+    return axios.get(`${host}/api/sedes/`);
 }
 
 // obtener tipo de solicitud por id
 export const getTipoById = (id) => {
-    return axios.get(`http://localhost:8000/api/solicitudes/tipo/${id}`);
+    return axios.get(`${host}/api/solicitudes/tipo/${id}`);
 }
 
 export const getAllUsers = () => {
-    return axios.get('http://localhost:8000/api/usuarios/');
+    return axios.get(`${host}/api/usuarios/`);
 }
 
 export const getAllEstados = () => {
-    return axios.get('http://127.0.0.1:8000/api/solicitudes/estados/', {
+    return axios.get(`${host}/api/solicitudes/estados/`, {
         headers: {
             'Authorization': `Token ${getLocalToken()}`
         }
     });
 }
-
 export const getProcesosById = (id) => {
-    return axios.get(`http://localhost:8000/api/procesos/solicitud/${id}`, {
+    return axios.get(`${host}/api/procesos/solicitud/${id}`, {
         headers: {
             'Authorization': `Token ${getLocalToken()}`
         }
@@ -107,7 +130,7 @@ export const getProcesosById = (id) => {
 }
 
 export const createProceso = (proceso) => {
-    return axios.post('http://localhost:8000/api/procesos/', proceso, {
+    return axios.post(`${host}/api/procesos/`, proceso, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Token ${getLocalToken()}`,
@@ -115,60 +138,69 @@ export const createProceso = (proceso) => {
     });
 }
 
+export const getDataGraficoCircular = () => {
+    return axios.get(`${host}/api/resumen_ts/gCircular`);
+}
+
+export const getDataGraficoLineas = () => {
+    return axios.get(`${host}/api/resumen_ts/gFechas`);
+}
+
+export const getDataGraficoBarras = () => {
+    return axios.get(`${host}/api/resumen_ts/gBarras`);
+}
+
+export const getDataResumenTarjetas = () => {
+    return axios.get(`${host}/api/resumen_ts/resumen`);
+}
+
+export const getDataResumenReporte = () => {
+    return axios.get(`${host}/api/resumen_ts/resumenReporte`);
+}
+
 export const login = (login) => {
-
     return new Promise((resolve, reject) => {
-
         const instance = axios.create({
-
-            baseURL: 'http://localhost:8000/api/authentication',
+            baseURL: `${host}/api/authentication`,
             // headers es lo necesario para hacer la petición  
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-
         });
+
         instance.post('login/', login)
             .then(r => {
+                // Guardar el token en localStorage
                 localStorage.setItem(tokenName, JSON.stringify(r.data.key));
-                console.log(r.data)
+
+                // Obtener las cookies de la respuesta
+                const cookies = r.headers['set-cookie'];
+                if (cookies) {
+                    // Iterar sobre las cookies y guardar las que necesitas
+                    cookies.forEach(cookie => {
+                        if (cookie.includes('csrftoken') || cookie.includes('sessionid')) {
+                            document.cookie = cookie;
+                            
+                        }
+                    });
+                }
+                console.log(r.data);
                 resolve(r.data);
-            }).catch(e => {
+            })
+            .catch(e => {
                 console.log(e);
                 reject(e.response);
             });
-
     });
-
-
-}
-
+};
 
 /*
-export const getAllSedes = () => {  
-    return new Promise( (resolve, reject) => {  
-        const instance = axios.create({  
-            baseURL : 'http://localhost:8000/api/sedes/',  
-            headers: {  
-                'Content-Type': 'application/json',
-                'Authorization': 'Token ' + getLocalToken()  
-            }  
-        });  
- 
-        instance.get()  
-        .then(r => {   
-            resolve(r.data);  
-        }).catch(e => {  
-            console.log(e);  
-            reject(e.response);  
-        });  
-    }); 
-};
+
 */
 export const logOut = () => {
     return new Promise((resolve, reject) => {
         const instance = axios.create({
-            baseURL: 'http://127.0.0.1:8000/api/authentication',
+            baseURL: `${host}/api/authentication`,
             headers: {
                 'Content-Type': 'application/json'
             }

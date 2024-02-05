@@ -3,6 +3,7 @@ import { getAllSedes,  createIncidencia } from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
+//import { useState } from "react";
 import { toast } from 'react-hot-toast';
 
 
@@ -37,6 +38,10 @@ export function RegistroIncidencias() {
       formData.append("sede",data.sede);
       formData.append("telefono",data.telefono);
       formData.append("tipo_solicitud",data.tipo_solicitud);
+      formData.append("expone",data.expone);
+      formData.append("encargado",1);
+      formData.append("estado_solicitud",1);
+
       
 
 
@@ -53,7 +58,7 @@ export function RegistroIncidencias() {
         console.log(pair[0] + ', ' + pair[1]);
       }
       await createIncidencia(formData);
-      
+      console.log(formData);
 
       toast.success('El registro se ha completado con éxito.  Se le enviara un e-mail con los detalles de su solicitud', {
         duration: 5000, // Duración en milisegundos
@@ -73,9 +78,14 @@ export function RegistroIncidencias() {
 
   const [sedes, setSedes] = useState([]);
   //const [isOtroSelected, setIsOtroSelected] = useState(false); 
-  const [selectedRol] = useState("Estudiante");
+  const [selectedRol, setSelectedRol] = useState("Estudiante");
   // Nuevo estado para controlar la entrada de texto
-
+  const [detalleEnabled, setDetalleEnabled] = useState(false);
+  // Nuevo estado para controlar la entrada de correo
+  const [correoPlaceholder, setCorreoPlaceholder] = useState("araozv@unsa.edu.pe");
+  // Nuevo estado para controlar la entrada de CUI
+  const [cuiDisabled, setCuiDisabled] = useState(false);
+  
   useEffect(() => {
  
     
@@ -110,7 +120,7 @@ export function RegistroIncidencias() {
           <img
             src="\defensoria.png" 
             alt="Defensoria"
-            className="w-full h-full object-contain" 
+            className="w-full h-full object-cover max-w-full" 
           />
         </div>
         <div className="bg-white rounded-lg p-4 w-80 h-90 mx-auto top-80 mt-8 hidden lg:block  sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96">
@@ -127,7 +137,7 @@ export function RegistroIncidencias() {
       </div>
 
 
-      <div className="max-w-2xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 lg:ml-40 lg:mt-10 ">
+      <div className="max-w-2xl mx-auto bg-grisclaro  rounded-lg shadow-lg p-10 lg:ml-40 lg:mt-10 ">
         <h4 className="text-granate text-3xl font-bold text-center mb-4">FORMULARIO DE ATENCION PARA CONSULTAS O QUEJAS</h4>
 
         <form onSubmit={onSubmit} >
@@ -149,31 +159,40 @@ export function RegistroIncidencias() {
       </div>
 
           <div style={{ display: "flex" }}>
-            {["Estudiante", "Docente", "Administrativo", "Otros"].map((rol) => (
-              <div key={rol} style={{ marginRight: "20px" }}>
+            {["Estudiante", "Egresado","Docente", "Administrativo", "Otros"].map((rol) => (
+              <div key={rol} className=" mx-2">
                 <label>
-                  <input
-                    type="radio"
-                    name="rol"
-                    value={rol}
-                    {...register("rol", { required: true })}               
-                  />
+                <input
+                  type="radio"
+                  name="rol"
+                  value={rol}
+                  {...register("rol", { required: true })}   
+                  onChange={() => {
+                    console.log("Rol seleccionado:", rol);
+                    setSelectedRol(rol);
+                    setDetalleEnabled(rol === "Otros");
+                    // Cambiar el valor del placeholder cuando el rol es "Otros"
+                    setCorreoPlaceholder(rol === "Otros" ? "usuario@gmail.com" : "alumno@unsa.edu.pe");
+                    setCuiDisabled(rol === "Otros");
+                  }}
+                  className=" mx-2"          
+                />
                   {rol}
                 </label>
               </div>
             ))}
           </div>
 
-          <div className=" relative  mb-6">
+          <div className="relative mb-6">
             <label>Si usted tiene otro Rol, detalle</label>
             <input
               type="text"
               placeholder="Detalle"
-           
               className={`${
-                selectedRol === "Otros" ? "bg-white" && {...register("rol")} : "bg-grisclaro"
+                selectedRol === "Otros" ? "bg-white" : "bg-grisclaro"
               } border border-white p-3 rounded-lg block w-full mb-3`}
-              disabled={selectedRol !== "Otros"}
+              {...register("detalle")}
+              disabled={!detalleEnabled}
             />
           </div>
 
@@ -183,7 +202,7 @@ export function RegistroIncidencias() {
               <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
-                placeholder="Nombres"
+                placeholder="Juan Carlos"
                 {...register("nombre", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
@@ -193,7 +212,7 @@ export function RegistroIncidencias() {
               <label htmlFor="apellidos">Apellidos</label>
               <input
                 type="text"
-                placeholder="Apellidos"
+                placeholder="Lopez Mendoza"
                 {...register("apellido", { required: true })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
               />
@@ -211,7 +230,7 @@ export function RegistroIncidencias() {
                   required: "Este campo es requerido",
                   pattern: {
                     value: /^[0-9]*$/,
-                    message: "Este campo solo acepta numeros",
+                    message: "Este campo solo acepta números",
                   },
                 })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
@@ -226,13 +245,13 @@ export function RegistroIncidencias() {
                 type="text"
                 placeholder="CUI"
                 {...register("cui", { 
-                  required: "Este campo es requerido",
                   pattern: {
                     value: /^[0-9]*$/,
-                    message: "Este campo solo acepta numeros",
+                    message: "Este campo solo acepta números",
                   },
                 })}
                 className="bg-zinc-300 p-3 rounded-lg block w-full"
+                disabled={cuiDisabled}
               />
               {errors.cui && <span className="font-bold">{errors.cui.message}</span>}
             </div>
@@ -240,13 +259,13 @@ export function RegistroIncidencias() {
 
           <div className="w-64 relative  mb-6">
             <div className="w-64 relative mb-6">
-              <label htmlFor="sede">Área/Sede</label>
+              <label htmlFor="sede">Dependencia</label>
                 <select
                   className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                   name="sede"
                   {...register("sede", { required: true })}
                 >
-                  <option value="">Selecciona una sede...</option>
+                  <option value="">Selecciona una dependencia...</option>
                   
                   {sedes.map((sede) => (
                     <option key={sede.id} value={parseInt(sede.id,10)}>
@@ -283,7 +302,7 @@ export function RegistroIncidencias() {
 
           <div className="flex flex-wrap -mx-3 mb-3">
             <div className="w-full md:w-1/2 px-3 mb-3">
-              <label htmlFor="telefono">Numero Telefonico</label>
+              <label htmlFor="telefono">Número Telefónico</label>
               <input
                 type="text"
                 placeholder="Numero Telefonico"
@@ -300,15 +319,19 @@ export function RegistroIncidencias() {
             </div>
 
             <div className="w-full md:w-1/2 px-3 mb-3">
-              <label htmlFor="correo">Correo Electronico</label>
+              <label htmlFor="correo">Correo Electrónico</label>
               <input
                 type="text"
-                placeholder="Correo Electronico"
+                placeholder={correoPlaceholder}
                 {...register("correo", {
                   required: "Este campo es requerido",
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, // Expresión regular para validar un correo electrónico
-                    message: "No es un correo válido",
+                    value: selectedRol === "Otros"
+                      ? /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+                      : /^[A-Za-z0-9._%+-]+@unsa\.edu\.pe$/,
+                    message: selectedRol === "Otros"
+                      ? "No es un correo válido"
+                      : "No es un correo institucional válido",
                   },
                 })}
             
@@ -319,39 +342,53 @@ export function RegistroIncidencias() {
           </div>
 
           <div className=" relative mb-6">
-            <label className=" font-bold">Tipo de Solicitud</label>
+            <label className="font-bold">Tipo de Solicitud</label>
                       
             <p>Seleccione el tipo de solicitud que quiere presentar:</p>
-            <div style= {{ display: "flex"}}>
-            {["Queja", "Reclamo", "Sugerencia", "Consulta"].map((option) => (
-              <div key={option} style= {{marginRight: "20px"}}>
-                <label>
-                  <input
-                    type="radio"
-                    name="tipo"
-                    value={option.toLowerCase()}
-                    {...register("tipo_solicitud", { required: true })}
-                    className="mr-2"
-                />
-                {option}
-                </label>
+              <div style= {{ display: "flex"}}>
+              {['Queja','Reclamo','Sugerencia','Consulta'].map((option,index) => (
+                <div key={option} style= {{marginRight: "20px"}}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="tipo"
+                      value={index+1}
+                      {...register("tipo_solicitud", { required: true })}
+                      className="mr-2 mx-2"
+                  />
+                  {option}
+                  </label>
+                </div>
+              ))}
               </div>
-            ))}
-            </div>
             {errors.tipo && <span className="font-bold text-center">Este campo es requerido</span>}
             
           </div>
 
           <div className=" relative  ">
+            <label className=" font-bold">Descripción de la Solicitud</label>
+            <p>(Dede describir brevemente el motivo de la solicitud siendo claro para poder abordar su situación de la manera más efectiva) </p>
+          </div>
+
+          <div className="relative  mb-6">
+            <input
+              type="text"
+              className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-10 "
+              placeholder="Motivo de la solicitud..." {...register("expone" , { required: true})}
+            />
+            {errors.expone && <span className="font-bold text-center">Este campo es requerido</span>}
+          </div>
+
+          <div className=" relative  ">
             <label className=" font-bold">Sustentación de la Solicitud</label>
-            <p>(Dede aclararse si se persigue modoficar decisiones ya adoptadas o bien alertar de un supuesto mal funcionamiento con objeto de solventar el problema en el futuro) </p>
+            <p>(Dede aclararse si se persigue modificar decisiones ya adoptadas o bien alertar de un supuesto mal funcionamiento con objeto de solventar el problema en el futuro) </p>
           </div>
 
           <div className="relative  mb-6">
             <textarea
               type="text"
               className="appearance-none block w-full bg-white border border-gris hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline h-24 "
-              placeholder="Escribe algo..." {...register("descripcion" , { required: true})}
+              placeholder="Exponga su solicitud..." {...register("descripcion" , { required: true})}
             />
             {errors.descripcion && <span className="font-bold text-center">Este campo es requerido</span>}
           </div>
@@ -391,7 +428,7 @@ export function RegistroIncidencias() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-granate p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
+              className="  bg-granate-900 p-3 rounded-lg block w-72 mt-3 mx-auto  text-white"
                 disabled={!autorizaNotificacion}
               >
               Registrar
