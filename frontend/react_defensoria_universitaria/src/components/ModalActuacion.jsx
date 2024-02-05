@@ -1,15 +1,10 @@
 
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
-import { getAllUsers } from '../api/registros.api';
-import { getAllEstados } from '../api/registros.api';
+import { getAllUsers, getAllEstados, createProceso } from '../api/registros.api';
 
-
-
-
-const ModalActuacion = ({ open, onClose }) => {
-
-
+const ModalActuacion = ({ open, onClose, solicitudId }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -27,11 +22,26 @@ const ModalActuacion = ({ open, onClose }) => {
         const fetchData = async () => {
             const res = await getAllEstados();
             setEstados(res.data);
-            console.log("ESTADOS >>>> ", res.data);
         };
         fetchData();
     }, []);
 
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = handleSubmit(async (data) => {
+
+        const formData = new FormData();
+        formData.append('solicitud', solicitudId);
+        formData.append('estado_solicitud', data.estado_solicitud);
+        formData.append('users', data.users);
+        console.log('users', data.users);
+        formData.append('observaciones', data.observaciones);
+        formData.append('organo_universitario_encargado', data.organo_universitario_encargado);
+        formData.append('estado_situacional', data.estado_situacional);
+        formData.append('remitido', data.remitido);
+        formData.append('recomendacion', data.recomendacion);
+
+        await createProceso(formData);
+    });
 
     if (!open) return null;
     return (
@@ -52,10 +62,11 @@ const ModalActuacion = ({ open, onClose }) => {
                     </div>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <h2 className="text-granate text-3xl font-bold text-center text-granate-900 mb-4">ACTUALIZAR EXPEDIENTE </h2>
-                        <form onSubmit={""} >
+                        <form onSubmit={onSubmit} >
                             <div className="mb-6">
-                                <label htmlFor="sedes" className="block mb-2 text-sm font-medium text-gray-90">Proceso</label>
-                                <select name="sedes" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <label htmlFor="estado_solicitud" className="block mb-2 text-sm font-medium text-gray-90">Proceso</label>
+                                <select name="estado_solicitud" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    {...register("estado_solicitud")}>
                                     <option selected>Selecciona un estado</option>
                                     {estados.map((estado) => (
                                         <option key={estado.id} value={parseInt(estado.id, 10)}>
@@ -68,7 +79,7 @@ const ModalActuacion = ({ open, onClose }) => {
                             <div className="mb-6">
                                 <label htmlFor="users" className="block mb-2 text-sm font-medium text-gray-90">Encargado</label>
                                 <select name="users" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                >
+                                    {...register("users")}>
                                     <option value="">Selecciona un usuario</option>
                                     {users.map((user) => (
                                         <option key={user.id} value={parseInt(user.id, 10)}>
@@ -79,26 +90,30 @@ const ModalActuacion = ({ open, onClose }) => {
                             </div>
                             <div className="mb-6">
 
-                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-90">Descripcion de proceso</label>
-                                <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                <label htmlFor="observaciones" className="block mb-2 text-sm font-medium text-gray-90">Descripcion de proceso</label>
+                                <textarea id="observaciones" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    {...register("observaciones")}></textarea>
+                            </div>
+                            <div className="mb-6">
+                                <label htmlFor="organo-universitario" className="block mb-2 text-sm font-medium text-gray-90">Organo Universitario</label>
+                                <input type="text" id="organo-universitario" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                    {...register("organo_universitario_encargado")} />
+                            </div>
+                            <div className="mb-6">
+                                <label htmlFor="estado-situacional" className="block mb-2 text-sm font-medium text-gray-90">Estado</label>
+                                <input type="text" id="estado-situacional" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                    {...register("estado_situacional")} />
+                            </div>
+                            <div className="mb-6">
+                                <label htmlFor="remitido" className="block mb-2 text-sm font-medium text-gray-90">Remitido</label>
+                                <input type="text" id="remitido" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                    {...register("remitido")} />
+                            </div>
+                            <div className="mb-6">
 
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-90">Organo Universitario</label>
-                                <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " />
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-90">Estado</label>
-                                <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " />
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-90">Remitido</label>
-                                <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " />
-                            </div>
-                            <div className="mb-6">
-
-                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-90">Recomendacion</label>
-                                <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                <label htmlFor="recomendacion" className="block mb-2 text-sm font-medium text-gray-90">Recomendacion</label>
+                                <textarea id="recomendacion" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    {...register("recomendacion")}></textarea>
 
                             </div>
 
@@ -128,6 +143,7 @@ const ModalActuacion = ({ open, onClose }) => {
 ModalActuacion.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    solicitudId: PropTypes.string.isRequired
 };
 
 export default ModalActuacion;

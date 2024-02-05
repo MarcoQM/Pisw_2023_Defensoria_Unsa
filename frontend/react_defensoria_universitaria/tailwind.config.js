@@ -23,6 +23,7 @@ export default {
       blue: colors.blue,
       orange: colors.orange,
       teal: colors.teal,
+      green: colors.green,
 
       granate: {
         50: '#fce8e8',

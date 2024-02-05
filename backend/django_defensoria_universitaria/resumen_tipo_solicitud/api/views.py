@@ -11,7 +11,6 @@ from procesos_app.models import Proceso
 from sedes_app.models import Sede
 from datetime import datetime
 
-
 class ResumenTarjetasAV(APIView):
     def get(self, request):
         tipoSolicitud = TipoSolicitud.objects.all()

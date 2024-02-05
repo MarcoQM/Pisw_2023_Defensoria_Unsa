@@ -115,7 +115,27 @@ export const getAllUsers = () => {
 }
 
 export const getAllEstados = () => {
-    return axios.get(`${host}/api/solicitudes/estados/`);
+    return axios.get(`${host}/api/solicitudes/estados/`, {
+        headers: {
+            'Authorization': `Token ${getLocalToken()}`
+        }
+    });
+}
+export const getProcesosById = (id) => {
+    return axios.get(`${host}/api/procesos/solicitud/${id}`, {
+        headers: {
+            'Authorization': `Token ${getLocalToken()}`
+        }
+    });
+}
+
+export const createProceso = (proceso) => {
+    return axios.post(`${host}/api/procesos/`, proceso, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Token ${getLocalToken()}`,
+        }
+    });
 }
 
 export const getDataGraficoCircular = () => {
