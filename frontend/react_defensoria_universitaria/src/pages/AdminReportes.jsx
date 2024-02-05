@@ -49,11 +49,25 @@ export function AdminReportes() {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Nombre
                                     </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Cargo
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tipo Solicitud
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Estado Solicitud
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Encargado
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fecha de Ingreso
+                                    </th>
                                     {/* columnas según los datos */}
                                 </tr>
                             </thead>
                             <tbody>
-                               
                                 <RegistrosList/>
                             </tbody>
 

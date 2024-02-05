@@ -2,7 +2,7 @@
 
 //import { RegistrosList } from "../components/RegistrosList";
 import {useState, useEffect} from "react";
-import {getAllSolicitudes} from "../api/registros.api";
+import {getAllSolicitudes, getDataResumenTarjetas} from "../api/registros.api";
 import {rankItem} from '@tanstack/match-sorter-utils';
 import FiltroFechas from '../components/FiltroFechas';
 import { Link } from 'react-router-dom';
@@ -28,20 +28,8 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 
 const TablaExpediente = () => {
 
-    
-    const quejasPendientes = 0
-    const quejasEnProceso = 5;
-    const reclamosEnProceso = 7;
-    const reclamosPendientes = 0;
-    const sugerenciasPendientes = 10;
-    const sugerenciasEnProceso = 2;
-    const consultasPendientes = 5;
-    const consultasEnProceso = 5;
-    
-    
-
-    
-
+    let totalPendientes = 0;
+    let totalEnProceso = 0;    
 
     // eslint-disable-next-line no-unused-vars
     const handleDateFilterChange = ({ startDate, endDate }) => {
@@ -106,12 +94,15 @@ const TablaExpediente = () => {
       {
         header : 'Tipo de Solicitud',
         accessorKey: 'tipo_solicitud_nombre'
-      },    
+      },
       {
         header : 'Estado',
         accessorKey: 'estado_solicitud_nombre'
       },
-      
+      {
+        header : 'Encargado',
+        accessorKey: 'encargado_nombre'
+      },
       {
         header : 'Fecha de Recepcion',
         accessorKey: 'fecha_creacion',
@@ -121,6 +112,7 @@ const TablaExpediente = () => {
           </div>
         ),
       },
+      
       {
         accessorKey: 'Acciones',
       
@@ -138,10 +130,16 @@ const TablaExpediente = () => {
 
     ]
 
+  const [dataTarjetas, setDataTarjetas] = useState([]);
+  async function loadDataReporteTarjetas(){
+    const res = await getDataResumenTarjetas();
+    const dataTarjetas = Object.entries(res.data.resumen);
+    setDataTarjetas(dataTarjetas);
+    }
 
   useEffect(() => {
-      
       loadRegistros();
+      loadDataReporteTarjetas();
   },[]);
 
   const table = useReactTable({
@@ -157,6 +155,34 @@ const TablaExpediente = () => {
 
   })
 
+
+  const renderizarEstados = () => {
+    const elementos = [];
+    for (let i = 0; i < dataTarjetas.length; i++) {
+        const tipoSolicitud = dataTarjetas[i][0];
+        const cantidadEstados = dataTarjetas[i][1];
+
+        const pendiente = cantidadEstados['Solicitado']
+        const proceso = cantidadEstados['Proceso']
+
+        totalPendientes += pendiente
+        totalEnProceso += proceso
+
+        elementos.push(
+        <BotonFiltroTipoSolicitud
+          key={tipoSolicitud}
+          icon={FaFile}
+          label={tipoSolicitud}
+          type={tipoSolicitud}
+          pending={pendiente}
+          inProcess={proceso}
+          onClick={setGlobalFilter}
+        />);
+
+    }
+    return elementos;
+  };
+
   return (
 
     <div className="w-full">
@@ -164,45 +190,47 @@ const TablaExpediente = () => {
           <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">SOLICITUDES RECIBIDAS</h2>
           
           <div className="space-x-4 mb-4 mt-10 hidden md:flex md:w-full md:h-40 lg:w-full lg:h-40">
+              {renderizarEstados()}
+
               {/* Cuadro de Quejas */}
-              <BotonFiltroTipoSolicitud
+              {/* <BotonFiltroTipoSolicitud
                 icon={FaFile}
                 label="Quejas"
                 type="Queja"
                 pending={quejasPendientes}
                 inProcess={quejasEnProceso}
                 onClick={setGlobalFilter}
-              />
+              /> */}
 
               {/* Cuadro de Reclamos */}
-              <BotonFiltroTipoSolicitud
+              {/* <BotonFiltroTipoSolicitud
                 icon={FaFile}
                 label="Reclamos"
-                type="Reclamo"
+                type="Reclamaciones"
                 pending={reclamosPendientes}
                 inProcess={reclamosEnProceso}
                 onClick={setGlobalFilter}
-              />
+              /> */}
 
               {/* Cuadro de Sugerencias */}
-              <BotonFiltroTipoSolicitud
+              {/* <BotonFiltroTipoSolicitud
                 icon={FaFile}
                 label="Sugerencias"
                 type="Sugerencia"
                 pending={sugerenciasPendientes}
                 inProcess={sugerenciasEnProceso}
                 onClick={setGlobalFilter}
-              />
+              /> */}
 
               {/* Cuadro de Consultas */}
-              <BotonFiltroTipoSolicitud
+              {/* <BotonFiltroTipoSolicitud
                 icon={FaFile}
                 label="Consultas"
                 type="Consulta"
                 pending={consultasPendientes}
                 inProcess={consultasEnProceso}
                 onClick={setGlobalFilter}
-              />
+              /> */}
 
               {/* Cuadro de Total */}
               
