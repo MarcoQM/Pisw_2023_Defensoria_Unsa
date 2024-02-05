@@ -91,9 +91,29 @@ export const getAllUsers = () => {
 }
 
 export const getAllEstados = () => {
-    return axios.get('http://127.0.0.1:8000/api/solicitudes/estados/');
+    return axios.get('http://127.0.0.1:8000/api/solicitudes/estados/', {
+        headers: {
+            'Authorization': `Token ${getLocalToken()}`
+        }
+    });
 }
 
+export const getProcesosById = (id) => {
+    return axios.get(`http://localhost:8000/api/procesos/solicitud/${id}`, {
+        headers: {
+            'Authorization': `Token ${getLocalToken()}`
+        }
+    });
+}
+
+export const createProceso = (proceso) => {
+    return axios.post('http://localhost:8000/api/procesos/', proceso, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Token ${getLocalToken()}`,
+        }
+    });
+}
 
 export const login = (login) => {
 

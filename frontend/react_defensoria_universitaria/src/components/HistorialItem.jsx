@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-function ListItem({ date, estado, encargado, remitido, recomendacion }) {
+function ListItem({ date, estado, encargado, descripcion, estado_descripcion, remitido, recomendacion }) {
 
     const getEstadoColor = (estado) => {
         switch (estado) {
@@ -29,10 +29,9 @@ function ListItem({ date, estado, encargado, remitido, recomendacion }) {
                 estado !== 'Recibido' && (
                     <>
                         <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Encargado: </span>{encargado}</p>
-                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Descripcion del proceso: </span>{encargado}</p>
-                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Oragano universitario: </span>{remitido}</p>
-                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Estado: </span>{encargado}</p>
-                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Remitido: </span>{encargado}</p>
+                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Descripcion del proceso: </span>{descripcion}</p>
+                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Estado: </span>{estado_descripcion}</p>
+                        <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Remitido: </span>{remitido}</p>
                         <p className="mb-1 text-sm font-normal"><span className='text-black font-semibold'>Recomendacion: </span>{recomendacion}</p>
                     </>
                 )
@@ -45,6 +44,8 @@ function ListItem({ date, estado, encargado, remitido, recomendacion }) {
 ListItem.propTypes = {
     date: PropTypes.string.isRequired,
     estado: PropTypes.string.isRequired,
+    descripcion: PropTypes.string.isRequired,
+    estado_descripcion: PropTypes.string.isRequired,
     encargado: PropTypes.string.isRequired,
     remitido: PropTypes.string.isRequired,
     recomendacion: PropTypes.string.isRequired,
