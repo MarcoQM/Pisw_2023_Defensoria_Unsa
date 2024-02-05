@@ -15,6 +15,7 @@ import { LoginAdministrativos } from "./pages/LoginAdministrativos";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import SoliDetails from "./components/SoliDetails";
+import UsuarioDetails from "./components/UsuarioDetails";
 
 
 
@@ -59,6 +60,7 @@ function App() {
               <Route path="/notificaciones" element={<ProtectedRoute element={<AdminNotificaciones />} />} />
               <Route path="/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} />} />
               <Route path="/detalles-solicitud/:solicitudId" element={<ProtectedRoute element={<SoliDetails />} />} />
+              <Route path="/detalles-usuario/:usuarioId" element={<ProtectedRoute element={<UsuarioDetails />} />} />
             </Route>
 
             
