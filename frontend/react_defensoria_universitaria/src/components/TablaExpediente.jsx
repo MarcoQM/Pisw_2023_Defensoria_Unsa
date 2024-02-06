@@ -192,46 +192,6 @@ const TablaExpediente = () => {
           <div className="space-x-4 mb-4 mt-10 hidden md:flex md:w-full md:h-40 lg:w-full lg:h-40">
               {renderizarEstados()}
 
-              {/* Cuadro de Quejas */}
-              {/* <BotonFiltroTipoSolicitud
-                icon={FaFile}
-                label="Quejas"
-                type="Queja"
-                pending={quejasPendientes}
-                inProcess={quejasEnProceso}
-                onClick={setGlobalFilter}
-              /> */}
-
-              {/* Cuadro de Reclamos */}
-              {/* <BotonFiltroTipoSolicitud
-                icon={FaFile}
-                label="Reclamos"
-                type="Reclamaciones"
-                pending={reclamosPendientes}
-                inProcess={reclamosEnProceso}
-                onClick={setGlobalFilter}
-              /> */}
-
-              {/* Cuadro de Sugerencias */}
-              {/* <BotonFiltroTipoSolicitud
-                icon={FaFile}
-                label="Sugerencias"
-                type="Sugerencia"
-                pending={sugerenciasPendientes}
-                inProcess={sugerenciasEnProceso}
-                onClick={setGlobalFilter}
-              /> */}
-
-              {/* Cuadro de Consultas */}
-              {/* <BotonFiltroTipoSolicitud
-                icon={FaFile}
-                label="Consultas"
-                type="Consulta"
-                pending={consultasPendientes}
-                inProcess={consultasEnProceso}
-                onClick={setGlobalFilter}
-              /> */}
-
               {/* Cuadro de Total */}
               <BotonFiltroTipoSolicitud
                 icon={FaFile}

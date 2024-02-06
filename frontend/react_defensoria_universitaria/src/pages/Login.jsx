@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 //import { useState, useEffect  } from 'react';
 import { login } from "../api/registros.api";
 import { useNavigate } from "react-router-dom";
-import DjangoCSRFToken from 'django-react-csrftoken'
 
 
 export function Login() {  
@@ -62,7 +61,6 @@ export function Login() {
           <h4 className="text-granate text-3xl font-bold text-center mb-4">LOGIN</h4>
   
           <form onSubmit={onSubmit} >
-            <DjangoCSRFToken/>
           
   
             <div className="flex flex-wrap -mx-3 mb-3 items-center">

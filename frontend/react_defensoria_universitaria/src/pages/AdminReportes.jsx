@@ -1,83 +1,278 @@
+import {useState, useEffect} from "react";
+import {getAllSolicitudes} from "../api/registros.api";
+import {rankItem} from '@tanstack/match-sorter-utils';
+import FiltroFechas from '../components/FiltroFechas';
+import { Link } from 'react-router-dom';
+import { parseISO } from 'date-fns';
+import ExcelJS from 'exceljs';
 
-import { getAllSolicitudes } from "../api/registros.api";
-import { FaFile } from "react-icons/fa";
-import { RegistroCard } from "../components/RegistroCard";
-import { RegistrosList } from "../components/RegistrosList";
-import { useEffect,useState } from "react";
-import Sidebar from "../components/SideBar";
+import {
+    flexRender,
+    getCoreRowModel,
+    useReactTable,
+    getPaginationRowModel,
+    getFilteredRowModel
+} from '@tanstack/react-table'
+
+const fuzzyFilter = (row, columnId, value, addMeta) => {
+    const itemRank = rankItem(row.getValue(columnId), value)
+  
+    addMeta({itemRank})
+    return itemRank.passed
+}
+
+
+
 
 export function AdminReportes() {
 
 
 
-
-    const sugerenciasPendientes = 10;
-    const consultasPendientes = 5;
-    const quejasEnProceso = 3;
-    const reclamosEnProceso = 7;
-
-
-    const [registros, setRegistros]=useState({});
+    const handleDownloadExcel = () => {
+        // Crear un nuevo libro de Excel
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Solicitudes');
+      
+        // Definir las columnas
+        worksheet.columns = [
+          { header: 'Nro de Expediente', key: 'codigo_expediente' },
+          { header: 'Solicitante', key: 'nombre' },
+          { header: 'Tipo de Solicitud', key: 'tipo_solicitud_nombre' },
+          { header: 'Estado', key: 'estado_solicitud_nombre' },
+          { header: 'Encargado', key: 'encargado_nombre' },
+          { header: 'Fecha de Recepcion', key: 'fecha_creacion' },
+          // Agrega más columnas si es necesario
+        ];
+      
+        // Agregar los datos
+        data.forEach(item => {
+          worksheet.addRow(item);
+        });
+      
+        // Escribir el archivo Excel
+        workbook.xlsx.writeBuffer().then(buffer => {
+          const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          saveAs(blob, 'solicitudes.xlsx');
+        });
+    };
     
-    useEffect(() => {
-        async function loadRegistros(){
-            const res = await getAllSolicitudes();
-            setRegistros(res.data);
-            
+
+    const handleDateFilterChange = ({ startDate, endDate }) => {
+
+    
+        const parsedStartDate = startDate ? parseISO(startDate) : null;
+        const parsedEndDate = endDate ? parseISO(endDate) : null;
+    
+        // Filtra los datos según el rango de fechas
+        const filteredData = data.filter((item) => {
+            const itemDate = parseISO(item.fecha_creacion); // Ajusta la propiedad según la estructura de tus datos
+            return (
+                (!parsedStartDate || itemDate >= parsedStartDate) &&
+                (!parsedEndDate || itemDate <= parsedEndDate)
+            );
+        });
+    
+        // Actualiza el estado con los datos filtrados
+        setData(filteredData);
+    };
+  
+    async function loadRegistros(){
+        const res = await getAllSolicitudes();
+        setData(res.data);
+        console.log(res.data)
+        
+    }
+
+    const handleClearFilters = () => {
+        // Lógica para limpiar los filtros y restaurar la data original
+        setGlobalFilter('');
+        // Vuelve a cargar la data original
+        async function loadRegistros() {
+          const res = await getAllSolicitudes();
+          setData(res);
         }
         loadRegistros();
+    };
+
+    const [data, setData]=useState([]);
+    const [globalFilter, setGlobalFilter] = useState('');
+  
+    const columns = [
+      {
+        accessorKey: 'Nro',
+        cell: ({ row }) => (
+          <div>{row.index + 1}</div>
+        ),
+      },
+      {
+        header : 'Nro de Expediente',
+        accessorKey: 'codigo_expediente'
+      },
+      {
+        header : 'Solicitante',
+        accessorKey: 'nombre'
+      },
+      {
+        header : 'Tipo de Solicitud',
+        accessorKey: 'tipo_solicitud_nombre'
+      },
+      {
+        header : 'Estado',
+        accessorKey: 'estado_solicitud_nombre'
+      },
+      {
+        header : 'Encargado',
+        accessorKey: 'encargado_nombre'
+      },
+      {
+        header : 'Fecha de Recepcion',
+        accessorKey: 'fecha_creacion',
+        cell: ({ row }) => (
+          <div>
+            {new Date(row.original.fecha_creacion).toLocaleDateString()}
+          </div>
+        ),
+      },
+      
+      {
+        accessorKey: 'Acciones',
+      
+        cell: ({ row }) => (
+          <div className="flex">
+            {/*botón para redirigir a los detalles de la solicitud */}
+            <Link to={`/detalles-solicitud/${row.original.id}`}>
+              <button className="bg-granate-900 hover:bg-granate-claro text-white  py-1 px-4 rounded">
+                Detalles
+              </button>
+            </Link>
+          </div>
+        ),
+      }
+
+    ] 
+
+    useEffect(() => {
+        loadRegistros();
+
     },[]);
 
+    const table = useReactTable({
+        data,
+        columns,
+        state: {
+        globalFilter
+        },
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn : fuzzyFilter
+
+    })
+
+
     return (
-        <div className="flex">            
+        <div className="w-full">
+      <div className="max-w-full bg-grisclaro rounded-lg shadow-lg md:m-10 md:p-10 "> {/* cuadro gris*/}
+          <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">SOLICITUDES RECIBIDAS</h2>
 
-            {/* Contenido Principal */}
-            <div className="ml-14 p-4 w-full">
-                <div className="max-w-7xl mx-auto bg-grisclaro rounded-lg shadow-lg p-10 my-10"> {/* cuadro gris*/}
-                    <h2 className="text-granate text-3xl font-bold text-center mb-4">REPORTES</h2>
-                
 
-                    <a className="text-black text-2xl font-bold text-center mb-4">Listado de reportes</a>
-                    {/* Tabla de Datos */}
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        ID
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Nombre
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Solicitante
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Tipo Solicitud
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Estado Solicitud
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Encargado
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Fecha de Ingreso
-                                    </th>
-                                    {/* columnas según los datos */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <RegistrosList/>
-                            </tbody>
-
-                            
-                        </table>
-                    </div>
-
-                        
-                </div>
+          <button onClick={handleDownloadExcel}>Descargar Excel</button>
+  
+          
+        <div className="container mx-auto md:mt-10 p-4">
+          <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>                                                     
+          <div className="md:px-6 md:py-4 ">
+            <div className=" flex flex-wrap"> 
+              <div className=" w-full md:w-3/6 my-2 text-left">
+                <span className=" ">Busqueda : </span>
+                <input type="text" 
+                  onChange={e => setGlobalFilter(e.target.value)}
+                  className="p-2 text-gray-600 border-gray-300  rounded outline-granate"
+                  placeholder="Buscar..."
+                />
+              </div>                  
+              <div className="w-3/6 md:w-3/6  ">
+                  <FiltroFechas onFilterChange={handleDateFilterChange} onClearFilters={handleClearFilters}/>
+                  
+              </div>             
             </div>
+            
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border divide-y divide-gray-200 ">
+                <thead>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id} className="border-b border-gray-300 text-granate bg-gray-100">
+                      {headerGroup.headers.map(header =>(
+                        <th key={header.id} className="py-2 px-4 text-left uppercase">
+                          {header.isPlaceholder
+                          ? null 
+                          : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map(row => (
+                  <tr key={row.id} className="text-gray-900 hover:bg-gray-400">
+                    {row.getVisibleCells().map(cell => (
+                      <td key={cell.id} className="py-2 px-4">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                  ))}
+
+                </tbody>
+
+              </table>
+              <div className="mt-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300  
+                      disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.setPageIndex(0)}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'<<'}
+                    </button>
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'<'}
+                    </button>
+                      {table.getPageOptions().map((value,key) => (
+                        <button key={key} className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.setPageIndex(value)}>
+                          {value + 1}
+
+                        </button>
+                      ))}
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                        disabled:hover:bg-white disabled:hover:text-gray-300"
+                          onClick={() => table.nextPage()}
+                          disabled={!table.getCanNextPage()}>
+                        {'>'}
+                    </button>
+                    <button className=" text-gray-600 bg-gray-200 py-0.5 px-1 rounded border border-gray-300
+                      disabled:hover:bg-white disabled:hover:text-gray-300"
+                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        disabled={!table.getCanPreviousPage()}>
+                        {'>>'}
+                    </button>
+
+                </div>
+            </div>               
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
     );
 }
