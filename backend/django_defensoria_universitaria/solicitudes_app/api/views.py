@@ -17,8 +17,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 class ListarSolicitudExpedienteAV(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    permission_classes = [AllowAny]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [AllowAny]
     
     def get(self, request):
         codigo_expediente = request.data.get('codigo_expediente')
@@ -105,7 +105,7 @@ class ListarSolicitudAV(APIView):
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
         
 class DetalleSolicitudAV(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, pk):
         try:
