@@ -31,6 +31,6 @@ class SolicitudSerializer(serializers.ModelSerializer):
         # fields = '__all__' 
         fields = ('id', 'codigo_expediente', 'rol', 'nombre', 'apellido', 'dni', 'cui', 'direccion',
                   'telefono', 'correo', 'solicita', 'expone', 'tipo_solicitud', 'tipo_solicitud_nombre', 
-                  'descripcion', 'organo_universitario', 'encargado', 'encargado_nombre',
+                  'organo_universitario', 'encargado', 'encargado_nombre',
                   'estado_solicitud', 'estado_solicitud_nombre', 'fecha_creacion', 'fecha_modificacion', 
                   'sede', 'sede_nombre', 'archivos')
