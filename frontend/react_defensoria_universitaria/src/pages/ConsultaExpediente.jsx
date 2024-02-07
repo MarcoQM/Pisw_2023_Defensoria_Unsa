@@ -4,10 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { getExpediente } from "../api/registros.api";
+import { getExpediente2} from "../api/registros.api";
+import { getExpediente1} from "../api/registros.api";
 import { getDni } from "../api/registros.api";
+import { useNavigate } from "react-router-dom"  
 
 export function ConsultaExpediente() {
-
+const navigate= useNavigate()
     const {
         register,
         handleSubmit,
@@ -25,8 +28,9 @@ export function ConsultaExpediente() {
     const onSubmit=handleSubmit(async data=>{
         const res = await getExpediente(data.codigo, data.dni)
         
+        
         setSolicitud(res.data);
-        console.log(res.data)
+        console.log(res.data);
 
 
 
@@ -81,7 +85,7 @@ export function ConsultaExpediente() {
                     {mostrarResultados && (
                     
                     <div className=" w-full flex flex-col items-center mt-4">
-                         <h4 className="text-granate-900 text-2xl font-bold ">RECLAMO {solicitud.codigo_expediente}</h4>    
+                         <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.tipo_solicitud_nombre} {solicitud.codigo_expediente}</h4>    
                         {/* Aquí mostrarías los resultados reales de la búsqueda */}
                         <p className=" "><strong>Solicitado por:</strong> {solicitud.nombre} {solicitud.apellido}</p>
 
@@ -200,9 +204,11 @@ export function ConsultaExpediente() {
                                     {
                                         solicitud.estado_solicitud==3 &&(
                                             <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-                                                onClick={() => setShowEditForm(true)}>
-                                                Editar
-                                            </button>
+                                            onClick={() => {
+                                                navigate(`/solicitud/${solicitud.id}`);
+                                            }}>
+                                            Editar
+                                        </button>
                                         )
                                     }
                                     
