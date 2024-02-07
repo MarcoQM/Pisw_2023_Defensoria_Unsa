@@ -43,18 +43,11 @@ export function RegistroIncidencias() {
       formData.append("encargado",1);
       formData.append("estado_solicitud",1);
 
-      
-
-
       const adjuntosInput = document.getElementById("adjuntos");
       for (let i = 0; i < adjuntosInput.files.length; i++) {
         formData.append("archivos", adjuntosInput.files[i]);
       }
 
-      
-      
-
-      
       for (const pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
       }

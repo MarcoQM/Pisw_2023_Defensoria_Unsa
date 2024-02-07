@@ -20,12 +20,13 @@ class ListarSolicitudExpedienteAV(APIView):
     #permission_classes = [IsAuthenticatedOrReadOnly]
     #permission_classes = [AllowAny]
     
-    def get(self, request):
+    def post(self, request):
         codigo_expediente = request.data.get('codigo_expediente')
         dni = request.data.get('dni')
         #solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente)
         solicitud = Solicitud.objects.filter(codigo_expediente=codigo_expediente, dni=dni)
         serializer = SolicitudSerializer(solicitud, many=True)
+        print(solicitud)
         return Response(serializer.data)
 
 class ListarSolicitudAV(APIView):

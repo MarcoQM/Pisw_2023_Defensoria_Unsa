@@ -4,8 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { getExpediente } from "../api/registros.api";
-import { getExpediente2} from "../api/registros.api";
-import { getExpediente1} from "../api/registros.api";
 import { getDni } from "../api/registros.api";
 import { useNavigate } from "react-router-dom"  
 
@@ -26,15 +24,14 @@ const navigate= useNavigate()
     
 
     const onSubmit=handleSubmit(async data=>{
-        const res = await getExpediente(data.codigo, data.dni)
-        
-        
-        setSolicitud(res.data);
+        const formData = new FormData();
+        formData.append('codigo_expediente', data.codigo);
+        formData.append('dni', data.dni);
+  
+        const res = await getExpediente(formData)
         console.log(res.data);
-
-
-
-
+        setSolicitud(res.data);
+    
         // Aquí, normalmente realizarías la búsqueda con los valores de expediente y clave.
         // Puedes simular una búsqueda y mostrar los resultados con un mensaje.
         setMostrarResultados(true);
@@ -57,28 +54,25 @@ const navigate= useNavigate()
 
                 <div className=" flex  flex-col items-center ">
                     <p className="mb-5" style={{ fontWeight: 'bold' }}>Ingrese el codigo de expediente  </p>
-                    <form onSubmit={onSubmit} className="flex flex-col">
+                    <form onSubmit={onSubmit} className="flex flex-col mx-auto">
                         <input
                         type="text"
                         placeholder="Código de Expediente"
                         {...register("codigo")}
                         value={expediente}
                         onChange={(e) => setExpediente(e.target.value)}
-                        className="mb-2 p-2 border-2 border-gray-500 rounded-lg"
+                        className="block mb-2 p-2 border-2 border-gray-500 rounded-lg"
                         />
-                        <p className="mb-5" style={{ fontWeight: 'bold' }}>Ingrese su número de DNI  </p>
+                        <p className="mb-5 " style={{ fontWeight: 'bold' }}>Ingrese su número de DNI  </p>
                         <input
                         type="text"
                         placeholder="Número de DNI"
                         {...register("dni")}
                         value={dni}
                         onChange={(e) => setDni(e.target.value)}
-                        className="mb-2 p-2 border-2 border-gray-500 rounded-lg"
+                        className="block mb-2 p-2 border-2 border-gray-500 rounded-lg"
                         />
-                        <button
-                        type="submit"
-                        className="w-32 bg-granate-900 text-white py-2 px-4 rounded-lg self-end"
-                        >
+                        <button type="submit" className="mx-auto flex justify-center items-center w-32 bg-granate-900 text-white py-2 px-4 rounded-lg">
                         Buscar
                         </button>
                     </form>
