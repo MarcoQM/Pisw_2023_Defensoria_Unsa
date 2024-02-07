@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/resumen_ts/', include('resumen_tipo_solicitud.api.urls')),
     path('api/restablecer/<uid>/<token>/', restablecer, name='password_reset_confirm'),
     path('api/obtenerToken/', obtener_csrf_token),
-    path('api/emailConfirmacion/',generar_token_uid),
+    path('api/emailConfirmacion/<str:protocolo>/<str:dominio>/<int:puerto>/',generar_token_uid),
 ]
 
 

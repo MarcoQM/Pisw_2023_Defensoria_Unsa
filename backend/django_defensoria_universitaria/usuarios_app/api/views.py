@@ -49,29 +49,35 @@ def restablecer(request,uid,token):
     else:
         return JsonResponse({'error': 'Se requiere un método POST.'}, status=405)
 @csrf_exempt
-def generar_token_uid(request):
+def generar_token_uid(request,protocolo,dominio,puerto):
+    
     if request.method == 'POST':
+       
         data = json.loads(request.body)
-        print(data)
+        
         email = data.get('email')
-        print(email)
+        
         #user = User.objects.get(email=email)
         try:
             user = User.objects.get(email=email)
         except ObjectDoesNotExist:
-            return JsonResponse({"Error": "Correo Electrónico Incorrecto."})
+            return JsonResponse({"Error": "Correo Electrónico no Válido."})
         uid=user.pk
         token = default_token_generator.make_token(user)
         current_site = get_current_site(request)
-    
-        # Obtener el dominio y el nombre del sitio
-        domain = current_site.domain
-        site_name = current_site.name
+        #domain = current_site.domain
+        #site_name = current_site.name
       
         
         #reset_url = 'http://' + site_name + "/api/restablecer/" + str(uid) + "/" + token +"/"
         #http://localhost:5173/restablecer/4/45asdf
-        reset_url = 'http://' + 'localhost:5173' + "/restablecer/" + str(uid) + "/" + token
+        #reset_url = 'http://' + 'localhost:5173' + "/restablecer/" + str(uid) + "/" + token
+        puertovalido=''
+        if puerto is not None:
+            puertovalido = ':'+str(puerto)
+        
+        reset_url = protocolo + '//' + dominio + puertovalido +'/restablecer/' + str(uid) + "/" + token
+        print(reset_url)
         enviar_email(email,reset_url)
         return JsonResponse({"Mensaje":"Confirmación enviada - Sigue las instrucciones del correo para cambiar tu contraseña."})
     else:

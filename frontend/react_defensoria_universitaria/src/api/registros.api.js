@@ -281,8 +281,11 @@ export const enviarEmailConfirmacion = async (email) => {
         // Configurar las cookies de la solicitud
         document.cookie = `csrftoken=${csrfToken};`;
         axios.defaults.withCredentials = true;
+        const hostname = window.location.hostname;
+        const port = window.location.port;
+        const protocol = window.location.protocol;
         // Realizar la solicitud POST a la API de confirmación de correo electrónico
-        const responseEmail = await axios.post(`${host}/api/emailConfirmacion/`, { email }, { headers });
+        const responseEmail = await axios.post(`${host}/api/emailConfirmacion/${protocol}/${hostname}/${port}/`, { email }, { headers });
         // Verificar si la respuesta contiene el mensaje
         if (responseEmail.data && responseEmail.data.Mensaje) {
             return responseEmail.data.Mensaje;
