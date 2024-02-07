@@ -85,9 +85,89 @@ export const getAllTipo = () => {
     return axios.get(`${host}/api/solicitudes/tipo/`);
 };
 
-export const getExpediente = (id) => {
+/*export const getExpediente = (id) => {
     return axios.get(`${host}/api/solicitudes/${id}`);
+};*/
+export const getExpediente = async (codigo_expediente, dni) => {
+    try {
+        const token = getLocalToken();
+        const response = await axios.get(`${host}/api/solicitudes/expediente/`, {
+            params: {
+                codigo_expediente: codigo_expediente,
+                dni: dni
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        });
+
+        // Verificar el código de estado HTTP
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error(`Error al obtener el expediente. Código de estado: ${response.status}`);
+        }
+    } catch (error) {
+        console.error("Error al obtener el expediente:", error);
+        throw error;
+    }
 };
+export const getExpediente2= (codigo_expediente) => {
+    return axios.get(`${host}/api/solicitudes/${codigo_expediente}`);
+};
+/*export const getExpediente1 = (codigo_expediente, dni) => {
+    try {
+        return axios.get(`${host}/api/solicitudes/expediente/`, {
+            params: {
+                codigo_expediente: codigo_expediente,
+                dni: dni
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token '+getLocalToken()
+            }
+
+        }
+        
+        );
+    } catch (error) {
+        console.error("Error al obtener el expediente:", error);
+        throw error;
+    }
+};*/
+export const getExpediente1 = async (codigo_expediente, dni) => {
+    try {
+        const response = await axios.get(`${host}/api/solicitudes/expediente/`, {
+            params: {
+                codigo_expediente: codigo_expediente,
+                dni: dni
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener el expediente:", error);
+        throw error;
+    }
+};
+export const deleteSolicitud=(id)=>{
+    return axios.delete(`http://localhost:8000/api/solicitudes/${id}`);
+};
+export const updateSolicitud = (id,solicitudes) => {
+    return axios.put(`${host}/api/solicitudes/${id}`,solicitudes, {
+        headers: {
+            'Authorization': `Token ${getLocalToken()}`
+        },
+    }
+
+
+    );
+
+}
+/*export const updateSolicitud=(id, solicitudes)=>{
+    return axios.put(`http://localhost:8000/api/solicitudes/${id}`,solicitudes);
+
+};*/
 /*export const getExpediente = (id, dni = false) => {
     // Utiliza un operador ternario para construir la URL en función de si se proporciona un DNI o un ID
     const apiUrl = dni

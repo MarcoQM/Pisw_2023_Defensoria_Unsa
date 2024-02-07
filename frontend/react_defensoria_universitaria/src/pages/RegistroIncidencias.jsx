@@ -1,29 +1,30 @@
 import { useForm } from "react-hook-form";
-import { getAllSedes,  createIncidencia } from "../api/registros.api";
+import { getAllSedes,  createIncidencia ,deleteSolicitud,updateSolicitud, getExpediente} from "../api/registros.api";
 //import { RegistrosList } from "../components/RegistrosList";
 //import { RegistroCard } from "../components/RegistroCard";
 import { useState, useEffect } from "react";
 //import { useState } from "react";
 import { toast } from 'react-hot-toast';
-
-
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export function RegistroIncidencias() {
-
-
   const navigate = useNavigate();
+  const params = useParams();
   
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const [autorizaNotificacion, setAutorizaNotificacion] = useState(false);
 
   const onSubmit=handleSubmit(async (data) =>{
+    if(params.id){
+      await updateSolicitud(params.id,data);
+    }else{
       const formData = new FormData();
 
       formData.append("organo_universitario","Defensoria Universitaria");
@@ -67,8 +68,7 @@ export function RegistroIncidencias() {
       
       navigate("/inicio") 
 
-      
-      
+    }  
       
   });
 
@@ -105,13 +105,71 @@ export function RegistroIncidencias() {
       
     } 
     loadSedes();
+    async function loadRegistros(){
+      if(params.id){
+        console.log('obteniendo datos')
+        const res= await getExpediente(params.id);
+        setValue('rol',res.data.rol)
+        setValue('apellido',res.data.apellido)
+        setValue('nombre',res.data.nombre)
+        setValue('cui',res.data.cui)
+        setValue('dni',res.data.dni)
+        setValue('sede',res.data.sede)
+        setValue('direccion',res.data.direccion)
+        setValue('telefono',res.data.telefono)
+        setValue('correo',res.data.correo)
+        setValue('solicita',res.data.solicita)
+        setValue('expone',res.data.expone)
+        setValue('tipo_solicitud',res.data.tipo_solicitud)
+        setValue('descripcion',res.data.descripcion)
+        setValue('archivos',res.data.archivos)
+        setValue('organo_universitario',res.data.organo_universitario);
+        setValue('rol',res.data.rol);
+        setValue('encargado',res.data.encargado);
+        setValue('estado_solicitud',res.data.estado_solicitud);
+        
+        console.log(res)
+      }
+    }
+    loadRegistros();
 
    
     
     
-  }, []);
+  }
+  , []);
+  /*
+  useEffect(()=>{
+    async function loadRegistros(){
+      if(params.id){
+        console.log('obteniendo datos')
+        const res= await getExpediente(params.id);
+        setValue('rol',res.data.rol)
+        setValue('apellido',res.data.apellido)
+        setValue('nombre',res.data.nombre)
+        setValue('cui',res.data.cui)
+        setValue('dni',res.data.dni)
+        setValue('sede',res.data.sede)
+        setValue('direccion',res.data.direccion)
+        setValue('telefono',res.data.telefono)
+        setValue('correo',res.data.correo)
+        setValue('solicita',res.data.solicita)
+        setValue('expone',res.data.expone)
+        setValue('tipo_solicitud',res.data.tipo_solicitud)
+        setValue('descripcion',res.data.descripcion)
+        setValue('archivos',res.data.archivos)
+        setValue('organo_universitario',res.data.organo_universitario);
+        setValue('rol',res.data.rol);
+        setValue('encargado',res.data.encargado);
+        setValue('estado_solicitud',res.data.estado_solicitud);
+        
+        console.log(res)
+      }
+    }
+    loadRegistros();
+  },[])
 
-  
+  */
   return (
   
     <div className="Relative" >
@@ -434,6 +492,20 @@ export function RegistroIncidencias() {
               Registrar
             </button>
           </div>
+          {params.id &&(
+          <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded " onClick={async()=>{
+            const accepted= window.confirm("Estas seguro(a)?");
+            if(accepted){
+              
+              await deleteSolicitud(params.id);
+              console.log("Eliminación exitosa");
+              navigate("/registro-incidencias");
+            }
+          }}
+          >
+            Eliminar
+          </button>
+          )}
           
         </form>
       </div>

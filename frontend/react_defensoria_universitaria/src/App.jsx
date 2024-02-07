@@ -31,6 +31,7 @@ function App() {
             <Route path="/inicio" element={<BarraPosteriorSolicitud />} />
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
+            <Route path="/solicitud/:id" element={<BarraPosteriorSolicitud/>} />
 
 
             {/* Ruta con BarraPosteriorPendiente */}
@@ -51,6 +52,7 @@ function App() {
             <Route path="/inicio" element={<Inicio />} />
             <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
+            <Route path="/solicitud/:id" element={<RegistroIncidencias/>} />
             
             <Route path="/" element={<Layout/>}>  
               <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
