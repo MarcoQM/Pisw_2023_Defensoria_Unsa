@@ -21,6 +21,24 @@ export const getAllSolicitudes = () => {
     });
 }
 
+export const getAllUsuarios = () => {
+    return axios.get((`${host}/api/usuarios/`), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token '+getLocalToken()
+        }
+    });
+}
+
+export const getDetalleUsuario = (id) => {
+    return axios.get((`${host}/api/usuarios/${id}`), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token '+getLocalToken()
+        }
+    });
+}
+
 
 // export const getAllSolicitudes = () => {  
 //     return new Promise( (resolve, reject) => {  
@@ -193,6 +211,8 @@ export const getTipoById = (id) => {
 export const getAllUsers = () => {
     return axios.get(`${host}/api/usuarios/`);
 }
+
+
 
 export const getAllEstados = () => {
     return axios.get(`${host}/api/solicitudes/estados/`, {
