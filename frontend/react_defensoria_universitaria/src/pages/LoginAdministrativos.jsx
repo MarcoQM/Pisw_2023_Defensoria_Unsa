@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/registros.api";
 import { useForm } from "react-hook-form";
-import DjangoCSRFToken from 'django-react-csrftoken'
+
 
 export function LoginAdministrativos() {
 
@@ -49,7 +49,6 @@ export function LoginAdministrativos() {
                                 </h2>
 
                                 <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
-                                    <DjangoCSRFToken />
 
                                     <div>
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900  "
