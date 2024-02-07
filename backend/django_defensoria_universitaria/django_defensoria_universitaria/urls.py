@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from usuarios_app.api.views import obtener_csrf_token,generar_token_uid,restablecer
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +15,9 @@ urlpatterns = [
     path('api/registration/', include('dj_rest_auth.registration.urls')),
     path('api/usuarios/', include('usuarios_app.api.urls')),
     path('api/resumen_ts/', include('resumen_tipo_solicitud.api.urls')),
-
+    path('api/restablecer/<uid>/<token>/', restablecer, name='password_reset_confirm'),
+    path('api/obtenerToken/', obtener_csrf_token),
+    path('api/emailConfirmacion/',generar_token_uid),
 ]
 
 

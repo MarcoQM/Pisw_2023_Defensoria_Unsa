@@ -26,8 +26,6 @@ SECRET_KEY = 'django-insecure-&$#^hr8^qqp&5xi_aol+e8z61at)j&3!s7n3hjsb#x^^hwa0&e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -140,7 +138,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cors authorization
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','vps-3870710-x.dattaweb.com','149.50.133.233']
+CORS_ORIGIN_WHITELIST = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
+CORS_ALLOW_CREDENTIALS = True
+
+TOKEN_TIMEOUT = 604800
+PASSWORD_RESET_TIMEOUT = 86400
 
 REST_FRAMEWORK = {
      'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',

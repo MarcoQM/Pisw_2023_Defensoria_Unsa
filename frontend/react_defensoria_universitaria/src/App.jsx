@@ -16,7 +16,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import SoliDetails from "./components/SoliDetails";
 import UsuarioDetails from "./components/UsuarioDetails";
-
+import { RecuperarContrasenia } from './pages/RecuperarContrasenia';
+import { RestablecerContrasenia } from './pages/RestablecerContrasenia';
 
 
 
@@ -33,7 +34,8 @@ function App() {
             <Route path="/login" element={<BarraPosteriorSolicitud />} />
             <Route path="/login2" element={<BarraPosteriorSolicitud />} />
             <Route path="/solicitud/:id" element={<BarraPosteriorSolicitud/>} />
-
+            <Route path="/recuperar-contrasenia" element={<BarraPosteriorSolicitud />} />
+            <Route path="/restablecer/:uid/:token" element={<BarraPosteriorSolicitud/>} />
 
             {/* Ruta con BarraPosteriorPendiente */}
             {/*<Route path="/consulta" element={<> <BarraPosteriorExpediente />
@@ -54,6 +56,8 @@ function App() {
             <Route path="/login" element={<LoginAdministrativos />} />
             <Route path="/consulta" element={<ConsultaExpediente />} />
             <Route path="/solicitud/:id" element={<RegistroIncidencias/>} />
+            <Route path="/recuperar-contrasenia" element={<RecuperarContrasenia />} />
+            <Route path="/restablecer/:uid/:token" element={<RestablecerContrasenia/>} />
             
             <Route path="/" element={<Layout/>}>  
               <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />

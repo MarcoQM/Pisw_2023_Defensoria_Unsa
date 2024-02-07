@@ -3,6 +3,85 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from usuarios_app.api.serializers import UserSerializer
+from django.middleware import csrf
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django_defensoria_universitaria.settings import EMAIL_HOST_USER
+import json
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
+
+def enviar_email(email, reset_url):
+    subject = 'Defensoría Universitario'
+    message = f'Haga clic en el siguiente enlace para restablecer su contraseña: {reset_url}'
+    send_mail(
+        subject,
+        message,
+        EMAIL_HOST_USER,  # Cambia esto al remitente que desees
+        [email],
+        fail_silently=False,
+    )
+@csrf_exempt
+def restablecer(request,uid,token):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        nueva_contrasenia = data.get('contrasenia')
+        v_nueva_contrasenia = data.get('v_contrasenia')
+        if(nueva_contrasenia == v_nueva_contrasenia):
+            try:
+                user_id = User.objects.get(pk=uid).pk
+            except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+                user_id = None
+            
+            if user_id is not None and default_token_generator.check_token(User.objects.get(pk=user_id), token):
+                # Restablecer la contraseña para el usuario
+                user = User.objects.get(pk=user_id)
+                user.set_password(nueva_contrasenia)
+                user.save()
+                return JsonResponse({'message': 'Contraseña restablecida con éxito.'})
+            else:
+                return JsonResponse({'error': 'Token inválido.'}, status=400)
+        else:
+            return JsonResponse({'error': 'Contraseñas distintas'}, status=405)
+        
+    else:
+        return JsonResponse({'error': 'Se requiere un método POST.'}, status=405)
+@csrf_exempt
+def generar_token_uid(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        email = data.get('email')
+        print(email)
+        #user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            return JsonResponse({"Error": "No existe un usuario con ese correo electrónico."})
+        uid=user.pk
+        token = default_token_generator.make_token(user)
+        current_site = get_current_site(request)
+    
+        # Obtener el dominio y el nombre del sitio
+        domain = current_site.domain
+        site_name = current_site.name
+      
+        
+        #reset_url = 'http://' + site_name + "/api/restablecer/" + str(uid) + "/" + token +"/"
+        #http://localhost:5173/restablecer/4/45asdf
+        reset_url = 'http://' + 'localhost:5173' + "/restablecer/" + str(uid) + "/" + token
+        enviar_email(email,reset_url)
+        return JsonResponse({"Mensaje":"Confirmación enviada - Sigue las instrucciones del correo para cambiar tu contraseña."})
+    else:
+        return JsonResponse()
+def obtener_csrf_token(request):
+    # Obtener el token CSRF
+    csrf_token = csrf.get_token(request)
+    # Devolver el token CSRF en un JSON
+    response_data = {'csrf_token': csrf_token}
+    return JsonResponse(response_data)
 
 class ListarUsuariosAV(APIView):
     def get(self, request):

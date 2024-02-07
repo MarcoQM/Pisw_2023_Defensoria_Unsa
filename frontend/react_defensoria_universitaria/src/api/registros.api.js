@@ -267,3 +267,56 @@ export const logOut = () => {
 };
 
 
+export const enviarEmailConfirmacion = async (email) => {
+    try {
+        // Realizar la solicitud GET para obtener el token CSRF de Django
+        const response = await axios.get(`${host}/api/obtenerToken/`);
+        // Extraer el token CSRF de la respuesta
+        const csrfToken = response.data.csrf_token;
+        console.log(csrfToken)
+        // Configurar los encabezados de la solicitud
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        // Configurar las cookies de la solicitud
+        document.cookie = `csrftoken=${csrfToken};`;
+        axios.defaults.withCredentials = true;
+        // Realizar la solicitud POST a la API de confirmación de correo electrónico
+        const responseEmail = await axios.post(`${host}/api/emailConfirmacion/`, { email }, { headers });
+        // Verificar si la respuesta contiene el mensaje
+        if (responseEmail.data && responseEmail.data.Mensaje) {
+            return responseEmail.data.Mensaje;
+        } else {
+            return 'No se pudo enviar el correo';
+        }
+    } catch (error) {
+        throw error; // Propaga el error para ser manejado por el componente
+    }
+};
+export const restablecerContrasenia = async (uid,token,contrasenia) => {
+    try {
+        // Realizar la solicitud GET para obtener el token CSRF de Django
+        const response = await axios.get(`${host}/api/obtenerToken/`);
+        const v_contrasenia = contrasenia;
+        // Extraer el token CSRF de la respuesta
+        const csrfToken = response.data.csrf_token;
+        console.log(csrfToken)
+        // Configurar los encabezados de la solicitud
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        // Configurar las cookies de la solicitud
+        document.cookie = `csrftoken=${csrfToken};`;
+        axios.defaults.withCredentials = true;
+        // Realizar la solicitud POST a la API de confirmación de correo electrónico
+        const responseEmail = await axios.post(`${host}/api/restablecer/${uid}/${token}/`, { contrasenia,v_contrasenia }, { headers });
+        // Verificar si la respuesta contiene el mensaje
+        if (responseEmail.data && responseEmail.data.message) {
+            return responseEmail.data.message;
+        } else {
+            return 'Esperando';
+        }
+    } catch (error) {
+        throw error; // Propaga el error para ser manejado por el componente
+    }
+};

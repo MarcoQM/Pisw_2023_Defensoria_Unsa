@@ -70,8 +70,7 @@ export function LoginAdministrativos() {
                                                 <label htmlFor="remember" className="text-gray-500">Permanecer registrado </label>
                                             </div>
                                             <div className="ml-3 text-sm">
-                                                <a href="#" className="text-sm font-medium text-granate-claro hover:underline"> ¿Has olvidado tu contraseña?</a>
-                                            </div>
+                                            <a href="/recuperar-contrasenia" className="text-sm font-medium text-granate-claro hover:underline"> ¿Has olvidado tu contraseña?</a>                                            </div>
                                         </div>
 
                                     </div>
