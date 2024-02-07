@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Details from "./Details";
 import HistorialItem from "./HistorialItem";
-import { getExpediente, getProcesosById } from "../api/registros.api";
+import { getSolicitud, getProcesosById } from "../api/registros.api";
 import ModalActuacion from "./ModalActuacion";
 
 function SoliDetails() {
@@ -36,7 +36,7 @@ function SoliDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getExpediente(solicitudId);
+      const res = await getSolicitud(solicitudId);
       setSolicitudData(res.data);
     };
 
@@ -71,7 +71,7 @@ function SoliDetails() {
           Agregar actuación
         </button>
       </div>
-      <ModalActuacion open={isOpen} onClose={() => setIsOpen(false)} solicitudId={solicitudId} />
+      <ModalActuacion open={isOpen} onClose={() => setIsOpen(false)} solicitudId={solicitudId} solicitud_encargado={solicitudData.encargado} solicitud_estado={solicitudData.estado_solicitud} />
       <div className="grid grid-cols-2 w-full gap-4">
         <div className="card bg-white border border-transparent rounded-md p-2">
           <h3 className="font-bold">Informacion General</h3>
@@ -138,10 +138,10 @@ function SoliDetails() {
                   date={formatDate(proceso.fecha_creacion)}
                   estado={proceso.estado_solicitud_descripcion}
                   encargado={proceso.nombre_usuario}
-                  descripcion={proceso.observaciones}
-                  estado_descripcion={proceso.estado_situacional}
-                  remitido={proceso.remitido}
-                  recomendacion={proceso.recomendacion}
+                  descripcion={proceso.observaciones ? proceso.observaciones : ""}
+                  estado_descripcion={proceso.estado_situacional ? proceso.estado_situacional : ""}
+                  remitido={proceso.remitido ? proceso.remitido : ""}
+                  recomendacion={proceso.recomendacion ? proceso.recomendacion : ""}
                 />
               ))}
             </ol>

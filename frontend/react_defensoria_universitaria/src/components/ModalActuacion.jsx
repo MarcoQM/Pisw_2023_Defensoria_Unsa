@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { getAllUsers, getAllEstados, createProceso } from '../api/registros.api';
 
-const ModalActuacion = ({ open, onClose, solicitudId }) => {
+const ModalActuacion = ({ open, onClose, solicitudId, solicitud_encargado, solicitud_estado }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -34,7 +34,6 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
         formData.append('estado_solicitud', data.estado_solicitud);
         formData.append('estado_proceso', 1); //Siempre 1
         formData.append('user', data.users);
-        console.log('users', data.users);
         formData.append('observaciones', data.observaciones);
         formData.append('organo_universitario_encargado', data.organo_universitario_encargado);
         formData.append('estado_situacional', data.estado_situacional);
@@ -42,6 +41,7 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
         formData.append('recomendacion', data.recomendacion);
 
         await createProceso(formData);
+        onClose();
     });
 
     if (!open) return null;
@@ -67,8 +67,9 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
                             <div className="mb-6">
                                 <label htmlFor="estado_solicitud" className="block mb-2 text-sm font-medium text-gray-90">Proceso</label>
                                 <select name="estado_solicitud" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    defaultValue={solicitud_estado}
                                     {...register("estado_solicitud")}>
-                                    <option selected>Selecciona un estado</option>
+                                    <option value=""></option>
                                     {estados.map((estado) => (
                                         <option key={estado.id} value={parseInt(estado.id, 10)}>
                                             {estado.nombre}
@@ -80,8 +81,9 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
                             <div className="mb-6">
                                 <label htmlFor="users" className="block mb-2 text-sm font-medium text-gray-90">Encargado</label>
                                 <select name="users" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    defaultValue={solicitud_encargado}
                                     {...register("users")}>
-                                    <option value="">Selecciona un usuario</option>
+                                    <option value=""></option>
                                     {users.map((user) => (
                                         <option key={user.id} value={parseInt(user.id, 10)}>
                                             {user.username}
@@ -144,7 +146,9 @@ const ModalActuacion = ({ open, onClose, solicitudId }) => {
 ModalActuacion.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    solicitudId: PropTypes.string.isRequired
+    solicitudId: PropTypes.string.isRequired,
+    solicitud_encargado: PropTypes.string.isRequired,
+    solicitud_estado: PropTypes.string.isRequired
 };
 
 export default ModalActuacion;

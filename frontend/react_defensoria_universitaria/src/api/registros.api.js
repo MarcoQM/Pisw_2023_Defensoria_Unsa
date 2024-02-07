@@ -16,7 +16,7 @@ export const getAllSolicitudes = () => {
     return axios.get(`${host}/api/solicitudes/`, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token '+getLocalToken()
+            'Authorization': 'Token ' + getLocalToken()
         }
     });
 }
@@ -25,7 +25,7 @@ export const getAllUsuarios = () => {
     return axios.get((`${host}/api/usuarios/`), {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token '+getLocalToken()
+            'Authorization': 'Token ' + getLocalToken()
         }
     });
 }
@@ -34,7 +34,7 @@ export const getDetalleUsuario = (id) => {
     return axios.get((`${host}/api/usuarios/${id}`), {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Token '+getLocalToken()
+            'Authorization': 'Token ' + getLocalToken()
         }
     });
 }
@@ -103,9 +103,10 @@ export const getAllTipo = () => {
     return axios.get(`${host}/api/solicitudes/tipo/`);
 };
 
-/*export const getExpediente = (id) => {
+export const getSolicitud = (id) => {
     return axios.get(`${host}/api/solicitudes/${id}`);
-};*/
+};
+
 export const getExpediente = (formData) => {
     return axios.post(`${host}/api/solicitudes/expediente/`, formData, {
         headers: {
@@ -115,11 +116,11 @@ export const getExpediente = (formData) => {
     );
 }
 
-export const deleteSolicitud=(id)=>{
+export const deleteSolicitud = (id) => {
     return axios.delete(`http://localhost:8000/api/solicitudes/${id}`);
 };
-export const updateSolicitud = (id,solicitudes) => {
-    return axios.put(`${host}/api/solicitudes/${id}`,solicitudes, {
+export const updateSolicitud = (id, solicitudes) => {
+    return axios.put(`${host}/api/solicitudes/${id}`, solicitudes, {
         headers: {
             'Authorization': `Token ${getLocalToken()}`
         },
@@ -227,7 +228,7 @@ export const login = (login) => {
                     cookies.forEach(cookie => {
                         if (cookie.includes('csrftoken') || cookie.includes('sessionid')) {
                             document.cookie = cookie;
-                            
+
                         }
                     });
                 }
