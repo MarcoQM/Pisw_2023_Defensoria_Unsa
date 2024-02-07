@@ -12,16 +12,21 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+from django.template.loader import render_to_string
 
 def enviar_email(email, reset_url):
-    subject = 'Defensoría Universitario'
-    message = f'Haga clic en el siguiente enlace para restablecer su contraseña: {reset_url}'
+    subject = 'Defensoría Universitaria - Restablecer Contraseña'
+    template = 'reset_password_email.html'
+    context = {'reset_url': reset_url}
+    html_message = render_to_string(template, context)
+    #message = f'Haga clic en el siguiente enlace para restablecer su contraseña: {reset_url}'
     send_mail(
         subject,
-        message,
+        '',#message,
         EMAIL_HOST_USER,  # Cambia esto al remitente que desees
         [email],
         fail_silently=False,
+        html_message = html_message
     )
 @csrf_exempt
 def restablecer(request,uid,token):
