@@ -9,8 +9,9 @@ export function RecuperarContrasenia() {
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState(false);
     const [confirmationMessage, setConfirmationMessage] = useState(null);
+    const [confirmationMessageError, setConfirmationMessageError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false); // Nuevo estado para indicar si se está enviando el correo
-
+    
     const onSubmit = handleSubmit(async (data) => {
         try {
             setConfirmationMessage('');
@@ -21,8 +22,10 @@ export function RecuperarContrasenia() {
             setIsSubmitting(true); // Marcar que se está enviando el correo
             const message = await enviarEmailConfirmacion(data.email);
             setConfirmationMessage(message);
+            setConfirmationMessageError("");
         } catch (error) {
-            console.error('Error al enviar correo de recuperación de contraseña:', error);
+            setConfirmationMessageError(error);
+            //console.error('Error al enviar correo de recuperación de contraseña:', error);
         } finally {
             setIsSubmitting(false); // Asegurarse de que se restablezca el estado, incluso si hay un error
         }
@@ -47,6 +50,11 @@ export function RecuperarContrasenia() {
                                 {confirmationMessage && (
                                     <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                                         <span className="block sm:inline">{confirmationMessage}</span>
+                                    </div>
+                                )}
+                                {confirmationMessageError && (
+                                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <span className="block sm:inline">{confirmationMessageError}</span>
                                     </div>
                                 )}
                                 <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>

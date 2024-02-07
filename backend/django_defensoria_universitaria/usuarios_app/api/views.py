@@ -59,7 +59,7 @@ def generar_token_uid(request):
         try:
             user = User.objects.get(email=email)
         except ObjectDoesNotExist:
-            return JsonResponse({"Error": "No existe un usuario con ese correo electrónico."})
+            return JsonResponse({"Error": "Correo Electrónico Incorrecto."})
         uid=user.pk
         token = default_token_generator.make_token(user)
         current_site = get_current_site(request)

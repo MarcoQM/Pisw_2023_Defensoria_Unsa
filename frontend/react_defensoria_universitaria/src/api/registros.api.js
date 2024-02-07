@@ -287,7 +287,7 @@ export const enviarEmailConfirmacion = async (email) => {
         if (responseEmail.data && responseEmail.data.Mensaje) {
             return responseEmail.data.Mensaje;
         } else {
-            return 'No se pudo enviar el correo';
+            throw responseEmail.data.Error;
         }
     } catch (error) {
         throw error; // Propaga el error para ser manejado por el componente
