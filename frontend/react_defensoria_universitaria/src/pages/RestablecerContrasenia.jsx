@@ -65,9 +65,7 @@ export function RestablecerContrasenia() {
                                     </button>
                                 </form>
                                 {confirmationMessage && (
-                                    <button onClick={() => navigate('/login')} className="text-sm text-granate-claro hover:underline mt-2">
-                                        Ir a Iniciar Sesión
-                                    </button>
+                                    <a href="/login" className="text-sm font-medium text-granate-claro hover:underline"> Ir a Inicio de Sesión</a>
                                 )}
                             </div>
                         </div>
