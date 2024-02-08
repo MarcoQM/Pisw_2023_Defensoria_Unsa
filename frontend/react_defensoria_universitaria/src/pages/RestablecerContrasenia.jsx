@@ -4,7 +4,6 @@ import { restablecerContrasenia } from "../api/registros.api";
 
 export function RestablecerContrasenia() {
     const { uid, token } = useParams();
-    const navigate = useNavigate();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [confirmationMessage, setConfirmationMessage] = useState(null);
     const [confirmationMessageError, setConfirmationMessageError] = useState(null);

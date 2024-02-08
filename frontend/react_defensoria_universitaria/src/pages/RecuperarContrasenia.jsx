@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { enviarEmailConfirmacion } from "../api/registros.api";
 
 export function RecuperarContrasenia() {
-    const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState(false);
     const [confirmationMessage, setConfirmationMessage] = useState(null);

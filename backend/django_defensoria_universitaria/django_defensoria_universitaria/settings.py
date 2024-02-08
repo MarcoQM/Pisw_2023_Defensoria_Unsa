@@ -144,14 +144,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    'http://vps-3870710-x.dattaweb.com'
-    #'http://localhost:5173'
+    'http://vps-3870710-x.dattaweb.com',
+    #'http://localhost:5173',
     # 'http://127.0.0.1',
     # 'http://0.0.0.0',
-    #'http://localhost'
+    #'http://localhost',
 ]
 
-ALLOWED_HOSTS = ['vps-3870710-x.dattaweb.com', 'localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['vps-3870710-x.dattaweb.com', 'localhost', '127.0.0.1:8000','127.0.0.1','149.50.133.233']
 
 TOKEN_TIMEOUT = 604800
 PASSWORD_RESET_TIMEOUT = 86400
