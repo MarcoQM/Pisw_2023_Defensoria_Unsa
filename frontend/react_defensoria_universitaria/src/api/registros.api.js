@@ -123,7 +123,9 @@ export const deleteSolicitud = (id) => {
 export const updateSolicitud = (id, solicitudes) => {
     return axios.put(`${host}/api/solicitudes/${id}`, solicitudes, {
         headers: {
-            'Authorization': `Token ${getLocalToken()}`
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + getLocalToken()
+            
         },
     }
 

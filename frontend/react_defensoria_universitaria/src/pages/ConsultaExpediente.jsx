@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { getExpediente } from "../api/registros.api";
 import { getDni } from "../api/registros.api";
 import { useNavigate } from "react-router-dom"  
+//import { EditFormModal } from "./EditFormModal";
 
 export function ConsultaExpediente() {
 const navigate= useNavigate()
@@ -20,9 +21,7 @@ const navigate= useNavigate()
     const [expediente, setExpediente] = useState("");
     const [dni, setDni] = useState("");
     const [mostrarResultados, setMostrarResultados] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
-    
-
+    const [showEditForm, setShowEditForm] = useState(false)
     const onSubmit=handleSubmit(async data=>{
         const formData = new FormData();
         formData.append('codigo_expediente', data.codigo);
@@ -30,7 +29,7 @@ const navigate= useNavigate()
   
         const res = await getExpediente(formData)
         console.log(res.data);
-        setSolicitud(res.data);
+        setSolicitud(res.data[0]);
     
         // Aquí, normalmente realizarías la búsqueda con los valores de expediente y clave.
         // Puedes simular una búsqueda y mostrar los resultados con un mensaje.
@@ -76,10 +75,11 @@ const navigate= useNavigate()
                         Buscar
                         </button>
                     </form>
-                    {mostrarResultados && (
+                    { mostrarResultados && (
                     
                     <div className=" w-full flex flex-col items-center mt-4">
-                         <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.tipo_solicitud_nombre} {solicitud.codigo_expediente}</h4>    
+                         <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.estado_solicitud} {solicitud.codigo_expediente}</h4>
+                         <a>probando</a>    
                         {/* Aquí mostrarías los resultados reales de la búsqueda */}
                         <p className=" "><strong>Solicitado por:</strong> {solicitud.nombre} {solicitud.apellido}</p>
 
@@ -288,14 +288,12 @@ const navigate= useNavigate()
         </div>
 
         );
-        const EditFormModal = ({ solicitud, onClose }) => {
+       const EditFormModal = ({ solicitud, onClose }) => {
             // Agrega el código necesario para el formulario de edición
-          
             return (
               // Estructura de la ventana emergente
               <div className="modal">
-                {/* Contenido del formulario de edición */}
-                {/* ... */}
+
                 <button onClick={onClose}>Cerrar</button>
               </div>
             );
