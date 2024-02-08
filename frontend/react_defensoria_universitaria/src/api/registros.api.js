@@ -273,7 +273,7 @@ export const enviarEmailConfirmacion = async (email) => {
         const response = await axios.get(`${host}/api/obtenerToken/`);
         // Extraer el token CSRF de la respuesta
         const csrfToken = response.data.csrf_token;
-        console.log(csrfToken)
+        //console.log(csrfToken)
         // Configurar los encabezados de la solicitud
         const headers = {
             'Content-Type': 'application/json',
@@ -282,9 +282,13 @@ export const enviarEmailConfirmacion = async (email) => {
         document.cookie = `csrftoken=${csrfToken};`;
         axios.defaults.withCredentials = true;
         const hostname = window.location.hostname;
-        const port = window.location.port;
+        let port = window.location.port;
         const protocol = window.location.protocol;
+        if(port == ''){
+            port = 0;
+        }
         // Realizar la solicitud POST a la API de confirmación de correo electrónico
+        //console.log(`${host}/api/emailConfirmacion/${protocol}/${hostname}/${port}/`);
         const responseEmail = await axios.post(`${host}/api/emailConfirmacion/${protocol}/${hostname}/${port}/`, { email }, { headers });
         // Verificar si la respuesta contiene el mensaje
         if (responseEmail.data && responseEmail.data.Mensaje) {

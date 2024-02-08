@@ -78,7 +78,8 @@ def generar_token_uid(request,protocolo,dominio,puerto):
         #http://localhost:5173/restablecer/4/45asdf
         #reset_url = 'http://' + 'localhost:5173' + "/restablecer/" + str(uid) + "/" + token
         puertovalido=''
-        if puerto is not None:
+        if puerto is not None and puerto != 0:
+            
             puertovalido = ':'+str(puerto)
         
         reset_url = protocolo + '//' + dominio + puertovalido +'/restablecer/' + str(uid) + "/" + token
