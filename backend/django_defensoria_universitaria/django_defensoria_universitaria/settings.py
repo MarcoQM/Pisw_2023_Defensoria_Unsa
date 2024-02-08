@@ -138,10 +138,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cors authorization
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','vps-3870710-x.dattaweb.com','149.50.133.233']
-CORS_ORIGIN_WHITELIST = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
+#CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1','vps-3870710-x.dattaweb.com','149.50.133.233']
+#CORS_ORIGIN_WHITELIST = ['http://localhost:5173','http://vps-3870710-x.dattaweb.com']
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://vps-3870710-x.dattaweb.com'
+    #'http://localhost:5173'
+    # 'http://127.0.0.1',
+    # 'http://0.0.0.0',
+    #'http://localhost'
+]
+
+ALLOWED_HOSTS = ['vps-3870710-x.dattaweb.com', 'localhost', '127.0.0.1:8000']
 
 TOKEN_TIMEOUT = 604800
 PASSWORD_RESET_TIMEOUT = 86400

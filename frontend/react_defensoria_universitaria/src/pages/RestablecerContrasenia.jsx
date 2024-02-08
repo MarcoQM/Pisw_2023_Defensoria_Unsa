@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import DjangoCSRFToken from 'django-react-csrftoken';
-import { useNavigate, useParams } from "react-router-dom";
 import { restablecerContrasenia } from "../api/registros.api";
 
 export function RestablecerContrasenia() {
@@ -49,7 +47,7 @@ export function RestablecerContrasenia() {
                                     </div>
                                 )}
                                 <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
-                                    <DjangoCSRFToken />
+                                   
                                     <div className="relative">
                                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
                                         <input type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" {...register("password", { required: true })} />

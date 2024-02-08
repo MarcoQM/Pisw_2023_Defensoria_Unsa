@@ -5,6 +5,7 @@ import FiltroFechas from '../components/FiltroFechas';
 import { Link } from 'react-router-dom';
 import { parseISO } from 'date-fns';
 import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 
 import {
     flexRender,
@@ -32,22 +33,32 @@ export function AdminReportes() {
         // Crear un nuevo libro de Excel
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Solicitudes');
-      
-        // Definir las columnas
+   
         worksheet.columns = [
-          { header: 'Nro de Expediente', key: 'codigo_expediente' },
-          { header: 'Solicitante', key: 'nombre' },
-          { header: 'Tipo de Solicitud', key: 'tipo_solicitud_nombre' },
-          { header: 'Estado', key: 'estado_solicitud_nombre' },
-          { header: 'Encargado', key: 'encargado_nombre' },
-          { header: 'Fecha de Recepcion', key: 'fecha_creacion' },
-          // Agrega más columnas si es necesario
+          { header: 'No.', key: 'numero', width: 5 }, 
+          { header: 'NÚMERO DE EXPEDIENTE INTERNO', key: 'codigo_expediente', width: 30 },
+          { header: 'ENCARGADO DEL EXPEDIENTE', key: 'encargado_nombre', width: 30 },
+          { header: 'FECHA DE RECEPCIÓN', key: 'fecha_creacion', width: 20 },
+          { header: 'NOMBRES Y APELLIDOS DEL SOLICITANTE', key: 'nombre', width: 40 },
+          { header: 'CORREO ELECTRÓNICO', key: 'correo', width: 30 },
+          { header: 'NÚMERO DE CELULAR', key: 'telefono', width: 20 },
+          { header: 'TIPO DE SOLICITUD', key: 'tipo_solicitud_nombre', width: 30 },
+          { header: 'RESUMEN DEL CONTENIDO DE LA SOLICITUD', key: 'expone', width: 40 },
+          { header: 'ÓRGANO UNIVERSITARIO RELACIONADO CON LOS HECHOS MENCIONADOS', key: 'organo_universitario', width: 50 },
+          { header: 'CONDICIÓN DEL SOLICITANTE EN LA UNIVERSIDAD', key: 'rol', width: 30 },
+          { header: 'ESTADO DEL TRÁMITE', key: 'estado_solicitud_nombre', width: 30 },
+          { header: 'FECHA DE FINALIZACIÓN DEL TRÁMITE', key: 'fecha_modificacion', width: 20 },
+
         ];
+
+        
       
         // Agregar los datos
-        data.forEach(item => {
-          worksheet.addRow(item);
+        data.forEach( (item, index) => {
+          worksheet.addRow({ numero: index + 1, ...item });
         });
+
+        
       
         // Escribir el archivo Excel
         workbook.xlsx.writeBuffer().then(buffer => {
@@ -176,7 +187,7 @@ export function AdminReportes() {
           <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">SOLICITUDES RECIBIDAS</h2>
 
 
-          <button onClick={handleDownloadExcel}>Descargar Excel</button>
+        
   
           
         <div className="container mx-auto md:mt-10 p-4">
@@ -267,12 +278,23 @@ export function AdminReportes() {
                         {'>>'}
                     </button>
 
+              
                 </div>
-            </div>               
+                
+            </div>
+                         
           </div>
+          
         </div>
+        <div>
+                    <button className=" bg-granate-900 hover:bg-granate-claro text-white  py-1 px-4 rounded  items-center"
+                        onClick={handleDownloadExcel}>Descargar Excel</button>
+                </div>  
+        
       </div>
+      
     </div>
+    
   </div>
     );
 }

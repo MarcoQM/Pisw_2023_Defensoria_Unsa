@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const host = 'http://127.0.0.1:8000';
+//const host = 'http://127.0.0.1:8000';
 //const host = 'http://vps-3870710-x.dattaweb.com:8000';
+const host = 'http://vps-3870710-x.dattaweb.com:8000';
 const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
@@ -268,6 +269,7 @@ export const logOut = () => {
 
 
 export const enviarEmailConfirmacion = async (email) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         // Realizar la solicitud GET para obtener el token CSRF de Django
         const response = await axios.get(`${host}/api/obtenerToken/`);
@@ -301,6 +303,7 @@ export const enviarEmailConfirmacion = async (email) => {
     }
 };
 export const restablecerContrasenia = async (uid,token,contrasenia) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         // Realizar la solicitud GET para obtener el token CSRF de Django
         const response = await axios.get(`${host}/api/obtenerToken/`);
