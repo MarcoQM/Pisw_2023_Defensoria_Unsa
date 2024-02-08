@@ -33,7 +33,9 @@ export function AdminReportes() {
         // Crear un nuevo libro de Excel
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Solicitudes');
-   
+
+        
+
         worksheet.columns = [
           { header: 'No.', key: 'numero', width: 5 }, 
           { header: 'NÚMERO DE EXPEDIENTE INTERNO', key: 'codigo_expediente', width: 30 },
@@ -48,22 +50,40 @@ export function AdminReportes() {
           { header: 'CONDICIÓN DEL SOLICITANTE EN LA UNIVERSIDAD', key: 'rol', width: 30 },
           { header: 'ESTADO DEL TRÁMITE', key: 'estado_solicitud_nombre', width: 30 },
           { header: 'FECHA DE FINALIZACIÓN DEL TRÁMITE', key: 'fecha_modificacion', width: 20 },
-
         ];
-
         
-      
+
+        worksheet.getRow(2).getCell(1).value = 'No.';
+        worksheet.getRow(2).getCell(2).value = 'Expediente';
+        worksheet.getRow(2).getCell(3).value = 'Encargado';
+        worksheet.getRow(2).getCell(4).value = 'Fecha';
+        worksheet.getRow(2).getCell(5).value = 'Solicitante';
+        worksheet.getRow(2).getCell(6).value = 'Correo';
+        worksheet.getRow(2).getCell(7).value = 'Teléfono';
+        worksheet.getRow(2).getCell(8).value = 'Tipo';
+        worksheet.getRow(2).getCell(9).value = 'Resumen';
+        worksheet.getRow(2).getCell(10).value = 'Órgano';
+        worksheet.getRow(2).getCell(11).value = 'Condición';
+        worksheet.getRow(2).getCell(12).value = 'Estado';
+        worksheet.getRow(2).getCell(13).value = 'Fecha de Finalización';
         // Agregar los datos
         data.forEach( (item, index) => {
           worksheet.addRow({ numero: index + 1, ...item });
-        });
+        }); 
 
-        
-      
+        const generalHeader = 'DEFENSORIA UNIVERSITARIA';
+
+        // Establecer el encabezado general en la primera celda
+        worksheet.mergeCells('A1:M1');
+        worksheet.getCell('A1').value = generalHeader;
+
+        const today = new Date().toLocaleDateString().replace(/\//g, '-');
+        const fileName = `solicitudes_${today}.xlsx`;
+
         // Escribir el archivo Excel
         workbook.xlsx.writeBuffer().then(buffer => {
           const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          saveAs(blob, 'solicitudes.xlsx');
+          saveAs(blob, fileName);
         });
     };
     
@@ -184,25 +204,14 @@ export function AdminReportes() {
     return (
         <div className="w-full">
       <div className="max-w-full bg-grisclaro rounded-lg shadow-lg md:m-10 md:p-10 "> {/* cuadro gris*/}
-          <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">SOLICITUDES RECIBIDAS</h2>
+          <h2 className="text-granate-900  mt-2 mb-4 text-2xl md:text-4xl font-bold text-center   ">REPORTES DE SOLICITUDES</h2>
 
-
-        
-  
-          
         <div className="container mx-auto md:mt-10 p-4">
           <h1 className="text-2xl font-bold mb-4">Listado de Solicitudes</h1>                                                     
           <div className="md:px-6 md:py-4 ">
             <div className=" flex flex-wrap"> 
-              <div className=" w-full md:w-3/6 my-2 text-left">
-                <span className=" ">Busqueda : </span>
-                <input type="text" 
-                  onChange={e => setGlobalFilter(e.target.value)}
-                  className="p-2 text-gray-600 border-gray-300  rounded outline-granate"
-                  placeholder="Buscar..."
-                />
-              </div>                  
-              <div className="w-3/6 md:w-3/6  ">
+                                
+              <div className="flex md:w-5/6  ">
                   <FiltroFechas onFilterChange={handleDateFilterChange} onClearFilters={handleClearFilters}/>
                   
               </div>             
@@ -286,8 +295,8 @@ export function AdminReportes() {
           </div>
           
         </div>
-        <div>
-                    <button className=" bg-granate-900 hover:bg-granate-claro text-white  py-1 px-4 rounded  items-center"
+        <div className=" text-center">
+                <button className=" bg-granate-900 hover:bg-granate-claro text-white  py-1 px-4 rounded"
                         onClick={handleDownloadExcel}>Descargar Excel</button>
                 </div>  
         

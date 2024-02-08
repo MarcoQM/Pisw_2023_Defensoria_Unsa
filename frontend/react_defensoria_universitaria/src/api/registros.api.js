@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-//const host = 'http://127.0.0.1:8000';
+const host = 'http://127.0.0.1:8000';
 //const host = 'http://vps-3870710-x.dattaweb.com:8000';
-const host = 'http://vps-3870710-x.dattaweb.com:8000';
 const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
