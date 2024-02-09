@@ -13,7 +13,7 @@ export function LoginAdministrativos() {
     const {
         register,
         handleSubmit,
-        
+
     } = useForm();
 
 
@@ -45,15 +45,15 @@ export function LoginAdministrativos() {
                                     ¡Bienvenido!
                                 </h1>
                                 <h2 className="text-center text-xs leading-tight tracking-tight text-gray-900 md:text-sm  ">
-                                    Iniciar sesión con tu correo electrónico y contraseña
+                                    Iniciar sesión con su nombre de usuario y contraseña
                                 </h2>
 
                                 <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
 
                                     <div>
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900  "
-                                        >Correo Eletrónico</label>
-                                        <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@unsa.edu.pe" required="" {...register("username", { required: true })} />
+                                        >Nombre de usuario</label>
+                                        <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="jramos" required="" {...register("username", { required: true })} />
                                     </div>
                                     <div>
                                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900  ">Contraseña</label>
@@ -70,7 +70,7 @@ export function LoginAdministrativos() {
                                                 <label htmlFor="remember" className="text-gray-500">Permanecer registrado </label>
                                             </div>
                                             <div className="ml-3 text-sm">
-                                            <a href="/recuperar-contrasenia" className="text-sm font-medium text-granate-claro hover:underline"> ¿Has olvidado tu contraseña?</a>                                            </div>
+                                                <a href="/recuperar-contrasenia" className="text-sm font-medium text-granate-claro hover:underline"> ¿Has olvidado tu contraseña?</a>                                            </div>
                                         </div>
 
                                     </div>
