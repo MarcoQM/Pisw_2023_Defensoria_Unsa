@@ -93,12 +93,12 @@ const ModalActuacion = ({ open, onClose, solicitudId, solicitud_encargado, solic
                             </div>
                             <div className="mb-6">
 
-                                <label htmlFor="observaciones" className="block mb-2 text-sm font-medium text-gray-90">Descripcion de proceso</label>
+                                <label htmlFor="observaciones" className="block mb-2 text-sm font-medium text-gray-90">Descripción de proceso</label>
                                 <textarea id="observaciones" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                     {...register("observaciones")}></textarea>
                             </div>
                             <div className="mb-6">
-                                <label htmlFor="organo-universitario" className="block mb-2 text-sm font-medium text-gray-90">Organo Universitario</label>
+                                <label htmlFor="organo-universitario" className="block mb-2 text-sm font-medium text-gray-90">Órgano Universitario</label>
                                 <input type="text" id="organo-universitario" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                     {...register("organo_universitario_encargado")} />
                             </div>
@@ -114,7 +114,7 @@ const ModalActuacion = ({ open, onClose, solicitudId, solicitud_encargado, solic
                             </div>
                             <div className="mb-6">
 
-                                <label htmlFor="recomendacion" className="block mb-2 text-sm font-medium text-gray-90">Recomendacion</label>
+                                <label htmlFor="recomendacion" className="block mb-2 text-sm font-medium text-gray-90">Recomendación</label>
                                 <textarea id="recomendacion" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                     {...register("recomendacion")}></textarea>
 
