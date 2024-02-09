@@ -53,8 +53,12 @@ const TablaExpediente = () => {
 
     async function loadRegistros(){
       const res = await getAllSolicitudes();
-      setData(res.data);
-      console.log(res.data)
+      const solicitudes = res.data.map(solicitud => ({
+        ...solicitud,
+        nombreCompleto: `${solicitud.nombre} ${solicitud.apellido}`
+      }));
+      const reverseData = solicitudes.reverse();
+      setData(reverseData);
       
     }
 
@@ -62,11 +66,9 @@ const TablaExpediente = () => {
       // Lógica para limpiar los filtros y restaurar la data original
       setGlobalFilter('');
       // Vuelve a cargar la data original
-      async function loadRegistros() {
-        const res = await getAllSolicitudes();
-        setData(res);
-      }
+      
       loadRegistros();
+      
     };
 
     
@@ -89,7 +91,7 @@ const TablaExpediente = () => {
       },
       {
         header : 'Solicitante',
-        accessorKey: 'nombre'
+        accessorKey:  'nombreCompleto'
       },
       {
         header : 'Tipo de Solicitud',
@@ -104,7 +106,7 @@ const TablaExpediente = () => {
         accessorKey: 'encargado_nombre'
       },
       {
-        header : 'Fecha de Recepcion',
+        header : 'Fecha de Recepción',
         accessorKey: 'fecha_creacion',
         cell: ({ row }) => (
           <div>
@@ -211,7 +213,7 @@ const TablaExpediente = () => {
           <div className="md:px-6 md:py-4 ">
             <div className=" flex flex-wrap"> 
               <div className=" w-full md:w-3/6 my-2 text-left">
-                <span className=" ">Busqueda : </span>
+                <span className=" ">Búsqueda : </span>
                 <input type="text" 
                   onChange={e => setGlobalFilter(e.target.value)}
                   className="p-2 text-gray-600 border-gray-300  rounded outline-granate"

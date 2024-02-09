@@ -14,10 +14,10 @@ export function Inicio() {
                                 <img src ="../unsa-escudo.png" className="mx-auto " />
                             </a>                        
                             <div className="my-2 font-semibold text-2xl lg:text-7xl text-grisclaro">
-                                Bienvenidos a Defensoria Universitaria
+                                Bienvenidos a Defensoría Universitaria
                             </div>
                             <div className="text-grisclaro font-semibold text-xl uppercase">
-                                Sistema Electrónico de Defensoria Universitaria
+                                Sistema Electrónico de Defensoría Universitaria
                             </div>
                             <a className="align-middle mt-3" href="">
                                 <button  type="button" className="inline-flex items-center py-2 border border-none rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:shadow-none transition ease-in-out duration-150 bg-granate-800 hover:bg-granate-500 active:bg-granate focus:border-unsa text-white px-12 lg:text-lg"
