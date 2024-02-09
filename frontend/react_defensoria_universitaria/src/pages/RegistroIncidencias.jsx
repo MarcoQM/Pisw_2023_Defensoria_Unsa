@@ -25,6 +25,9 @@ export function RegistroIncidencias() {
     if(params.id){
        updateSolicitud(params.id,data);
       await navigate("/inicio");
+      toast.success('Actualizacion realizada con exito', {
+        duration: 5000, // Duración en milisegundos
+      });
     }else{
       const formData = new FormData();
 
@@ -484,7 +487,8 @@ export function RegistroIncidencias() {
               Registrar
             </button>
           </div>
-          {params.id &&(
+          
+          {/*params.id &&(
           <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded " onClick={async()=>{
             const accepted= window.confirm("Estas seguro(a)?");
             if(accepted){
@@ -496,7 +500,7 @@ export function RegistroIncidencias() {
           >
             Eliminar
           </button>
-          )}
+        )*/}
           
         </form>
       </div>
