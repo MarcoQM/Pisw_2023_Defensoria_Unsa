@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    # 'allauth.socialaccount' # si queremos implementar autenticación usando redes sociales
+    'allauth.socialaccount' # si queremos implementar autenticación usando redes sociales
     'corsheaders',
     'rest_framework',
     'coreapi',

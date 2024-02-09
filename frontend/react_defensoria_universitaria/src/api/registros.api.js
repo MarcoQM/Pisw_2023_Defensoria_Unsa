@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const host = 'http://127.0.0.1:8000';
+//const host = 'http://127.0.0.1:8000';
 //const host = 'http://vps-3870710-x.dattaweb.com:8000';
-//const host = 'http://vps-3870710-x.dattaweb.com:8000';
+const host = 'http://vps-3870710-x.dattaweb.com:8000';
 const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
@@ -288,9 +288,10 @@ export const enviarEmailConfirmacion = async (email) => {
         const hostname = window.location.hostname;
         let port = window.location.port;
         const protocol = window.location.protocol;
-        if (port == '') {
-            port = 0;
-        }
+        //if (port == '') {
+        //    port = 0;
+        //}
+        port = 0;
         // Realizar la solicitud POST a la API de confirmación de correo electrónico
         //console.log(`${host}/api/emailConfirmacion/${protocol}/${hostname}/${port}/`);
         const responseEmail = await axios.post(`${host}/api/emailConfirmacion/${protocol}/${hostname}/${port}/`, { email }, { headers });
@@ -332,3 +333,57 @@ export const restablecerContrasenia = async (uid, token, contrasenia) => {
         throw error; // Propaga el error para ser manejado por el componente
     }
 };
+
+export const aniadirUsuario = async (nombreUsuario, correoElectronico) => {
+    try {
+        const hostname = window.location.hostname;
+        let port = window.location.port;
+        const protocol = window.location.protocol;
+        //if (port == '') {
+        //    port = 0;
+        //}
+        port = 0;
+        const response = await axios.post(
+            `${host}/api/registro/${protocol}/${hostname}/${port}/`,
+            //'http://127.0.0.1:8000/api/registro/http:/localhost/5173/',
+            {
+            usuario: nombreUsuario,
+            correo: correoElectronico
+            },
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${getLocalToken()}`, // Asegúrate de definir la función getLocalToken() para obtener el token de autorización
+            }
+            }
+        );
+            if (response.data && response.data.message) {
+                return response.data.message;
+            } else {
+                throw response.data.error;
+            }
+        } catch (error) {
+            throw error; // Propaga el error para ser manejado por el componente
+        }
+  };
+  export const eliminarUsuario = async (userid) => {
+    try {
+        
+        const response = await axios.delete(
+            `${host}/api/eliminar/${userid}/`,          
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${getLocalToken()}`, // Asegúrate de definir la función getLocalToken() para obtener el token de autorización
+            }
+            }
+        );
+            if (response.data && response.data.message) {
+                return response.data.message;
+            } else {
+                throw response.data.error;
+            }
+        } catch (error) {
+            throw error; // Propaga el error para ser manejado por el componente
+        }
+  };

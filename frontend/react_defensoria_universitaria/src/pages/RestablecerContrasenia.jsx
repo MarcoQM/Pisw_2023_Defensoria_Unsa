@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { restablecerContrasenia } from "../api/registros.api";
+import { useParams } from 'react-router-dom';
 
 export function RestablecerContrasenia() {
     const { uid, token } = useParams();

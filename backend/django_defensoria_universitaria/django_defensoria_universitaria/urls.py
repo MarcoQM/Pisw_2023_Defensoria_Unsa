@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from django.conf import settings
 from django.conf.urls.static import static
-from usuarios_app.api.views import obtener_csrf_token,generar_token_uid,restablecer
+from usuarios_app.api.views import obtener_csrf_token,generar_token_uid,restablecer,registro_usuario_api,eliminar_usuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,6 +18,8 @@ urlpatterns = [
     path('api/restablecer/<uid>/<token>/', restablecer, name='password_reset_confirm'),
     path('api/obtenerToken/', obtener_csrf_token),
     path('api/emailConfirmacion/<str:protocolo>/<str:dominio>/<int:puerto>/',generar_token_uid),
+    path('api/registro/<str:protocolo>/<str:dominio>/<int:puerto>/',registro_usuario_api),
+    path('api/eliminar/<int:user_id>/',eliminar_usuario),
 ]
 
 

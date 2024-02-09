@@ -13,11 +13,69 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.template.loader import render_to_string
+import string
+import random
 
-def enviar_email(email, reset_url):
-    subject = 'Defensoría Universitaria - Restablecer Contraseña'
-    template = 'reset_password_email.html'
-    context = {'reset_url': reset_url}
+def generar_contraseña():
+    longitud = 10
+    caracteres = string.ascii_letters + string.digits
+    contraseña = ''.join(random.choice(caracteres) for i in range(longitud))
+    return contraseña
+
+@csrf_exempt
+def registro_usuario_api(request,protocolo,dominio,puerto):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        usuario = data.get('usuario')
+        correo = data.get('correo')
+        print(usuario)
+        print(correo)
+        
+        # Validar que no exista un usuario con el mismo nombre de usuario
+        if User.objects.filter(username=usuario).exists():
+            return JsonResponse({'error': 'Intente con otro Usuario.'})
+
+        # Validar que no exista un usuario con el mismo correo electrónico
+        if User.objects.filter(email=correo).exists():
+            return JsonResponse({'error': 'Ya existe un usuario con este correo electrónico.'})
+
+        contrasenia = generar_contraseña()
+    
+        try:
+            nuevo_usuario = User.objects.create_user(username=usuario, email=correo, password=contrasenia)            
+            puertovalido=''
+            if puerto is not None and puerto != 0: 
+                puertovalido = ':'+str(puerto)
+            reset_url = protocolo + '//' + dominio + puertovalido +'/login'
+            print(reset_url)
+            enviar_email(correo,reset_url,'emailRegistro.html','Bienvenido',{'reset_url': reset_url,'username':usuario,'password':contrasenia})
+            return JsonResponse({'message': 'Usuario registrado exitosamente.'})
+        except Exception as e:
+            return JsonResponse({'error': 'Ocurrió un error al intentar registrar el usuario: {}'.format(str(e))})
+    else:
+        return JsonResponse({'error': 'Se requiere un método POST.'}, status=405)
+
+@csrf_exempt
+def eliminar_usuario(request, user_id):
+    if request.method == 'DELETE':
+        try:
+            usuario = User.objects.get(id=user_id)
+            usuario.delete()
+            return JsonResponse({'message': 'El usuario fue eliminado correctamente.'})
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'El usuario no existe.'})
+        except Exception as e:
+            if e.args:
+                ultimoargumento = e.args[-1]
+            return JsonResponse({'error': str(ultimoargumento)})
+    else:
+        return JsonResponse({'error': 'Método no permitido. Solo se permite el método DELETE.'})
+
+def enviar_email(email, reset_url,itemplate,tema,contexto):
+    subject = 'Defensoría Universitaria - '+tema
+    template = itemplate
+    context = contexto
     html_message = render_to_string(template, context)
     #message = f'Haga clic en el siguiente enlace para restablecer su contraseña: {reset_url}'
     send_mail(
@@ -53,6 +111,7 @@ def restablecer(request,uid,token):
         
     else:
         return JsonResponse({'error': 'Se requiere un método POST.'}, status=405)
+
 @csrf_exempt
 def generar_token_uid(request,protocolo,dominio,puerto):
     
@@ -84,7 +143,7 @@ def generar_token_uid(request,protocolo,dominio,puerto):
         
         reset_url = protocolo + '//' + dominio + puertovalido +'/restablecer/' + str(uid) + "/" + token
         print(reset_url)
-        enviar_email(email,reset_url)
+        enviar_email(email,reset_url,'reset_password_email.html','Restablecer Contraseña',{'reset_url': reset_url})
         return JsonResponse({"Mensaje":"Confirmación enviada - Sigue las instrucciones del correo para cambiar tu contraseña."})
     else:
         return JsonResponse()
