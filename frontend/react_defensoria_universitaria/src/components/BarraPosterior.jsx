@@ -16,7 +16,7 @@ export function BarraPosteriorSolicitud() {
                         alt="Logo UNSA"
                         className=" pl-50 sm:pl-20 w-50 h-10 mr-2"
                     />
-                    <span className=" text-sm  sm:text-xl font-semibold">Defensoria Universitaria</span>
+                    <span className=" text-sm  sm:text-xl font-semibold">Defensoría Universitaria</span>
                 </div>
                 <button className=" text-white hover:text-gris  py-2 px-4 rounded text-sm sm:text-base border-2"
                     onClick={() => navigate("/consulta")}>
