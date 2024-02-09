@@ -74,7 +74,7 @@ function SoliDetails() {
       <ModalActuacion open={isOpen} onClose={() => setIsOpen(false)} solicitudId={solicitudId} solicitud_encargado={solicitudData.encargado} solicitud_estado={solicitudData.estado_solicitud} />
       <div className="grid grid-cols-2 w-full gap-4">
         <div className="card bg-white border border-transparent rounded-md p-2">
-          <h3 className="font-bold">Informacion General</h3>
+          <h3 className="font-bold">Información General</h3>
           <div className="grid grid-cols-2 gap-1 overflow-auto">
             <Details title="Fecha:" text={formatDate(solicitudData.fecha_creacion)} />
             <Details title="Tipo de solicitud:" text={solicitudData.tipo_solicitud_nombre} />
@@ -89,7 +89,7 @@ function SoliDetails() {
           </div>
         </div>
         <div className="card bg-white border border-transparent rounded-md p-2">
-          <h3 className="font-bold">Informacion General</h3>
+          <h3 className="font-bold">Datos Personales</h3>
           <div className="grid grid-cols-2 gap-1 overflow-auto">
             <Details title="Nombres:" text={solicitudData.nombre} />
             <Details title="Apellidos:" text={solicitudData.apellido} />
@@ -97,7 +97,7 @@ function SoliDetails() {
             <Details title="CUI:" text={solicitudData.cui} />
             <Details title="Rol:" text={solicitudData.rol} />
             <Details title="Dependencia:" text={solicitudData.sede_nombre} />
-            <Details title="Numero de celular:" text={solicitudData.telefono} />
+            <Details title="Número de celular:" text={solicitudData.telefono} />
             <Details title="Correo:" text={solicitudData.correo} />
             <Details
               title="Direccion:"
@@ -120,7 +120,7 @@ function SoliDetails() {
             {solicitudData && solicitudData.archivos && solicitudData.archivos.map((archivo, index) => (
               <li key={index} className="flex items-center">
                 <img src={getIconForFileType(archivo.archivo)} alt="Archivo" className="w-8 h-8 m-2" />
-                <a href={archivo.archivo} className="text-sm font-medium text-blue-800 hover:underline">
+                <a href={`http://vps-3870710-x.dattaweb.com:8000${archivo.archivo}`} className="text-sm font-medium text-blue-800 hover:underline">
                   Prueba{index + 1}.{archivo.archivo.split('.').pop()}
                 </a>
               </li>

@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const host = 'http://127.0.0.1:8000';
 //const host = 'http://vps-3870710-x.dattaweb.com:8000';
+//const host = 'http://vps-3870710-x.dattaweb.com:8000';
 const tokenName = 'user_uaeh_token';
 const userName = 'user_name';
 
@@ -124,7 +125,7 @@ export const updateSolicitud = (id, solicitudes) => {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Token ' + getLocalToken()
-            
+
         },
     }
 
@@ -287,7 +288,7 @@ export const enviarEmailConfirmacion = async (email) => {
         const hostname = window.location.hostname;
         let port = window.location.port;
         const protocol = window.location.protocol;
-        if(port == ''){
+        if (port == '') {
             port = 0;
         }
         // Realizar la solicitud POST a la API de confirmación de correo electrónico
@@ -303,7 +304,7 @@ export const enviarEmailConfirmacion = async (email) => {
         throw error; // Propaga el error para ser manejado por el componente
     }
 };
-export const restablecerContrasenia = async (uid,token,contrasenia) => {
+export const restablecerContrasenia = async (uid, token, contrasenia) => {
     // eslint-disable-next-line no-useless-catch
     try {
         // Realizar la solicitud GET para obtener el token CSRF de Django
@@ -320,7 +321,7 @@ export const restablecerContrasenia = async (uid,token,contrasenia) => {
         document.cookie = `csrftoken=${csrfToken};`;
         axios.defaults.withCredentials = true;
         // Realizar la solicitud POST a la API de confirmación de correo electrónico
-        const responseEmail = await axios.post(`${host}/api/restablecer/${uid}/${token}/`, { contrasenia,v_contrasenia }, { headers });
+        const responseEmail = await axios.post(`${host}/api/restablecer/${uid}/${token}/`, { contrasenia, v_contrasenia }, { headers });
         // Verificar si la respuesta contiene el mensaje
         if (responseEmail.data && responseEmail.data.message) {
             return responseEmail.data.message;

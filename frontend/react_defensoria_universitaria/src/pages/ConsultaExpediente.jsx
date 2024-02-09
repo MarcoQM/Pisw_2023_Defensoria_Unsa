@@ -30,9 +30,6 @@ const navigate= useNavigate()
         const res = await getExpediente(formData)
         console.log(res.data);
         setSolicitud(res.data[0]);
-    
-        // Aquí, normalmente realizarías la búsqueda con los valores de expediente y clave.
-        // Puedes simular una búsqueda y mostrar los resultados con un mensaje.
         setMostrarResultados(true);
 
     });
@@ -52,7 +49,7 @@ const navigate= useNavigate()
                 <h4 className="text-granate-900 text-3xl font-bold text-center mb-4">CONSULTA RÁPIDA POR EXPEDIENTE</h4>
 
                 <div className=" flex  flex-col items-center ">
-                    <p className="mb-5" style={{ fontWeight: 'bold' }}>Ingrese el codigo de expediente  </p>
+                    <p className="mb-5" style={{ fontWeight: 'bold' }}>Ingrese el código de expediente  </p>
                     <form onSubmit={onSubmit} className="flex flex-col mx-auto">
                         <input
                         type="text"
@@ -75,10 +72,10 @@ const navigate= useNavigate()
                         Buscar
                         </button>
                     </form>
-                    { mostrarResultados && (
+                    { mostrarResultados && solicitud ?(
                     
                     <div className=" w-full flex flex-col items-center mt-4">
-                         <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.estado_solicitud} {solicitud.codigo_expediente}</h4>
+                         <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.tipo_solicitud_nombre} {solicitud.codigo_expediente}</h4>
                          <a>probando</a>    
                         {/* Aquí mostrarías los resultados reales de la búsqueda */}
                         <p className=" "><strong>Solicitado por:</strong> {solicitud.nombre} {solicitud.apellido}</p>
@@ -271,18 +268,12 @@ const navigate= useNavigate()
                             </div>
                             )}
                         </div>
-                    </div>
+                    </div> 
 
-                    
-                        
+                    ): (
+                        <p>Coloque los datos solicitados.</p>
+                      )}
 
-
-                        
-
-
-                    
-
-                    )}
                 </div>
             </div>            
         </div>
