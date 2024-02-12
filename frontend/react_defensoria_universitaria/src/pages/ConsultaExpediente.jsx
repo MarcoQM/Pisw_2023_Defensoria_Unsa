@@ -61,9 +61,8 @@ const navigate= useNavigate()
             if (mostrarResultados && solicitud) {
                 const res = await getProcesosById(solicitud.id);
                 if (res.data.length > 0) {
-                    // Assuming res.data contains an array of processes,
-                    // update procesoData with the latest data.
-                    setProcesoData(res.data[res.data.length - 1]); // Assuming the latest process is at the end of the array
+                
+                    setProcesoData(res.data[res.data.length - 1]); 
                 }
             }
         };
@@ -210,11 +209,10 @@ const navigate= useNavigate()
                                 <div className="flex-initial w-4/6 py-2 px-4  ">
                                     <h4 className="text-granate-900 text-2xl font-bold ">Recibido</h4>    
                                     <p className=" "><strong>Solicita:</strong> {solicitud.solicita}</p>
-                                    <p className=" "><strong>Expone: </strong> {solicitud.expone}</p>
                                 </div>
                                 <div className="flex-initial w-1/6 py-2 px-4  ">
                                     
-                                <p className=" self-end">Fecha: {new Date(procesoData.fecha_creacion).toLocaleDateString()}  </p>
+                                <p className=" self-end">Fecha: {new Date(solicitud.fecha_creacion).toLocaleDateString()}  </p>
                                 </div>
                             </div>
                             )}
@@ -227,8 +225,8 @@ const navigate= useNavigate()
                                 </div>
                                 <div className="flex-initial w-4/6 py-2 px-4  ">
                                     <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.estado_solicitud_nombre }</h4>    
-                                    <p className=" "><strong>Solicita:</strong> {solicitud.solicita}</p>
                                     <p className=" "><strong>Descripción:</strong> {procesoData.observaciones}</p>
+                                    <p className=" "><strong>Encargado:</strong> {procesoData.nombre_usuario}</p>
                                     {
                                         solicitud.estado_solicitud==3 &&(
                                             <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
@@ -256,8 +254,8 @@ const navigate= useNavigate()
                                 </div>
                                 <div className="flex-initial w-4/6 py-2 px-4  ">
                                     <h4 className="text-granate-900 text-2xl font-bold ">Admitido</h4>    
-                                    <p className=" "><strong>Solicita:</strong> {solicitud.solicita}</p>
                                     <p className=" "><strong>Descripción:</strong> {procesoData.observaciones}</p>
+                                    <p className=" "><strong>Encargado:</strong> {procesoData.nombre_usuario}</p>
                                     
                                 </div>
                                 <div className="flex-initial w-1/6 py-2 px-4  ">
@@ -278,6 +276,7 @@ const navigate= useNavigate()
                                     <h4 className="text-granate-900 text-2xl font-bold ">En proceso</h4>    
                                     <p className=" "><strong>Solicita:</strong> {solicitud.solicita}</p>
                                     <p className=" "><strong>Descripción:</strong> {procesoData.observaciones}</p>
+                                    <p className=" "><strong>Estado:</strong> {procesoData.estado_situacional}</p>
                                 </div>
                                 <div className="flex-initial w-1/6 py-2 px-4  ">
                                     
@@ -295,8 +294,8 @@ const navigate= useNavigate()
                                     </div>
                                     <div className="flex-initial w-4/6 py-2 px-4  ">
                                     <h4 className="text-granate-900 text-2xl font-bold ">{solicitud.estado_solicitud_nombre }</h4>    
-                                    <p className=" "><strong>Solicita:</strong> {solicitud.solicita}</p>
                                     <p className=" "><strong>Descripción:</strong> {procesoData.observaciones}</p>
+                                    <p className=" "><strong>Encargado:</strong> {procesoData.nombre_usuario}</p>
                                     </div>
                                     <div className="flex-initial w-1/6 py-2 px-4  ">
                                         
